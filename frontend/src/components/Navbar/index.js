@@ -32,15 +32,15 @@ const Navbar = () => {
           <NavLink to='/gallery' activeStyle>
             Gallery
           </NavLink>
-          <NavLink to='/contact-us' activeStyle>
+          <NavLink to='/contact' activeStyle>
             Contact
           </NavLink>
           {/* Second Nav */}
           {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
         </NavMenu>
-        <NavBtn>
+        {/* <NavBtn>
           <NavBtnLink to='/signin'>Sign In</NavBtnLink>
-        </NavBtn>
+        </NavBtn> */}
       </Nav>
     </>
   );

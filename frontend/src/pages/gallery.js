@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SignUp = () => {
+const Gallery = () => {
   return (
     <div
       style={{
@@ -10,9 +10,9 @@ const SignUp = () => {
         height: '90vh'
       }}
     >
-      <h1>Sign Up</h1>
+      <h1>Gallery</h1>
     </div>
   );
 };
 
-export default SignUp;
+export default Gallery;

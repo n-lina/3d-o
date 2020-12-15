@@ -6,10 +6,16 @@ import '../App.css'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from '../pages';
 import About from '../pages/about';
-import Learn from '../pages/services';
+import Learn from '../pages/learn';
 import Contact from '../pages/contact';
-import Create from '../pages/signup';
-import Gallery from '../pages/signup';
+import Create from '../pages/create';
+import Gallery from '../pages/gallery';
+import Browse from '../pages/browse';
+import Colouring from '../pages/colouring'
+import CreateSwan from "../pages/create-swan"
+import CreateVase from "../pages/create-vase"
+import CreateBasket from "../pages/create-basket"
+import CreateFigurine from "../pages/create-figurine"
 
 class App extends Component {
   render() {
@@ -18,17 +24,23 @@ class App extends Component {
     return (
       <div className="Background">
         <div className="InnerApp">
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route path='/' exact component={Home} />
-            <Route path='/about' component={About} />
-            <Route path='/services' component={Learn} />
-            <Route path='/contact-us' component={Contact} />
-            <Route path='/sign-up' component={Gallery} />
-            <Route path='/sign-up' component={Create} />
-          </Switch>
-        </Router>
+          <Router>
+            <Navbar/>
+            <Switch>
+              <Route path='/' exact component={Home} />
+              <Route path='/about' component={About} />
+              <Route path='/create' component={Create} />
+              <Route path='/learn' component={Learn} />
+              <Route path='/contact' component={Contact} />
+              <Route path='/gallery' component={Gallery} />
+              <Route path='/browse' component={Browse} />
+              <Route path='/colouring' component={Colouring} />
+              <Route path='/create-swan' component={CreateSwan} />
+              <Route path='/create-vase' component={CreateVase} />
+              <Route path='/create-basket' component={CreateBasket} />
+              <Route path='/create-figurine' component={CreateFigurine} />
+            </Switch>
+          </Router>
           <h1>Status: {invoice.status()}</h1>
 
           {!invoice.is_paid && (
