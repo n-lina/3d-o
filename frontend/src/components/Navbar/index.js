@@ -17,22 +17,22 @@ const Navbar = () => {
         </NavLink>
         <Bars />
         <NavMenu>
-          <NavLink to='/about' activeStyle>
+          <NavLink to='/about' activeStyle = {{background: "#fff"}}>
             About
           </NavLink>
-          <NavLink to='/learn' activeStyle>
+          <NavLink to='/learn' activeStyle = {{background: "#fff"}}>
             Learn
           </NavLink>
-          <NavLink to='/create' activeStyle>
+          <NavLink to='/create' activeStyle = {{background: "#fff"}}>
             Create
           </NavLink>
-          <NavLink to='/browse' activeStyle>
+          <NavLink to='/browse' activeStyle = {{background: "#fff"}}>
             Browse
           </NavLink>
-          <NavLink to='/gallery' activeStyle>
+          <NavLink to='/gallery' activeStyle = {{background: "#fff"}}>
             Gallery
           </NavLink>
-          <NavLink to='/contact' activeStyle>
+          <NavLink to='/contact' activeStyle = {{background: "#fff"}}>
             Contact
           </NavLink>
           {/* Second Nav */}
