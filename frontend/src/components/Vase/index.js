@@ -1,143 +1,183 @@
-import React, { useRef, useState, useMemo } from "react";
-import {useFrame } from "react-three-fiber";
+import React, { useRef, useState, useMemo, Suspense } from "react";
+import {useFrame} from "react-three-fiber";
 import * as THREE from "three";
 import rose from "../../assets/paper.PNG";
 
-// THREE.SceneUtils = {
+/* constraints: 
+- d1_height < d2_height < d3_height 
+- 0 < d1, d2, d3 < 100cm
+- 0 < height < 100cm
+*/
 
-// 	createMultiMaterialObject: function ( geometry, materials ) {
-// 		var group = new THREE.Group();
-// 		for ( var i = 0, l = materials.length; i < l; i ++ ) {
-// 			group.add( new THREE.Mesh( geometry, materials[ i ] ) );
-// 		}
-// 		return group;
-// 	},
+//raw user inputs
+const height = 100
+const diameter_top = 40
+const diameter_bottom = 40 
+const diameter_1 = 70
+const diameter_1_h = 50
+const diameter_2 = 20
+const diameter_2_h = 70
+const diameter_3 = 20
+const diameter_3_h = 90
+const top_rim = true 
+const bottom_rim = false
+const bottom_disk = false
 
-// 	detach: function ( child, parent, scene ) {
-// 		child.applyMatrix( parent.matrixWorld );
-// 		parent.remove( child );
-// 		scene.add( child );
-// 	},
+// calculated values 
+const height_scaleto = 36
+const top_height = height_scaleto/2
+const bottom_height = -1 * top_height
+const scale_factor = height_scaleto/height
 
-// 	attach: function ( child, scene, parent ) {
-// 		child.applyMatrix( new THREE.Matrix4().getInverse( parent.matrixWorld ) );
-// 		scene.remove( child );
-// 		parent.add( child );
-// 	}
-// };
+const dtop = diameter_top * scale_factor
+const dbottom = diameter_bottom * scale_factor
+
+const d1 = diameter_1 * scale_factor
+const d1_height = (diameter_1_h * scale_factor) - top_height
+
+const d2 = diameter_2 * scale_factor
+const d2_height = (diameter_2_h * scale_factor) - top_height
+
+const d3 = diameter_3 * scale_factor
+const d3_height = (diameter_3_h * scale_factor) - top_height
+
+let top_rim_mesh = <mesh/>
+let bottom_rim_mesh = <mesh />
+let bottom_disk_mesh = <mesh />
+
+function getInputMarker(rad, height){
+    return (
+        <mesh position = {[0,height,0]}>
+            <cylinderGeometry args={[rad, rad, 0.25, 40, 1, true,0, Math.PI * 2]}/>
+            <meshPhongMaterial color="red" />
+        </mesh>
+    )
+}
+
+const dtop_marker = top_rim ? getInputMarker((dtop/2) + 0.6, top_height) : getInputMarker((dtop/2) + 0.1, top_height) 
+const dbottom_marker = bottom_rim ? getInputMarker((dbottom/2) + 0.6, bottom_height) : getInputMarker((dbottom/2) + 0.1, bottom_height)
+const d1_marker = getInputMarker((d1/2) + 0.1, d1_height)
+const d2_marker = getInputMarker((d2/2) + 0.1, d2_height)
+const d3_marker = getInputMarker((d3/2) + 0.1, d3_height)
+
+if (top_rim){
+    top_rim_mesh = <mesh position = {[0,top_height+0.1,0]} rotation = {[1.57,0,0]}> 
+    <torusGeometry args={[(dtop/2)+0.1,0.4,10,50]}/>
+    <meshPhongMaterial color="#FF7E98" />
+    </mesh>
+}
+if (bottom_rim){
+    bottom_rim_mesh = <mesh position = {[0,bottom_height-0.1,0]} rotation = {[1.57,0,0]}> 
+    <torusGeometry args={[(dbottom/2)+0.1, 0.4, 10, 50]}/>
+    <meshPhongMaterial color="#FF7E98" />
+    </mesh>
+}
+
+
+var myPoints = [bottom_height,dbottom/2, d1_height,d1/2, d2_height,d2/2, d3_height,d3/2, top_height,dtop/2]; 
+var tension = 0.4
+var numOfSegments = 6
+
+function getCurvePoints(pts, tension, isClosed, numOfSegments) {
+
+    // use input value if provided, or use a default value   
+    tension = (typeof tension != 'undefined') ? tension : 0.5;
+    isClosed = isClosed ? isClosed : false;
+    numOfSegments = numOfSegments ? numOfSegments : 16;
+
+    var _pts = [], res = [],    // clone array
+        x, y,           // our x,y coords
+        t1x, t2x, t1y, t2y, // tension vectors
+        c1, c2, c3, c4,     // cardinal points
+        st, t, i;       // steps based on num. of segments
+
+    // clone array so we don't change the original
+    //
+    _pts = pts.slice(0);
+
+    // The algorithm require a previous and next point to the actual point array.
+    // Check if we will draw closed or open curve.
+    // If closed, copy end points to beginning and first points to end
+    // If open, duplicate first points to befinning, end points to end
+    if (isClosed) {
+        _pts.unshift(pts[pts.length - 1]);
+        _pts.unshift(pts[pts.length - 2]);
+        _pts.unshift(pts[pts.length - 1]);
+        _pts.unshift(pts[pts.length - 2]);
+        _pts.push(pts[0]);
+        _pts.push(pts[1]);
+    }
+    else {
+        _pts.unshift(pts[1]);   //copy 1. point and insert at beginning
+        _pts.unshift(pts[0]);
+        _pts.push(pts[pts.length - 2]); //copy last point and append
+        _pts.push(pts[pts.length - 1]);
+    }
+
+    // ok, lets start..
+
+    // 1. loop goes through point array
+    // 2. loop goes through each segment between the 2 pts + 1e point before and after
+    for (i=2; i < (_pts.length - 4); i+=2) {
+        for (t=0; t <= numOfSegments; t++) {
+
+            // calc tension vectors
+            t1x = (_pts[i+2] - _pts[i-2]) * tension;
+            t2x = (_pts[i+4] - _pts[i]) * tension;
+
+            t1y = (_pts[i+3] - _pts[i-1]) * tension;
+            t2y = (_pts[i+5] - _pts[i+1]) * tension;
+
+            // calc step
+            st = t / numOfSegments;
+
+            // calc cardinals
+            c1 =   2 * Math.pow(st, 3)  - 3 * Math.pow(st, 2) + 1; 
+            c2 = -(2 * Math.pow(st, 3)) + 3 * Math.pow(st, 2); 
+            c3 =       Math.pow(st, 3)  - 2 * Math.pow(st, 2) + st; 
+            c4 =       Math.pow(st, 3)  -     Math.pow(st, 2);
+
+            // calc x and y cords with common control vectors
+            x = c1 * _pts[i]    + c2 * _pts[i+2] + c3 * t1x + c4 * t2x;
+            y = c1 * _pts[i+1]  + c2 * _pts[i+3] + c3 * t1y + c4 * t2y;
+
+            //store points in array
+            res.push(x);
+            res.push(y);
+
+        }
+    }
+
+    return res;
+}
 
 let points = [];
-points.push( new THREE.Vector2( 7.75, -15.88) );
-points.push( new THREE.Vector2( 7.8, -13.95 ) );
-points.push( new THREE.Vector2( 8.3, -12.02) );
-points.push( new THREE.Vector2( 8.97, -10.01 ) );
-points.push( new THREE.Vector2( 9.7, -8.01 ) );
-points.push( new THREE.Vector2( 10.55, -5.94 ) );
-points.push( new THREE.Vector2( 11.45, -3.99 ) );
-points.push( new THREE.Vector2( 12.3, -1.9 ) );
-points.push( new THREE.Vector2( 13.09, 0.83 ) );
-points.push( new THREE.Vector2( 13.36, 3.21 ) );
-points.push( new THREE.Vector2( 13.21, 6.01 ) );
-points.push( new THREE.Vector2( 12.63, 8.04) );
-points.push( new THREE.Vector2( 11.73, 9.93 ) );
-points.push( new THREE.Vector2( 10.43, 11.46 ) );
-points.push( new THREE.Vector2( 9.25, 12.41) );
-points.push( new THREE.Vector2( 7.91, 13.35) );
-points.push( new THREE.Vector2( 7, 14.28) );
-points.push( new THREE.Vector2( 6.53, 15.86) );
+const new_pts = getCurvePoints(myPoints, tension, false, numOfSegments)
+for (let i=0; i<new_pts.length; i+=2){
+    const h = new_pts[i]
+    const r = new_pts[i+1]
+    points.push( new THREE.Vector2(r, h));
+}
 
 const Vase = (props) => {
-    const mesh = useRef();
-    // useFrame(() => {
-    //   mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
-    // });
+    // const mesh = useRef();
     const texture = useMemo(() => new THREE.TextureLoader().load(rose), []);
     // texture.wrapS = THREE.MirroredRepeatWrapping;
     // texture.wrapT = THREE.MirroredRepeatWrapping;
     // texture.repeat.set(2, 2.6);
 
-    var lathe;
-    var torus1, torus2, cylinder;
-
-    // var geometry = new THREE.LatheGeometry( points, 30, 0, 2*Math.PI );
-    // var geometry = <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-    
-    // var outer_material = new THREE.MeshPhongMaterial({map: texture, side: THREE.FrontSide, specular: 0x121212, shininess: 26});
-    // var outer_material = <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="0x121212" shininess = {26}/>
-    
-    // var inner_material = new THREE.MeshPhongMaterial({color: "black", side: THREE.BackSide});
-    // var inner_material = <meshPhoneMaterial color="black" side = {THREE.BackSide} />
-   
-    // var materials = [ inner_material, outer_material]
-    
-    // lathe = THREE.SceneUtils.createMultiMaterialObject(geometry, materials)
-    lathe = <group rotation={[0.3,0,0]}>
-        <mesh>
-            <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
-        </mesh>
-        <mesh>
-            <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-            <meshPhoneMaterial color="black" side = {THREE.BackSide} />
-        </mesh>
-        <mesh position = {[0,15.8,0]} rotation = {[1.57,0,0]}> 
-            <torusGeometry args={[7,0.45,30,100]}/>
-            <meshPhongMaterial color="black" />
-        </mesh>
-        <mesh position = {[0,-15.7,0]} rotation = {[1.57,0,0]}> 
-            <torusGeometry args={[8, 0.3, 30, 100]}/>
-            <meshPhongMaterial color="black" />
-        </mesh>
-        <mesh position = {[0,-15.7,0]}>
-            <cylinderGeometry args={[8, 8, 0.8, 32]}/>
-            <meshPhongMaterial color="black" />
-        </mesh>
-    </group>
-    
-    // var geometry2 = new THREE.TorusGeometry( 7, 0.45, 30, 100 );
-    // var material2 = new THREE.MeshPhongMaterial( { color: "black" });
-    // torus1 = new THREE.Mesh( geometry2, material2 );
-    // torus1.position.y = 15.8;
-    // torus1.rotation.x += 1.57;
-
-    torus1 = <mesh position = {[0,15.8,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[7,0.45,30,100]}/>
-        <meshPhongMaterial color="black" />
-    </mesh>
-
-    // var geometry3 = new THREE.TorusGeometry( 8, 0.3, 30, 100 );
-    // var material3 = new THREE.MeshPhongMaterial( { color: "black" } );
-    // torus2 = new THREE.Mesh( geometry3, material3 );
-    // torus2.position.y = -15.7;
-    // torus2.rotation.x += 1.57;
-
-    torus2 = <mesh position = {[0,-15.7,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[8, 0.3, 30, 100]}/>
-        <meshPhongMaterial color="black" />
-    </mesh>
-
-    // var geometry4 = new THREE.CylinderGeometry( 8, 8, 0.8, 32 );
-    // var material4 = new THREE.MeshPhongMaterial( {color: "black" } );
-    // cylinder = new THREE.Mesh( geometry4, material4 );
-    // cylinder.position.y = -15.7;
-
-    cylinder = <mesh position = {[0,-15.7,0]}>
-        <cylinderGeometry args={[8, 8, 0.8, 32]}/>
-        <meshPhongMaterial color="black" />
-    </mesh>
-
-    // lathe.add(torus1)
-    // lathe.add(torus2);
-    // lathe.add(cylinder);
-    // lathe.rotation.x += 0.3;	
-    let [x_rot,changeXrot] = useState(0.3);
+    let [x_rot,changeXrot] = useState(0);
     let [y_rot,changeYrot] = useState(0);
     let [z_rot,changeZrot] = useState(0);
 
-    const handleKeyDown = (event) => {
-        // if (init_done == false)
-        //     return; 
+    if (bottom_disk){
+        bottom_disk_mesh = <mesh position = {[0,bottom_height,0]}>
+            <cylinderGeometry args={[dbottom/2, dbottom/2, 0.8, 32]}/>
+            <meshPhongMaterial color="pink" map={texture} />
+        </mesh>
+    }
 
+    const handleKeyDown = (event) => {
         switch(event.key)
         {
             case "x":
@@ -154,7 +194,7 @@ const Vase = (props) => {
                     break;
             case " ": 
                     event.preventDefault()
-                    x_rot = 0.3
+                    x_rot = 0
                     y_rot = 0
                     z_rot = 0 
                     changeXrot(x_rot)
@@ -175,28 +215,28 @@ const Vase = (props) => {
     }, []);
 
     return (
-    <group rotation={[x_rot,y_rot,z_rot]}>
-        <mesh >
-            <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
-        </mesh>
-        <mesh>
-            <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial color="black" side = {THREE.BackSide} />
-        </mesh>
-        <mesh position = {[0,15.8,0]} rotation = {[1.57,0,0]}> 
-            <torusGeometry args={[7,0.45,30,100]}/>
-            <meshPhongMaterial color="black" />
-        </mesh>
-        <mesh position = {[0,-15.7,0]} rotation = {[1.57,0,0]}> 
-            <torusGeometry args={[8, 0.3, 30, 100]}/>
-            <meshPhongMaterial color="black" />
-        </mesh>
-        {/* <mesh position = {[0,-15.7,0]} ref={mesh}>
-            <cylinderGeometry args={[8, 8, 0.8, 32]}/>
-            <meshPhongMaterial color="black" />
-        </mesh> */}
-    </group>
+        <group rotation={[x_rot,y_rot,z_rot]}>
+            <mesh >
+                <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
+                <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            </mesh>
+            <mesh>
+                <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
+                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+            </mesh>
+            {top_rim && top_rim_mesh}
+            {bottom_rim && bottom_rim_mesh}
+            {bottom_disk && bottom_disk_mesh}
+            {dbottom_marker}
+            {d1_marker}
+            {d2_marker}
+            {d3_marker}
+            {dtop_marker}
+            {/* <mesh position = {[0,-15.7,0]} ref={mesh}>
+                <cylinderGeometry args={[8, 8, 0.8, 32]}/>
+                <meshPhongMaterial color="black" />
+            </mesh> */}
+        </group>
     )
   }
 
