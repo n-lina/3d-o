@@ -1,7 +1,21 @@
-import React, { useRef, useState, useMemo, Suspense } from "react";
+import React, { useRef, useState, useMemo} from "react";
 import {useFrame} from "react-three-fiber";
 import * as THREE from "three";
 import rose from "../../assets/paper.PNG";
+
+import { onPatch } from "mobx-state-tree";
+import makeInspectable from "mobx-devtools-mst";
+import VaseStore from "../../models/VaseStore";
+
+const vase = VaseStore.create();
+
+onPatch(vase, patch => {
+  console.log(patch);
+  console.log("hi")
+  console.log(vase.units())
+});
+makeInspectable(vase);
+
 
 /* constraints: 
 - d1_height < d2_height < d3_height 
@@ -9,37 +23,22 @@ import rose from "../../assets/paper.PNG";
 - 0 < height < 100cm
 */
 
-//raw user inputs
-const height = 100
-const diameter_top = 40
-const diameter_bottom = 40 
-const diameter_1 = 70
-const diameter_1_h = 50
-const diameter_2 = 20
-const diameter_2_h = 70
-const diameter_3 = 20
-const diameter_3_h = 90
-const top_rim = true 
-const bottom_rim = false
-const bottom_disk = false
+// scaled values 
+const s_dtop_h = vase.scale_h/2
+const s_dbottom_h = -1 * s_dtop_h
+const scale_factor = vase.scale_h/vase.height
 
-// calculated values 
-const height_scaleto = 36
-const top_height = height_scaleto/2
-const bottom_height = -1 * top_height
-const scale_factor = height_scaleto/height
+const s_dtop = vase.dtop * scale_factor
+const s_dbottom = vase.dbottom * scale_factor
 
-const dtop = diameter_top * scale_factor
-const dbottom = diameter_bottom * scale_factor
+const s_d1 = vase.d1 * scale_factor
+const s_d1_h = (vase.d1_h * scale_factor) - s_dtop_h
 
-const d1 = diameter_1 * scale_factor
-const d1_height = (diameter_1_h * scale_factor) - top_height
+const s_d2 = vase.d2 * scale_factor
+const s_d2_h = (vase.d2_h * scale_factor) - s_dtop_h
 
-const d2 = diameter_2 * scale_factor
-const d2_height = (diameter_2_h * scale_factor) - top_height
-
-const d3 = diameter_3 * scale_factor
-const d3_height = (diameter_3_h * scale_factor) - top_height
+const s_d3 = vase.d3 * scale_factor
+const s_d3_h = (vase.d3_h * scale_factor) - s_dtop_h
 
 let top_rim_mesh = <mesh/>
 let bottom_rim_mesh = <mesh />
@@ -54,110 +53,26 @@ function getInputMarker(rad, height){
     )
 }
 
-const dtop_marker = top_rim ? getInputMarker((dtop/2) + 0.6, top_height) : getInputMarker((dtop/2) + 0.1, top_height) 
-const dbottom_marker = bottom_rim ? getInputMarker((dbottom/2) + 0.6, bottom_height) : getInputMarker((dbottom/2) + 0.1, bottom_height)
-const d1_marker = getInputMarker((d1/2) + 0.1, d1_height)
-const d2_marker = getInputMarker((d2/2) + 0.1, d2_height)
-const d3_marker = getInputMarker((d3/2) + 0.1, d3_height)
+const dtop_marker = vase.top_rim ? getInputMarker((s_dtop/2) + 0.6, s_dtop_h) : getInputMarker((s_dtop/2) + 0.1, s_dtop_h) 
+const dbottom_marker = vase.bottom_rim ? getInputMarker((s_dbottom/2) + 0.6, s_dbottom_h) : getInputMarker((s_dbottom/2) + 0.1, s_dbottom_h)
+const d1_marker = getInputMarker((s_d1/2) + 0.1, s_d1_h)
+const d2_marker = getInputMarker((s_d2/2) + 0.1, s_d2_h)
+const d3_marker = getInputMarker((s_d3/2) + 0.1, s_d3_h)
 
-if (top_rim){
-    top_rim_mesh = <mesh position = {[0,top_height+0.1,0]} rotation = {[1.57,0,0]}> 
-    <torusGeometry args={[(dtop/2)+0.1,0.4,10,50]}/>
+if (vase.top_rim){
+    top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 
+    <torusGeometry args={[(s_dtop/2)+0.1,0.4,10,50]}/>
     <meshPhongMaterial color="#FF7E98" />
     </mesh>
 }
-if (bottom_rim){
-    bottom_rim_mesh = <mesh position = {[0,bottom_height-0.1,0]} rotation = {[1.57,0,0]}> 
-    <torusGeometry args={[(dbottom/2)+0.1, 0.4, 10, 50]}/>
+if (vase.bottom_rim){
+    bottom_rim_mesh = <mesh position = {[0,s_dbottom_h-0.1,0]} rotation = {[1.57,0,0]}> 
+    <torusGeometry args={[(s_dbottom/2)+0.1, 0.4, 10, 50]}/>
     <meshPhongMaterial color="#FF7E98" />
     </mesh>
 }
 
-
-var myPoints = [bottom_height,dbottom/2, d1_height,d1/2, d2_height,d2/2, d3_height,d3/2, top_height,dtop/2]; 
-var tension = 0.4
-var numOfSegments = 6
-
-function getCurvePoints(pts, tension, isClosed, numOfSegments) {
-
-    // use input value if provided, or use a default value   
-    tension = (typeof tension != 'undefined') ? tension : 0.5;
-    isClosed = isClosed ? isClosed : false;
-    numOfSegments = numOfSegments ? numOfSegments : 16;
-
-    var _pts = [], res = [],    // clone array
-        x, y,           // our x,y coords
-        t1x, t2x, t1y, t2y, // tension vectors
-        c1, c2, c3, c4,     // cardinal points
-        st, t, i;       // steps based on num. of segments
-
-    // clone array so we don't change the original
-    //
-    _pts = pts.slice(0);
-
-    // The algorithm require a previous and next point to the actual point array.
-    // Check if we will draw closed or open curve.
-    // If closed, copy end points to beginning and first points to end
-    // If open, duplicate first points to befinning, end points to end
-    if (isClosed) {
-        _pts.unshift(pts[pts.length - 1]);
-        _pts.unshift(pts[pts.length - 2]);
-        _pts.unshift(pts[pts.length - 1]);
-        _pts.unshift(pts[pts.length - 2]);
-        _pts.push(pts[0]);
-        _pts.push(pts[1]);
-    }
-    else {
-        _pts.unshift(pts[1]);   //copy 1. point and insert at beginning
-        _pts.unshift(pts[0]);
-        _pts.push(pts[pts.length - 2]); //copy last point and append
-        _pts.push(pts[pts.length - 1]);
-    }
-
-    // ok, lets start..
-
-    // 1. loop goes through point array
-    // 2. loop goes through each segment between the 2 pts + 1e point before and after
-    for (i=2; i < (_pts.length - 4); i+=2) {
-        for (t=0; t <= numOfSegments; t++) {
-
-            // calc tension vectors
-            t1x = (_pts[i+2] - _pts[i-2]) * tension;
-            t2x = (_pts[i+4] - _pts[i]) * tension;
-
-            t1y = (_pts[i+3] - _pts[i-1]) * tension;
-            t2y = (_pts[i+5] - _pts[i+1]) * tension;
-
-            // calc step
-            st = t / numOfSegments;
-
-            // calc cardinals
-            c1 =   2 * Math.pow(st, 3)  - 3 * Math.pow(st, 2) + 1; 
-            c2 = -(2 * Math.pow(st, 3)) + 3 * Math.pow(st, 2); 
-            c3 =       Math.pow(st, 3)  - 2 * Math.pow(st, 2) + st; 
-            c4 =       Math.pow(st, 3)  -     Math.pow(st, 2);
-
-            // calc x and y cords with common control vectors
-            x = c1 * _pts[i]    + c2 * _pts[i+2] + c3 * t1x + c4 * t2x;
-            y = c1 * _pts[i+1]  + c2 * _pts[i+3] + c3 * t1y + c4 * t2y;
-
-            //store points in array
-            res.push(x);
-            res.push(y);
-
-        }
-    }
-
-    return res;
-}
-
-let points = [];
-const new_pts = getCurvePoints(myPoints, tension, false, numOfSegments)
-for (let i=0; i<new_pts.length; i+=2){
-    const h = new_pts[i]
-    const r = new_pts[i+1]
-    points.push( new THREE.Vector2(r, h));
-}
+const points = vase.updateCurvedPts()
 
 const Vase = (props) => {
     // const mesh = useRef();
@@ -170,9 +85,9 @@ const Vase = (props) => {
     let [y_rot,changeYrot] = useState(0);
     let [z_rot,changeZrot] = useState(0);
 
-    if (bottom_disk){
-        bottom_disk_mesh = <mesh position = {[0,bottom_height,0]}>
-            <cylinderGeometry args={[dbottom/2, dbottom/2, 0.8, 32]}/>
+    if (vase.bottom_disk){
+        bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
+            <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
             <meshPhongMaterial color="pink" map={texture} />
         </mesh>
     }
@@ -224,18 +139,14 @@ const Vase = (props) => {
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
                 <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
             </mesh>
-            {top_rim && top_rim_mesh}
-            {bottom_rim && bottom_rim_mesh}
-            {bottom_disk && bottom_disk_mesh}
+            {vase.top_rim && top_rim_mesh}
+            {vase.bottom_rim && bottom_rim_mesh}
+            {vase.bottom_disk && bottom_disk_mesh}
             {dbottom_marker}
             {d1_marker}
             {d2_marker}
             {d3_marker}
             {dtop_marker}
-            {/* <mesh position = {[0,-15.7,0]} ref={mesh}>
-                <cylinderGeometry args={[8, 8, 0.8, 32]}/>
-                <meshPhongMaterial color="black" />
-            </mesh> */}
         </group>
     )
   }
