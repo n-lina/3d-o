@@ -6,6 +6,9 @@ import {
 import { Canvas} from "react-three-fiber";
 // import Box from "../components/Box"
 import Vase from "../components/Vase"
+import './create-vase.css'
+import Switch from "react-switch";
+
 const CreateVase = () => {
   return (
     <>
@@ -36,8 +39,27 @@ const CreateVase = () => {
             {/* <Box position={[2.5, 0, 0]} /> */}
           </Canvas>
         </div>
-        <div style={{background: '#daa', width: '44%', height: 'auto'}}>
-          <h1>Input</h1>
+        <div style={{background: '#daa', width: '44%', height: 'auto', overflow: 'scroll'}}>
+          <p>units</p>
+          <Switch onChange={() => console.log("toggled")} checked={false} />
+          <p>height</p>
+          <p>diameter 5 (top)</p>
+          <p>diameter 4</p>
+          <p>diameter 3</p>
+          <p>diameter 2</p>
+          <p>diameter 1 (bottom)</p>
+          <p>---------------------</p>
+          <p>diameter 5 (top) height</p>
+          <p>diameter 4 height</p>
+          <p>diameter 3 height</p>
+          <p>diameter 2 height</p>
+          <p>diameter 1 (bottom) height</p>
+          <p>top rim</p>
+          <Switch onChange={() => console.log("toggled")} checked={false} />
+          <p>bottom rim</p>
+          <Switch onChange={() => console.log("toggled")} checked={false} />
+          <p>bottom cover</p>
+          <Switch onChange={() => console.log("toggled")} checked={false} />
           <NavBtn>
             <NavBtnLink to='/colouring'>Done</NavBtnLink>
           </NavBtn>
