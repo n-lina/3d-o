@@ -17,9 +17,20 @@ import CreateVase from "../pages/create-vase"
 import CreateBasket from "../pages/create-basket"
 import CreateFigurine from "../pages/create-figurine"
 
+import { onPatch } from "mobx-state-tree";
+import makeInspectable from "mobx-devtools-mst";
+import Invoice from "../models/Invoice";
+
+const invoice = Invoice.create({ currency: "CAD" });
+
+onPatch(invoice, patch => {
+  console.log(patch);
+});
+makeInspectable(invoice);
+
 class App extends Component {
   render() {
-    const { invoice } = this.props;
+    // const { invoice } = this.props;
 
     return (
       <div className="Background">
