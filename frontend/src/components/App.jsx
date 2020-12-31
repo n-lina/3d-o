@@ -52,7 +52,7 @@ class App extends Component {
               <Route path='/create-figurine' component={CreateFigurine} />
             </Switch>
           </Router>
-          <h1>Status: {invoice.status()}</h1>
+          {/* <h1>Status: {invoice.status()}</h1>
 
           {!invoice.is_paid && (
             <button
@@ -101,7 +101,7 @@ class App extends Component {
             {invoice.itemList.items.map((item, i) => (
               <InvoiceItem key={i} item={item} />
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     );
