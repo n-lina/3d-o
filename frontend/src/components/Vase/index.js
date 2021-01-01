@@ -65,6 +65,7 @@ const Vase = (props) => {
     let [x_rot,changeXrot] = useState(0);
     let [y_rot,changeYrot] = useState(0);
     let [z_rot,changeZrot] = useState(0);
+    let [dist,changeDist] = useState(0);
 
     if (vase.bottom_disk){
         bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
@@ -88,14 +89,24 @@ const Vase = (props) => {
                     z_rot = z_rot + 0.1
                     changeZrot(z_rot);
                     break;
+            case "w": 
+                    dist = Math.max(dist - 5,-550)
+                    changeDist(dist)
+                    break;
+            case "q": 
+                    dist = Math.min(dist + 5,40)
+                    changeDist(dist)
+                    break;
             case " ": 
                     event.preventDefault()
                     x_rot = 0
                     y_rot = 0
                     z_rot = 0 
+                    dist = 0
                     changeXrot(x_rot)
                     changeYrot(y_rot)
                     changeZrot(z_rot)
+                    changeDist(dist)
             default: 
                     break;
         }
@@ -111,7 +122,7 @@ const Vase = (props) => {
     }, []);
 
     return (
-        <group rotation={[x_rot,y_rot,z_rot]}>
+        <group position={[0,0,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             <mesh >
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
                 <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>

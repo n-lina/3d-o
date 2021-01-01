@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+
 import {
   NavBtn,
   NavBtnLink
@@ -7,13 +8,16 @@ import { Canvas} from "react-three-fiber";
 // import Box from "../components/Box"
 import Vase from "../components/Vase"
 import './create-vase.css'
-import Switch from "react-switch";
 import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
+import SwitchSelector from "react-switch-selector";
+
 
 
 import { onPatch } from "mobx-state-tree";
 import makeInspectable from "mobx-devtools-mst";
 import VaseStore from "../models/VaseStore";
+import { observer } from "mobx-react";
+
 
 const vase = VaseStore.create();
 
@@ -105,33 +109,6 @@ export function MultiHandle({
     )
   }
 }
-
-const mySlider = <Slider
-rootStyle={sliderStyle}
-domain={[0, 100]}
-step={1}
-mode={2}
-values={[30]}
->
-<Rail>
-  {({ getRailProps }) => (
-    <div style={railStyle} {...getRailProps()} />
-  )}
-</Rail>
-<Handles>
-  {({ handles, getHandleProps }) => (
-    <div className="slider-handles">
-      {handles.map(handle => (
-        <Handle
-          key={handle.id}
-          handle={handle}
-          getHandleProps={getHandleProps}
-        />
-      ))}
-    </div>
-  )}
-</Handles>
-</Slider>
 
 const sliderHeight = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.height]} onUpdate={(val) => vase.update_height(val[0])} >
   <Rail>
@@ -263,15 +240,10 @@ const dSlider = <Slider
 rootStyle={sliderStyle}
 domain={[0, 100]}
 mode={2}
-values={[0, (vase.d1_h/vase.height)*100, (vase.d2_h/vase.height)*100, (vase.d3_h/vase.height)*100, 100] /* three values = three handles */}
+values={[0, vase.d1_h, vase.d2_h, vase.d3_h, 100] /* three values = three handles */}
 onUpdate={(val)=>vase.update_d_heights(val)}
 step={5}
 >
-{/* <Rail>
-  {({ getRailProps }) => (
-    <div style={railStyle} {...getRailProps()} />
-  )}
-</Rail> */}
 <div style={railStyle} />
 <Handles>
   {({ handles, getHandleProps }) => (
@@ -288,13 +260,81 @@ step={5}
 </Handles>
 </Slider>
 
+const options = [
+  {
+      label: "y",
+      value: true,
+      selectedBackgroundColor: "#E28988",
+  },  {
+      label: "n",
+      value: false,
+      selectedBackgroundColor: "#E28988"
+  }
+];
+
+const unitOptions = [
+  {
+      label: "cm",
+      value: true,
+      selectedBackgroundColor: "#E28988",
+  },  {
+      label: "in",
+      value: false,
+      selectedBackgroundColor: "#E28988"
+  }
+];
+
+const top_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
+    <SwitchSelector
+        onChange={(val) => vase.update_top_rim(val)}
+        options={options}
+        initialSelectedIndex={vase.top_rim ? 0 : 1}
+        backgroundColor={"#FFE7E5"}
+        fontColor={"#D75A58"}
+        optionBorderRadius={30}
+    />
+</div>
+
+const bottom_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
+    <SwitchSelector
+        onChange={(val) => vase.update_bottom_rim(val)}
+        options={options}
+        initialSelectedIndex={vase.bottom_rim ? 0 : 1}
+        backgroundColor={"#FFE7E5"}
+        fontColor={"#D75A58"}
+        optionBorderRadius={30}
+    />
+</div>
+
+const bottom_disk_switch = <div className="switch"  style={{width: 100, height: 50}}>
+    <SwitchSelector
+        onChange={(val) => vase.update_bottom_disk(val)}
+        options={options}
+        initialSelectedIndex={vase.bottom_disk ? 0 : 1}
+        backgroundColor={"#FFE7E5"}
+        fontColor={"#D75A58"}
+        optionBorderRadius={30}
+    />
+</div>
+
+const units_switch = <div className="switch" style={{width: 100, height: 50}}>
+    <SwitchSelector
+        onChange={(val) => vase.update_units(val)}
+        options={unitOptions}
+        initialSelectedIndex={vase.units ? 0 : 1}
+        backgroundColor={"#FFE7E5"}
+        fontColor={"#D75A58"}
+        optionBorderRadius={30}
+    />
+</div>
 
 const CreateVase = () => {
+
   return (
     <>
-      <div style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '100vh'}}>
-        <div style={{background: '#FFDDE4', width: '57%', height: 'auto'}}>
-          <Canvas camera={{position:[0, 0, 100], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink"}}>
+      <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: 'auto'}}>
+        <div className="containerLeft" style={{background: '#FFE7E5', width: '57%', height: 'auto',float:'left'}}>
+          <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '80%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
             {/* <ambientLight intensity={0} /> */}
             <spotLight position={[-275, 150, 90]} intensity = {1.5}/>
             <spotLight position={[100, 25, 90]} intensity = {1.3}/>
@@ -305,43 +345,61 @@ const CreateVase = () => {
             {/* <pointLight position={[-10, -10, -10]} /> */}
             <Vase vase={vase} />
           </Canvas>
+          <div className="containerCaption">
+            <br/>
+            <a>Press <span>x</span> , <span>y</span> , and <span>z</span> to rotate the object ,<br/><span>q</span> and <span>w</span> to zoom in and out , <br/>and <span>space</span> to reset view to default . </a>
+          </div>
         </div>
-        <div style={{background: '#FFE7E5', marginLeft:'3.2%', width: '36%', height: 'auto', overflow: 'visible'}}>
-          <p>units</p>
-          <Switch onChange={() => console.log("toggled")} checked={false} />
+        <div className="containerRight" style={{background: '#FFE7E5', width: '43%', height: '100%', overflow: 'visible', float:'right'}}>
+          <br />
+          <p className="textSwitch">units</p>
+          {units_switch}
           <div>
-            <div style={{background: '#FFE7E5', width: '45.5%', float: 'left'}}>
-              <p>height</p>
+            <div style={{background: '#FFE7E5', width: '40.5%', float: 'left', marginBottom:30, marginLeft:25, marginTop:15}}>
+              <p className="text">height</p>
               {sliderHeight}
-              <p>diameter 5 (top)</p>
-              {slider_dtop}
-              <p>diameter 4</p>
+              <p className="text">2nd diameter</p>
               {slider_d3}
-            </div>
-            <div style={{background: '#FFE7E5', width: '46%', float: 'right'}}>
-              <p>diameter 3</p>
-              {slider_d2}
-              <p>diameter 2</p>
+              <p className="text">4th diameter</p>
               {slider_d1}
-              <p>diameter 1 (bottom)</p>
+            </div>
+            <div style={{background: '#FFE7E5', width: '40.5%', float: 'right', marginBottom:30, marginRight:30, marginTop:15}}>
+              <p className="text">top diameter</p>
+              {slider_dtop}
+              <p className="text">3rd diameter</p>
+              {slider_d2}
+              <p className="text">bottom diameter</p>
               {slider_dbottom}
             </div>
           </div>
-          <p>diameter heights</p>
-          {dSlider}
-          <p>top rim</p>
-          <Switch onChange={() => vase.update_top_rim(!vase.top_rim)} checked={false} />
-          <p>bottom rim</p>
-          <Switch onChange={() => vase.update_bottom_rim(!vase.bottom_rim)} checked={false} />
-          <p>bottom cover</p>
-          <Switch onChange={() => vase.update_bottom_disk(!vase.bottom_disk)} checked={false} />
-          <NavBtn>
-            <NavBtnLink to='/colouring'>Done</NavBtnLink>
-          </NavBtn>
+          <p className="text">diameter heights ( % )</p>
+          <div style={{width:'88%', marginLeft:'5%'}}>
+            {dSlider}
+          </div>
+          <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
+            <p className="textSwitch">top rim</p>
+            {top_rim_switch}
+          </div>
+          <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
+            <p className="textSwitch">bottom rim</p>
+            {bottom_rim_switch}
+          </div>
+          <div style={{float: 'right', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
+            <p className="textSwitch">bottom cover</p>
+            {bottom_disk_switch}
+          </div>
+          <div style={{color:'#FFE7E5', marginTop: -10}}>.</div>
+          <div className="switch" style={{width: 80, marginBottom:35}}>
+            <NavBtn>
+              <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
+                <p className = "buttonText">done</p>
+                </NavBtnLink>
+            </NavBtn>
+          </div>
         </div>
       </div>
   </>  
   );
 };
 
-export default CreateVase;
+export default observer(CreateVase);
