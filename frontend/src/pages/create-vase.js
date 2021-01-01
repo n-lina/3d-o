@@ -392,7 +392,7 @@ const CreateVase = () => {
           <div className="switch" style={{width: 80, marginBottom:35}}>
             <NavBtn>
               <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
-                <p className = "buttonText">Done</p>
+                <p className = "buttonText">done</p>
                 </NavBtnLink>
             </NavBtn>
           </div>

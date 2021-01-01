@@ -25,7 +25,8 @@
 
 .buttonText {
   margin: auto;
-  margin-top: 15px
+  margin-top: 15px;
+  letter-spacing: 2px;
 }
 
 .container {

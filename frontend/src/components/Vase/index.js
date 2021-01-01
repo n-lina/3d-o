@@ -89,11 +89,11 @@ const Vase = (props) => {
                     z_rot = z_rot + 0.1
                     changeZrot(z_rot);
                     break;
-            case "q": 
+            case "w": 
                     dist = Math.max(dist - 5,-550)
                     changeDist(dist)
                     break;
-            case "w": 
+            case "q": 
                     dist = Math.min(dist + 5,40)
                     changeDist(dist)
                     break;
