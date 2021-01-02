@@ -8,7 +8,7 @@ import { ArcherContainer, ArcherElement } from 'react-archer';
 - spray painting 
 - using lines and shapes to color 
 - larger brush size 
-- rotation option -- need to use smth other than index for keys, and map for default / starting position 
+- rotation option -- need to use smth other than index for keys, and map for default / starting position */
 
 
 // const rootStyle = { width:'200px', marginLeft: 'auto', marginRight:'auto', marginBottom:0, background: "#eaa"};
