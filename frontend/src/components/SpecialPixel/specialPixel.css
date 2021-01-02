@@ -1,19 +1,19 @@
 .specialPixelOn {
-    width: 12px;
-    height: 2px;
+    width: 20px;
+    height: 5px;
     border-style:solid;
     border-width: 0.5px;
-    border-color: red;
-    margin-top: 2px; 
-    margin-bottom: 2px;
+    border-color:pink ;
+    margin-top: 5px; 
+    margin-bottom: 5px;
   }
 
   .specialPixelOff {
-    width: 12px;
-    height: 2px;
+    width: 20px;
+    height: 5px;
     border-style:solid;
     border-width: 0.5px;
-    border-color: white;
-    margin-top: 2px; 
-    margin-bottom: 2px;
+    border-color:white;
+    margin-top: 5px; 
+    margin-bottom: 5px;
   }
