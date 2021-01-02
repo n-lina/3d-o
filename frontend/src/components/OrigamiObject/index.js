@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import { ArcherContainer, ArcherElement } from 'react-archer';
 import DrawingSection from "../DrawingSection";
 import "./OrigamiObject.css";
 
