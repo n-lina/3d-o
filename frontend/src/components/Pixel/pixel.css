@@ -1,8 +1,8 @@
 .pixel {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 12px;
+    height: 7.6px;
     border-style:solid;
-    border-width: thin;
+    border-width: 0.5px;
   
     /* // &:hover {
     //   cursor: pointer;

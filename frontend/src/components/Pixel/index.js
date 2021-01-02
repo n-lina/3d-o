@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./pixel.css";
 
 export default function Pixel(props) {
-  const { selectedColor } = props;
+  const { selectedColor, defaultColor} = props;
 
-  const [pixelColor, setPixelColor] = useState("#fff");
+  const [pixelColor, setPixelColor] = useState(defaultColor);
   const [oldColor, setOldColor] = useState(pixelColor);
   const [canChangeColor, setCanChangeColor] = useState(true);
 
@@ -35,4 +35,5 @@ export default function Pixel(props) {
       style={{ backgroundColor: pixelColor }}
     ></div>
   );
+
 }
