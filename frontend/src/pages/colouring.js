@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { CirclePicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
-import { ArcherContainer, ArcherElement } from 'react-archer';
 
 /* stretch goals 
 - spray painting 
