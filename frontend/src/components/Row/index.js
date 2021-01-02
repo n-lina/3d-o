@@ -3,7 +3,7 @@ import "./row.css";
 import Pixel from "../Pixel";
 
 export default function Row(props) {
-  const { width, selectedColor, offset, defaultColor } = props;
+  const { width, selectedColor, offset, defaultColor, num } = props;
 
   let pixels = [];
 

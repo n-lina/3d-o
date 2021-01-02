@@ -16,8 +16,6 @@ import "./colouringPage.css";
 // const boxStyle = { padding: '10px', border: '1px solid black', };
 
 const Colouring = () => {
-  const [panelWidth, setPanelWidth] = useState(16);
-  const [panelHeight, setPanelHeight] = useState(16);
   const [selectedColor, setColor] = useState("#f44336");
   const [defaultColor, setDefaultColor] = useState("#fff"); 
 
@@ -25,15 +23,13 @@ const Colouring = () => {
     setColor(color.hex);
   }
   
-  const myDimensions = [[30, 19, false],[39,10, true],[31,8, true], [29,100, true]];
-  const specialTop = new Set([12,13,14])
-  const specialBottom = new Set([12,13,14])
+  const myDimensions = [[50, 19, false],[39,10, true],[31,8, true], [29,100, true]];
 
   let myHeight = 0 
-  const myYMargin = 10
-  const px_y = 8
+  const myYMargin = 20
+  const px_y = 13
   const px_border = 1
-  const marker_y = 7
+  const marker_y = 20
 
   for (let i = 0; i < myDimensions.length; i++){
     const y = myDimensions[i][1]
@@ -54,17 +50,13 @@ const Colouring = () => {
             height: 'auto',
             width: 'auto', 
             // background: '#fff',
-            position: 'absolute',    
-            marginLeft:10, 
-            marginRight:10      
+            position: 'absolute',         
           }}
         >
           <OrigamiObject 
             dimensions={myDimensions}  
             selectedColor={selectedColor}
             defaultColor={defaultColor}
-            specialTop={specialTop}
-            specialBottom={specialBottom}
           />
         </div>
       </div>

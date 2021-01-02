@@ -2,21 +2,32 @@ import React, { useState } from "react";
 import "./specialPixel.css";
 
 export default function SpecialPixel(props) {
-  const {on} = props;
+  const {on, num, markerNum} = props;
 
   if (on){
-    return (
+    if (markerNum){
+      return (
         <div
           className="specialPixelOn"
-          style={{ backgroundColor: "red" }}
+          style={{ backgroundColor: "pink" }}
+        ><p style={{marginTop: -4, fontSize: 10, marginLeft: 4, position:'absolute', background: 'pink', paddingLeft: 2.5, paddingRight:2.5, borderRadius:6, color:"red"}}> {markerNum}</p></div>
+      );
+    } else {
+      return (
+        <div
+          className="specialPixelOn"
+          style={{ backgroundColor: "pink" }}
         ></div>
       );
-  } else {
+    }
+  } 
+  else {
     return (
         <div
           className="specialPixelOff"
-          style={{ backgroundColor: "white" }}
-        ></div>
+        >
+          <p style={{fontSize:10, marginLeft: 4, marginTop: -4, position:'absolute'}}>{num}</p>
+          </div>
       );
   }
 
