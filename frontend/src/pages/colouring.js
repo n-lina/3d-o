@@ -22,8 +22,10 @@ const Colouring = () => {
   function changeColor(color) {
     setColor(color.hex);
   }
-  
-  const myDimensions = [[50, 19, false],[39,10, true],[31,8, true], [29,100, true]];
+
+  // right now max increase allowed is 1.5x - implement negative remainders for up to 2x increase
+
+  const myDimensions = [[29, 19, false],[31,10, true],[39,8, true], [80,10, true]];
 
   let myHeight = 0 
   const myYMargin = 20

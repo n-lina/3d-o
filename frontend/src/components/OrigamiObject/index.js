@@ -5,9 +5,6 @@ import "./OrigamiObject.css";
 
 export default function OrigamiObject(props) {
     const { dimensions, selectedColor, defaultColor} = props;
-    const special = []
-    // const specialTop = new Set([12,13,14])
-    // const specialBottom = new Set([12,13,14])
   
     const objectRef = useRef();
 
@@ -15,8 +12,8 @@ export default function OrigamiObject(props) {
     let specialBottom = []
 
     for (let i = dimensions.length-2; i >= 0; i--){
-      let sTopCurr = []
-      let sBottomCurr = [0,1,2,3]
+      let sTopCurr = {}
+      let sBottomCurr = {}
 
       const curr = dimensions[i+1][0]
       const next = dimensions[i][0]
@@ -25,7 +22,9 @@ export default function OrigamiObject(props) {
       let distribute = 0 
       let remainder = 0
       let spacing = 0
+
       if (diff > 0){ // increasing - 2 pcs per increase
+        sBottomCurr  = {0: true, 1: false, 2: false, 3: false}
         distribute = curr - (2 * diff)// pieces left to distribute for spacing 
         remainder = distribute % diff
         spacing = Math.floor(distribute/diff)
@@ -41,25 +40,32 @@ export default function OrigamiObject(props) {
         let i = 0 
         let idx = 0 
         while(i < diff){
-          sTopCurr.push(idx)
-          sTopCurr.push(idx+1)
+          sTopCurr[idx] = true
+          sTopCurr[idx+1] = false
           idx += spacing_arr[i] + 1 + 1
           i += 1 
         }
         i = 0
+        let last_idx = 3
         for (let i = 0; i < spacing_arr.length-1; i ++){
-          const last_idx = sBottomCurr[sBottomCurr.length-1]
-          for (let count = 0; count < 4; count ++){
-            sBottomCurr.push(last_idx + spacing_arr[i] + count) 
+          sBottomCurr[last_idx + spacing_arr[i]] = true
+          for (let count = 1; count < 4; count ++){
+            sBottomCurr[last_idx + spacing_arr[i] + count] = false 
           }
-        }       
+          last_idx = last_idx + spacing_arr[i] + 3
+        }  
+        specialTop.unshift(sTopCurr)
+        specialBottom.unshift(sBottomCurr)     
+      } 
+      else { // decreasing 
+        specialTop = [{},{},{}]
+        specialBottom = [{},{},{}]
       }
-      specialTop.unshift(new Set(sTopCurr))
-      specialBottom.unshift(new Set(sBottomCurr))
+      console.log("----")
     }
-  
-    specialTop.unshift(new Set())
-    specialBottom.push(new Set())
+    
+    specialTop.unshift({})
+    specialBottom.push({})
 
     let sections = [];
   

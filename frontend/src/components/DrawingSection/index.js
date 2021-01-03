@@ -20,18 +20,18 @@ export default function DrawingSection(props) {
   for (let i = 0; i < height; i++) {
     if (startOffset){
       if (i%2 == 0){
-        rows.push(<Row key={i} offset={10.5} width={width} selectedColor={selectedColor} defaultColor={defaultColor} num={i} />);
+        rows.push(<Row key={i} offset={10.5} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={i+1} />);
       }
       else{ 
-        rows.push(<Row key={i} offset={0} width={width} selectedColor={selectedColor} defaultColor={defaultColor} num={i}  />);
+        rows.push(<Row key={i} offset={0} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={i+1}  />);
       }
     }
     else {
       if (i%2 == 1){
-        rows.push(<Row key={i} offset={10.5} width={width} selectedColor={selectedColor} defaultColor={defaultColor} num={i}  />);
+        rows.push(<Row key={i} offset={10.5} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={i+1} />);
       }
       else{ 
-        rows.push(<Row key={i} offset={0} width={width} selectedColor={selectedColor} defaultColor={defaultColor} num={i}  />);
+        rows.push(<Row key={i} offset={0} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={i+1} />);
       }
     }
   }
