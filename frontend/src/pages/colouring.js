@@ -10,11 +10,6 @@ import "./colouringPage.css";
 - rotation option -- need to use smth other than index for keys, and map for default / starting position */
 
 
-// const rootStyle = { width:'200px', marginLeft: 'auto', marginRight:'auto', marginBottom:0, background: "#eaa"};
-// const rowStyle = { margin: '200px 0', display: 'flex', justifyContent: 'space-between', }
-// const fromStyle = { width:'200px', marginLeft: '100px', marginRight:'100px', background: "#eaa"};
-// const boxStyle = { padding: '10px', border: '1px solid black', };
-
 const Colouring = () => {
   const [selectedColor, setColor] = useState("#f44336");
   const [defaultColor, setDefaultColor] = useState("#fff"); 
@@ -24,8 +19,9 @@ const Colouring = () => {
   }
 
   // right now max increase allowed is 1.5x - implement negative remainders for up to 2x increase
+  // max decrease allowed is 0.66x 
 
-  const myDimensions = [[29, 19, false],[31,10, true],[39,8, true], [80,10, true]];
+  const myDimensions = [[50, 19],[34,10],[28,9], [16,10]];
 
   let myHeight = 0 
   const myYMargin = 20
@@ -39,11 +35,11 @@ const Colouring = () => {
   }
 
   return (
-    <div >
-      <div className = "toolbar" style={{background: '#fae', justifyContent:'center', alignItems: 'center', width:'auto', padding: 10, marginBottom: 10}}>
+    <div style={{background: "#FFE7E5"}}>
+      <div className = "toolbar">
         <CirclePicker color={selectedColor} onChangeComplete={changeColor} />
       </div>
-      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight}}>
+      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight, background:"#FFE7E5"}}>
         <div className = "canvas"
           style={{
             //  display: 'flex',

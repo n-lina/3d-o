@@ -14,9 +14,15 @@ export default function SpecialRow(props) {
 
   for (let i = 0; i < width; i++) {
     if (i in my_dict){
-      if (my_dict[i]){
+      if (my_dict[i] == 1){
         count += 1
         pixels.push(<SpecialPixel key={i} on={true} markerNum={count}/>);
+      }
+      else if (my_dict[i] == -1){
+        pixels.push(<SpecialPixel key={i} on={true} rounded={true}/>);
+      }
+      else if (i == width-1 && my_dict[i] == 0){
+        pixels[0] = <SpecialPixel key={i} on={true}/>
       }
       else{
         pixels.push(<SpecialPixel key={i} on={true}/>);

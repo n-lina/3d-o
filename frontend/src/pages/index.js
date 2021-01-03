@@ -33,17 +33,8 @@ const Home = () => {
         <Route path='/create-figurine' component={CreateFigurine} />
         <Route path='/' component={Landing}/>
       </Switch>
-      {/* <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '90vh'
-        }}
-      >
-        <h1>Home</h1>
-      </div> */}
     </div>
+    <p style={{marginBottom: 30, marginTop: 20, letterSpacing: 1.5, color: "#E33937", fontSize:13}}>lina nguyen 🍓 2021</p>
   </div>
   );
 };
