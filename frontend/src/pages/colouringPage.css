@@ -7,3 +7,36 @@
     border-style:solid; 
     border-width: thin;
 }
+
+.toolbar{
+    background: #D14240;
+    /* justify-content:'center'; */
+    /* align-items: 'center'; */
+    width:'auto';
+    padding: 10px;
+    margin-bottom: 30px; 
+    border-radius: 30px;
+}
+
+.InnerAppColouring {
+    text-align: center;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    margin-left: 10px; 
+    margin-right: 10px;
+    padding: 0px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+    height: '110%';
+    border-radius: 30px;
+    /* border: 2px solid pink; */
+  }
+  
+  .BackgroundColouring {
+    background-color: pink;
+    background-image: url("https://i.pinimg.com/originals/15/d4/0d/15d40d56992d05e8f0e5f5abf7e973ca.jpg");
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }

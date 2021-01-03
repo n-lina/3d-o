@@ -1,29 +1,43 @@
 .specialPixelOn {
-    width: 20px;
-    height: 5px;
-    border-style:solid;
-    border-width: 0.5px;
-    border-color:pink ;
-    margin-top: 5px; 
-    margin-bottom: 5px;
-  }
+  width: 20px;
+  height: 5px;
+  border-style:solid;
+  border-width: 0.5px;
+  border-color: #FF778C ;
+  margin-top: 5px; 
+  margin-bottom: 5px;
+  background: #FF778C
+}
 
-  .specialPixelOff {
-    width: 20px;
-    height: 5px;
-    border-style:solid;
-    border-width: 0.5px;
-    border-color:white;
-    margin-top: 5px; 
-    margin-bottom: 5px;
-  }
+.roundedRight {
+  width: 20px;
+  height: 5px;
+  border-style:solid;
+  border-width: 0.5px;
+  border-color: #FF778C;
+  margin-top: 5px; 
+  margin-bottom: 5px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  background: #FF778C;
+}
 
-  .rowMarkerPixel {
-    width: 20px;
-    height: 3px;
-    border-style:solid;
-    border-width: 0.5px;
-    border-color:white;
-    /* margin-top: 5px;  */
-    /* margin-bottom: 5px; */
-  }
+.specialPixelOff {
+  width: 20px;
+  height: 5px;
+  border-style:solid;
+  border-width: 0.5px;
+  border-color:#FFE7E5;
+  margin-top: 5px; 
+  margin-bottom: 5px;
+}
+
+.rowMarkerPixel {
+  width: 20px;
+  height: 3px;
+  border-style:solid;
+  border-width: 0.5px;
+  border-color:#FFE7E5;
+  /* margin-top: 5px;  */
+  /* margin-bottom: 5px; */
+}

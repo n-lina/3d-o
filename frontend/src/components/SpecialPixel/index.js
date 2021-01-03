@@ -2,23 +2,30 @@ import React, { useState } from "react";
 import "./specialPixel.css";
 
 export default function SpecialPixel(props) {
-  const {on, num, markerNum, rowNum} = props;
+  const {on, num, markerNum, rowNum, rounded} = props;
 
   if (on){
     if (markerNum){
       return (
         <div
           className="specialPixelOn"
-          style={{ backgroundColor: "pink" }}
-        ><p style={{marginTop: -4, fontSize: 10, marginLeft: 4, position:'absolute', background: 'pink', paddingLeft: 2.5, paddingRight:2.5, borderRadius:6, color:"red"}}> {markerNum}</p></div>
+        ><p style={{marginTop: -4, fontSize: 10, marginLeft: -1.1, position:'absolute', background: "#FF778C", paddingLeft: 2.5, paddingRight:2.5, borderRadius:6, color:"white"}}> {markerNum}</p></div>
       );
     } else {
-      return (
-        <div
-          className="specialPixelOn"
-          style={{ backgroundColor: "pink" }}
-        ></div>
-      );
+      if (rounded){
+        return (
+          <div
+            className="roundedRight"
+          ></div>
+        );
+      }
+      else{
+        return (
+          <div
+            className="specialPixelOn"
+          ></div>
+        );
+      }
     }
   } 
   else {

@@ -23,7 +23,7 @@ class App extends Component {
     // const { invoice } = this.props;
 
     return (
-      <div>
+      <div style={{background: "#FFE7E5"}}>
           <Router>
             {/* <Navbar/> */}
             <Switch>
@@ -35,25 +35,6 @@ class App extends Component {
               </Route>
             </Switch>
           </Router>
-        {/* <div className="Background">
-          <div className="InnerApp"> */}
-            {/* <Router>
-              <Navbar/>
-              <Switch>
-                <Route path='/' exact component={Home} />
-                <Route path='/about' component={About} />
-                <Route path='/create' component={Create} />
-                <Route path='/learn' component={Learn} />
-                <Route path='/contact' component={Contact} />
-                <Route path='/gallery' component={Gallery} />
-                <Route path='/browse' component={Browse} />
-                <Route path='/colouring' component={Colouring} />
-                <Route path='/create-swan' component={CreateSwan} />
-                <Route path='/create-vase' component={CreateVase} />
-                <Route path='/create-basket' component={CreateBasket} />
-                <Route path='/create-figurine' component={CreateFigurine} />
-              </Switch>
-            </Router> */}
             {/* <h1>Status: {invoice.status()}</h1>
 
             {!invoice.is_paid && (
@@ -104,8 +85,6 @@ class App extends Component {
                 <InvoiceItem key={i} item={item} />
               ))}
             </ul> */}
-          {/* </div>
-        </div> */}
       </div>
     );
   }
