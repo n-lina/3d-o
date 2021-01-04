@@ -4,7 +4,7 @@ import "./OrigamiObject.css";
 
 
 export default function OrigamiObject(props) {
-    const { dimensions, selectedColor, defaultColor, oldDefault} = props;
+    const { dimensions, formObject} = props;
   
     const objectRef = useRef();
 
@@ -101,7 +101,7 @@ export default function OrigamiObject(props) {
     let sections = [];
   
     for (let i = 0; i < dimensions.length; i++) {
-      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} selectedColor={selectedColor} defaultColor={defaultColor} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} oldDefault={oldDefault} />);
+      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} formObject={formObject} />);
     }
   
     return (

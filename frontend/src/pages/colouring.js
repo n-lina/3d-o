@@ -3,6 +3,17 @@ import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
 import Sticky from 'react-stickynode';
+import ColoringForm from '../models/ColoringForm';
+import { onPatch } from "mobx-state-tree";
+import makeInspectable from "mobx-devtools-mst";
+import { observer } from "mobx-react";
+
+const form = ColoringForm.create();
+
+onPatch(form, patch => {
+  // console.log(patch);
+});
+makeInspectable(form);
 
 /* stretch goals 
 - spray painting 
@@ -10,11 +21,7 @@ import Sticky from 'react-stickynode';
 - larger brush size 
 - rotation option -- need to use smth other than index for keys, and map for default / starting position */
 
-
 const Colouring = () => {
-  const [selectedColor, setColor] = useState("#f44336");
-  const [defaultColor, setDefaultColor] = useState("#FFFFFF"); 
-  const [oldDefault, setOldDefault] = useState("#FFFFFF");
   const [showPicker, setShowPicker] = useState(false);
   const [showPickerDefault, setShowPickerDefault] = useState(false);
   const [colorPaletteIdx, setColorIdx] = useState(0);
@@ -23,7 +30,7 @@ const Colouring = () => {
   const [dColorPalette, setDColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']) 
 
   function changeColor(color) {
-    setColor(color.hex);
+    form.setColor(color.hex);
     const search = (color.hex).toString().toUpperCase()
     if (!colorPalette.includes(search)){
       let new_palette = colorPalette
@@ -35,9 +42,8 @@ const Colouring = () => {
   }
 
   function changeDefaultColor(color) {
-    setOldDefault(defaultColor)
     const search = (color.hex).toString().toUpperCase()
-    setDefaultColor(search);
+    form.setDefaultColor(search);
     if (!dColorPalette.includes(search)){
       let new_palette = dColorPalette
       new_palette[dColorPaletteIdx] = search
@@ -47,11 +53,8 @@ const Colouring = () => {
     }
   }
 
-  function handleUndo(){
-    return 
-  }
-
-  const myDimensions = [[50, 19],[34,10],[28,9], [16,10]];
+  const myDimensions = form.getDimensions();
+  const absolute = form.maxWidth > 52 ? true : false 
 
   let myHeight = 0 
   const myYMargin = 20
@@ -68,10 +71,10 @@ const Colouring = () => {
       <div 
         className = "color-picker-cover"
         onClick={()=> setShowPicker(!showPicker)} 
-        style={{background: selectedColor, marginLeft: 30}}
+        style={{background: form.selectedColor, marginLeft: 30}}
       ></div>
       <div className = "color-picker-palette" style={{marginLeft: 26}}>
-        {showPicker &&  <TwitterPicker colors={colorPalette} triangle="top-left" color={selectedColor} onChangeComplete={changeColor} />}
+        {showPicker &&  <TwitterPicker colors={colorPalette} triangle="top-left" color={form.selectedColor} onChangeComplete={changeColor} />}
       </div>
     </div>
   
@@ -79,10 +82,10 @@ const Colouring = () => {
       <div 
         className = "color-picker-cover"
         onClick={()=> setShowPickerDefault(!showPickerDefault)} 
-        style={{background: defaultColor}}
+        style={{background: form.defaultColor}}
       ></div>
       <div className = "color-picker-palette" >
-        {showPickerDefault &&  <TwitterPicker colors={dColorPalette} triangle="top-left" color={defaultColor} onChangeComplete={changeDefaultColor} />}
+        {showPickerDefault &&  <TwitterPicker colors={dColorPalette} triangle="top-left" color={form.defaultColor} onChangeComplete={changeDefaultColor} />}
       </div>
     </div>
 
@@ -91,27 +94,31 @@ const Colouring = () => {
       <Sticky innerZ={3}>
         <div className = "toolbar">
           <div className = "undo-button"
-            onClick={() => handleUndo()}>
+            onClick={() => form.undo()}>
           </div>
           {colorPicker}
           {defaultColorPicker}
           <div className = "undo-button"
-            onClick={() => handleUndo()}>
+            onClick={() => form.redo()}>
           </div>
         </div>
       </Sticky>
       <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight, background:"#FFE7E5"}}>
-        <div className = "canvas">
+        {absolute && (<div className = "canvas">
           <OrigamiObject 
             dimensions={myDimensions}  
-            selectedColor={selectedColor}
-            defaultColor={defaultColor}
-            oldDefault={oldDefault}
+            formObject={form}
           />
-        </div>
+        </div>)}
+        {!absolute && (<div className = "canvas-relative">
+          <OrigamiObject 
+            dimensions={myDimensions}  
+            formObject={form}
+          />
+        </div>)}
       </div>
     </div>
   );
 };
 
-export default Colouring;
+export default observer(Colouring);
