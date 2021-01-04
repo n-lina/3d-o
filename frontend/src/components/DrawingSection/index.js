@@ -7,7 +7,7 @@ import SpecialRow from "../SpecialRow";
 // import { exportComponentAsPNG } from "react-component-export-image";
 
 export default function DrawingSection(props) {
-  const { width, height, selectedColor, defaultColor, specialTop, specialBottom, increasing } = props;
+  const { width, height, selectedColor, defaultColor, specialTop, specialBottom, increasing, oldDefault} = props;
 
   const panelRef = useRef();
 
@@ -17,10 +17,10 @@ export default function DrawingSection(props) {
 
   for (let i = 0; i < height; i++) {
     if (i%2 == 1){
-      rows.push(<Row key={i} offset={10.5} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={height-i} />);
+      rows.push(<Row key={i} offset={10.5} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={height-i} oldDefault={oldDefault} />);
     }
     else{ 
-      rows.push(<Row key={i} offset={0} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={height-i} />);
+      rows.push(<Row key={i} offset={0} width={width} selectedColor={selectedColor} defaultColor={defaultColor} rowNum={height-i} oldDefault={oldDefault} />);
     }
   }
   

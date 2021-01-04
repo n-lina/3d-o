@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { CirclePicker } from "react-color";
+import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
+import Sticky from 'react-stickynode';
 
 /* stretch goals 
 - spray painting 
@@ -12,14 +13,43 @@ import "./colouringPage.css";
 
 const Colouring = () => {
   const [selectedColor, setColor] = useState("#f44336");
-  const [defaultColor, setDefaultColor] = useState("#fff"); 
+  const [defaultColor, setDefaultColor] = useState("#FFFFFF"); 
+  const [oldDefault, setOldDefault] = useState("#FFFFFF");
+  const [showPicker, setShowPicker] = useState(false);
+  const [showPickerDefault, setShowPickerDefault] = useState(false);
+  const [colorPaletteIdx, setColorIdx] = useState(0);
+  const [dColorPaletteIdx, setDColorIdx] = useState(0);
+  const [colorPalette, setColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']) 
+  const [dColorPalette, setDColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']) 
 
   function changeColor(color) {
     setColor(color.hex);
+    const search = (color.hex).toString().toUpperCase()
+    if (!colorPalette.includes(search)){
+      let new_palette = colorPalette
+      new_palette[colorPaletteIdx] = search
+      setColorPalette(new_palette)
+      const new_idx = (colorPaletteIdx + 1) % 10
+      setColorIdx(new_idx)
+    }
   }
 
-  // right now max increase allowed is 1.5x - implement negative remainders for up to 2x increase
-  // max decrease allowed is 0.66x 
+  function changeDefaultColor(color) {
+    setOldDefault(defaultColor)
+    const search = (color.hex).toString().toUpperCase()
+    setDefaultColor(search);
+    if (!dColorPalette.includes(search)){
+      let new_palette = dColorPalette
+      new_palette[dColorPaletteIdx] = search
+      setDColorPalette(new_palette)
+      const new_idx = (dColorPaletteIdx + 1) % 10
+      setDColorIdx(new_idx)
+    }
+  }
+
+  function handleUndo(){
+    return 
+  }
 
   const myDimensions = [[50, 19],[34,10],[28,9], [16,10]];
 
@@ -34,27 +64,49 @@ const Colouring = () => {
     myHeight += (y * (px_y + px_border)) + (1.5*myYMargin) + (2*marker_y)
   }
 
+  const colorPicker = <div className = "color-picker-object" style={{marginRight: 30, marginLeft: 30}}>
+      <div 
+        className = "color-picker-cover"
+        onClick={()=> setShowPicker(!showPicker)} 
+        style={{background: selectedColor, marginLeft: 30}}
+      ></div>
+      <div className = "color-picker-palette" style={{marginLeft: 26}}>
+        {showPicker &&  <TwitterPicker colors={colorPalette} triangle="top-left" color={selectedColor} onChangeComplete={changeColor} />}
+      </div>
+    </div>
+  
+  const defaultColorPicker = <div className = "color-picker-object">
+      <div 
+        className = "color-picker-cover"
+        onClick={()=> setShowPickerDefault(!showPickerDefault)} 
+        style={{background: defaultColor}}
+      ></div>
+      <div className = "color-picker-palette" >
+        {showPickerDefault &&  <TwitterPicker colors={dColorPalette} triangle="top-left" color={defaultColor} onChangeComplete={changeDefaultColor} />}
+      </div>
+    </div>
+
   return (
     <div style={{background: "#FFE7E5"}}>
-      <div className = "toolbar">
-        <CirclePicker color={selectedColor} onChangeComplete={changeColor} />
-      </div>
+      <Sticky innerZ={3}>
+        <div className = "toolbar">
+          <div className = "undo-button"
+            onClick={() => handleUndo()}>
+          </div>
+          {colorPicker}
+          {defaultColorPicker}
+          <div className = "undo-button"
+            onClick={() => handleUndo()}>
+          </div>
+        </div>
+      </Sticky>
       <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight, background:"#FFE7E5"}}>
-        <div className = "canvas"
-          style={{
-            //  display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 'auto',
-            width: 'auto', 
-            // background: '#fff',
-            position: 'absolute',         
-          }}
-        >
+        <div className = "canvas">
           <OrigamiObject 
             dimensions={myDimensions}  
             selectedColor={selectedColor}
             defaultColor={defaultColor}
+            oldDefault={oldDefault}
           />
         </div>
       </div>

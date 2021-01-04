@@ -4,7 +4,7 @@ import "./OrigamiObject.css";
 
 
 export default function OrigamiObject(props) {
-    const { dimensions, selectedColor, defaultColor} = props;
+    const { dimensions, selectedColor, defaultColor, oldDefault} = props;
   
     const objectRef = useRef();
 
@@ -29,8 +29,6 @@ export default function OrigamiObject(props) {
         distribute = curr - (2 * diff)// pieces left to distribute for spacing 
         remainder = distribute >= 0 ? distribute % diff : curr-diff
         spacing = Math.floor(distribute/diff)
-        console.log("rem " + remainder)
-        console.log("spacing " + spacing)
         let spacing_arr = Array(diff).fill(spacing)
         for (let i = 0; i < 2; i++){
           let j = i
@@ -40,7 +38,6 @@ export default function OrigamiObject(props) {
             j += 2 
           }
         }
-        console.log(spacing_arr)
         let i = 0 
         let idx = 0 
         while(i < diff){
@@ -104,7 +101,7 @@ export default function OrigamiObject(props) {
     let sections = [];
   
     for (let i = 0; i < dimensions.length; i++) {
-      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} selectedColor={selectedColor} defaultColor={defaultColor} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} />);
+      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} selectedColor={selectedColor} defaultColor={defaultColor} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} oldDefault={oldDefault} />);
     }
   
     return (
