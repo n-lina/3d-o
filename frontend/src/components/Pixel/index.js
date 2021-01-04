@@ -8,6 +8,16 @@ export default function Pixel(props) {
   const [oldColor, setOldColor] = useState(pixelColor);
   const [canChangeColor, setCanChangeColor] = useState(true);
 
+  function borderColor(defaultColor) {
+    var color = defaultColor.substring(2, 8);
+    console.log(color)
+    var r = parseInt(color.substring(0, 2), 16); // hexToR
+    var g = parseInt(color.substring(2, 4), 16); // hexToG
+    var b = parseInt(color.substring(4, 6), 16); // hexToB
+    return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 90) ?
+      "#000000" : "#FFFFFF";
+  }
+
   useEffect(()=>{
     if (pixelColor == formObject.oldDefault) setPixelColor(formObject.defaultColor)
   }, [formObject.defaultColor])
@@ -36,7 +46,7 @@ export default function Pixel(props) {
       onClick={applyColor}
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
-      style={{ background: pixelColor }}
+      style={{ background: pixelColor, borderColor: borderColor(formObject.defaultColor)}}
     ></div>
   );
 

@@ -67,40 +67,52 @@ const Colouring = () => {
     myHeight += (y * (px_y + px_border)) + (1.5*myYMargin) + (2*marker_y)
   }
 
-  const colorPicker = <div className = "color-picker-object" style={{marginRight: 30, marginLeft: 30}}>
-      <div 
-        className = "color-picker-cover"
+  const colorPicker = <div className = "color-picker-object">
+      <p className = "label">pixel color</p>
+      <div className = "color-picker-cover"
         onClick={()=> setShowPicker(!showPicker)} 
-        style={{background: form.selectedColor, marginLeft: 30}}
+        style={{background: form.selectedColor}}
       ></div>
-      <div className = "color-picker-palette" style={{marginLeft: 26}}>
+      <div className = "color-picker-palette">
         {showPicker &&  <TwitterPicker colors={colorPalette} triangle="top-left" color={form.selectedColor} onChangeComplete={changeColor} />}
       </div>
     </div>
   
-  const defaultColorPicker = <div className = "color-picker-object">
-      <div 
-        className = "color-picker-cover"
+  const defaultColorPicker = <div className = "color-picker-object-d">
+      <p className = "label">primary color</p>
+      <div className = "color-picker-cover"
         onClick={()=> setShowPickerDefault(!showPickerDefault)} 
         style={{background: form.defaultColor}}
       ></div>
-      <div className = "color-picker-palette" >
+      <div className = "color-picker-palette-d" >
         {showPickerDefault &&  <TwitterPicker colors={dColorPalette} triangle="top-left" color={form.defaultColor} onChangeComplete={changeDefaultColor} />}
       </div>
     </div>
+
+  const redoButton = 
+  <div className = "button-object">
+    <p className = "label">redo</p>
+    <div className = "redo-button"
+      onClick={() => form.redo()}>
+    </div>
+  </div>
+
+  const undoButton = 
+  <div className = "button-object">
+    <p className = "label">undo</p>
+    <div className = "undo-button"
+      onClick={() => form.undo()}>
+    </div>
+  </div>
 
   return (
     <div style={{background: "#FFE7E5"}}>
       <Sticky innerZ={3}>
         <div className = "toolbar">
-          <div className = "undo-button"
-            onClick={() => form.undo()}>
-          </div>
+          {undoButton}
           {colorPicker}
           {defaultColorPicker}
-          <div className = "undo-button"
-            onClick={() => form.redo()}>
-          </div>
+          {redoButton}
         </div>
       </Sticky>
       <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight, background:"#FFE7E5"}}>

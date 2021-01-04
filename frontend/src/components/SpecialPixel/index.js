@@ -14,15 +14,13 @@ export default function SpecialPixel(props) {
     } else {
       if (rounded){
         return (
-          <div
-            className="roundedRight"
+          <div className="roundedRight"
           ></div>
         );
       }
       else{
         return (
-          <div
-            className="specialPixelOn"
+          <div className="specialPixelOn"
           ></div>
         );
       }
