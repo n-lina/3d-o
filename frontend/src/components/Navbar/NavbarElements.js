@@ -6,7 +6,8 @@ export const Nav = styled.nav`
   background: #D14240;
   height: 80px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   padding: 0.5rem calc((100vw - 1000px) / 2);
   z-index: 10;
   border-radius: 30px 30px 30px 30px;
@@ -21,24 +22,28 @@ export const NavLink = styled(Link)`
   align-items: center;
   text-decoration: none;
   padding: 0 1rem;
-  height: 60%;
+  // height: 70%;
   cursor: pointer;
   border-radius: 30px;
   margin: 5px;
 
   &:hover {
     transition: all 0.3s ease-in-out;
-    background: pink;
+    background: #FFD8DF;
     color: red;
-    height: 70%;
+    // height: 100%;
   }
 
   &.active {
     color: red;
-    background: pink;
-    height: 70%;
-    border-radius: 40px
+    background: #FFD8DF;
+    // height: 100%;
+    border-radius: 40px;
   }
+`;
+
+export const PlainLink = styled(Link)`
+  text-decoration:none;
 `;
 
 export const Bars = styled(FaBars)`

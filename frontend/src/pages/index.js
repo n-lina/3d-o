@@ -12,6 +12,7 @@ import CreateSwan from "./create-swan"
 import CreateVase from "./create-vase"
 import CreateBasket from "./create-basket"
 import CreateFigurine from "./create-figurine"
+import Result from "./result"
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
@@ -31,6 +32,7 @@ const Home = () => {
         <Route path='/create-vase' component={CreateVase} />
         <Route path='/create-basket' component={CreateBasket} />
         <Route path='/create-figurine' component={CreateFigurine} />
+        <Route path='/Result' component={Result} />
         <Route path='/' component={Landing}/>
       </Switch>
     </div>

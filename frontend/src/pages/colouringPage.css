@@ -10,34 +10,40 @@
 
 .toolbar{
     background: #D14240;
-    padding: 20px;
+    padding: 13px;
     margin-bottom: 30px; 
     border-radius: 30px;
     text-align: center;
 }
 
 .color-picker-cover {
-  border-radius: 20px; 
+  border-radius: 30px; 
   border-style: solid; 
+  border-width: 2px;
   border-color: white; 
-  height: 40px; 
-  width: 40px; 
+  height: 46px; 
+  width: 46px; 
   margin-left:auto; 
   margin-right: auto;
 }
+
+.color-picker-cover:hover {
+  border-radius: 30px; 
+  border-style: solid; 
+  border-width: 2px;
+  border-color: white; 
+  height: 51px; 
+  width: 51px; 
+  margin-left:auto; 
+  margin-right: auto;
+}
+
 
 .color-picker-object {
   display:inline-block;
   z-index:5px; 
   margin-left: 20px; 
   margin-right: 20px;
-}
-
-.color-picker-object-d {
-  display:inline-block;
-  z-index:5px; 
-  margin-left: 20px; 
-  margin-right: 20px
 }
 
 .color-picker-palette {
@@ -60,52 +66,125 @@
   position: relative;
 }
 
-.undo-button {
-  width: 40px; 
-  height: 40px; 
-  border-radius: 20px;
-  background: pink;
-  border-style:solid;
-  border-color:pink;
-  /* margin:8px 20px;  */
-    margin-left: auto;
-  margin-right: auto;
-}
-
-.redo-button {
-  width: 40px; 
-  height: 40px; 
-  border-radius: 20px;
-  background: pink;
-  border-style:solid;
-  border-color:pink;
-  /* margin:8px 20px;  */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.border-button {
-  width: 40px; 
-  height: 40px; 
-  border-radius: 20px;
-  border-style:solid;
-  border-color:white;
-  margin-left: auto;
-  margin-right: auto;
-  /* margin:8px 20px;  */
-}
-
-.button-object { 
+.mode-object { 
   display: inline-block;
-  /* margin:8px 20px;  */
-  /* margin-bottom: 8px; */
-  margin-left: 20px; 
+  margin-left: 30px; 
+  margin-right: 30px;
+  vertical-align: top;
+}
+
+.back { 
+  float: left;
+  margin-left: 20px
+}
+
+.next {
+  float: right;
   margin-right: 20px
 }
+
+.nav {
+  width: 35px; 
+  height: 55px; 
+  border-radius: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-style:solid;
+  border-color:white;
+  margin-top: 15px;
+  background: #D14240;
+}
+
+.nav:hover {
+  width: 35px; 
+  height: 55px; 
+  border-radius: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-style:solid;
+  border-color:white;
+  border-width: thick;
+  margin-top: 12px;
+  background: #D14240;
+}
+
+.nav-label {
+  color: white;
+  margin: 8px;
+  font-size: 25px
+}
+
 
 .label {
   letter-spacing: 2px;
   font-size: 14;
   color:white; 
   margin-top: 0px
+}
+
+.label:hover {
+  letter-spacing: 2px;
+  font-size: 14;
+  color:#D14240; 
+  margin-top: 0px
+}
+
+.label-inside {
+  letter-spacing: 2px;
+  font-size: 12;
+  color:red;
+  margin-top:5px
+  
+}
+
+.mode-button {
+  width: 80px; 
+  height: 55px; 
+  border-radius: 40px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-style:solid;
+  border-color:#FFD8DF;
+  background: #FFD8DF;  
+  margin-top: 7px;
+}
+
+.mode-button:hover {
+  width: 80px; 
+  height: 55px; 
+  border-radius: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-style:solid;
+  border-color: #FFD8DF;
+  border-width: thick;
+  background: #FFD8DF;
+  margin-top: 5px;
+}
+
+.logo {
+  width: 51px; 
+  height:51px; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4px;
+}
+
+.logo:hover {
+  width: 55px; 
+  height:55px; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+}
+
+.logo-object {
+  display: inline-block;
+  margin-left: 20px; 
+  margin-right: 20px;
+  vertical-align: top;
 }

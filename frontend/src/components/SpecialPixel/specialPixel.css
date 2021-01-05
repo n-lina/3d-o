@@ -3,10 +3,10 @@
   height: 5px;
   border-style:solid;
   border-width: 0.5px;
-  border-color: #FF778C ;
+  border-color: #FF6C7B ;
   margin-top: 5px; 
   margin-bottom: 5px;
-  background: #FF778C
+  background: #FF6C7B
 }
 
 .roundedRight {
@@ -14,12 +14,12 @@
   height: 5px;
   border-style:solid;
   border-width: 0.5px;
-  border-color: #FF778C;
+  border-color: #FF6C7B;
   margin-top: 5px; 
   margin-bottom: 5px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  background: #FF778C;
+  background: #FF6C7B;
 }
 
 .specialPixelOff {

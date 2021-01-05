@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef} from "react";
 import "./pixel.css";
 
 export default function Pixel(props) {
-  const { formObject } = props;
+  const { formObject} = props;
 
   const [pixelColor, setPixelColor] = useState("#FFFFFF");
   const [oldColor, setOldColor] = useState(pixelColor);
@@ -10,7 +10,6 @@ export default function Pixel(props) {
 
   function borderColor(defaultColor) {
     var color = defaultColor.substring(2, 8);
-    console.log(color)
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
     var b = parseInt(color.substring(4, 6), 16); // hexToB
@@ -19,12 +18,22 @@ export default function Pixel(props) {
   }
 
   useEffect(()=>{
-    if (pixelColor == formObject.oldDefault) setPixelColor(formObject.defaultColor)
+    if(formObject.clear) {
+      setPixelColor(formObject.defaultColor)
+    }
+    else if (pixelColor == formObject.oldDefault) setPixelColor(formObject.defaultColor)
   }, [formObject.defaultColor])
 
   function applyColor() {
+    formObject.unsetClear();
     setPixelColor(formObject.selectedColor);
     setCanChangeColor(false);
+  }
+
+  function applyColorSpray() {
+    if (formObject.mode){
+      applyColor()
+    }
   }
 
   function changeColorOnHover() {
@@ -46,6 +55,7 @@ export default function Pixel(props) {
       onClick={applyColor}
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
+      onMouseOver={applyColorSpray}
       style={{ background: pixelColor, borderColor: borderColor(formObject.defaultColor)}}
     ></div>
   );

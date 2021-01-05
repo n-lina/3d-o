@@ -7,6 +7,10 @@ import ColoringForm from '../models/ColoringForm';
 import { onPatch } from "mobx-state-tree";
 import makeInspectable from "mobx-devtools-mst";
 import { observer } from "mobx-react";
+import logo from "../assets/circle-simple-logo.png"
+import {
+  PlainLink
+} from '../components/Navbar/NavbarElements';
 
 const form = ColoringForm.create();
 
@@ -14,6 +18,7 @@ onPatch(form, patch => {
   // console.log(patch);
 });
 makeInspectable(form);
+
 
 /* stretch goals 
 - spray painting 
@@ -72,47 +77,81 @@ const Colouring = () => {
       <div className = "color-picker-cover"
         onClick={()=> setShowPicker(!showPicker)} 
         style={{background: form.selectedColor}}
-      ></div>
+      >
+        <br />
+      </div>
       <div className = "color-picker-palette">
         {showPicker &&  <TwitterPicker colors={colorPalette} triangle="top-left" color={form.selectedColor} onChangeComplete={changeColor} />}
       </div>
     </div>
   
-  const defaultColorPicker = <div className = "color-picker-object-d">
+  const defaultColorPicker = <div className = "color-picker-object">
       <p className = "label">primary color</p>
       <div className = "color-picker-cover"
-        onClick={()=> setShowPickerDefault(!showPickerDefault)} 
+        onClick={() => setShowPickerDefault(!showPickerDefault)} 
         style={{background: form.defaultColor}}
-      ></div>
+      >
+        <br />
+      </div>
       <div className = "color-picker-palette-d" >
         {showPickerDefault &&  <TwitterPicker colors={dColorPalette} triangle="top-left" color={form.defaultColor} onChangeComplete={changeDefaultColor} />}
       </div>
     </div>
 
-  const redoButton = 
-  <div className = "button-object">
-    <p className = "label">redo</p>
-    <div className = "redo-button"
-      onClick={() => form.redo()}>
+  const paintByPixel = 
+  <div className = "mode-object">
+    <div className = "mode-button"
+      onClick={() => form.setMode(false)}> 
+      <p className = "label-inside">paint by pixel</p>
     </div>
   </div>
 
-  const undoButton = 
-  <div className = "button-object">
-    <p className = "label">undo</p>
-    <div className = "undo-button"
-      onClick={() => form.undo()}>
+  const sprayPaint = 
+  <div className = "mode-object">
+    <div className = "mode-button"
+      onClick={() => form.setMode(true)}> 
+      <p className = "label-inside">spray paint</p>
     </div>
   </div>
+
+  const clearObject = <div className = "logo-object">
+    <p className = "label">clear</p>
+    <img className = "logo"
+      src={logo}
+      onClick={() => form.clearAll()} 
+    />
+  </div>  
+
+  const backButton = 
+  <div className = "back">
+    <div className = "nav"
+      onClick={() => console.log("hi")}> 
+      <p className = "nav-label">	&lt; </p>
+    </div>
+  </div>
+
+  const nextButton = 
+  <div className = "next">
+    <PlainLink to="/result">
+      <div className = "nav"
+        onClick={() => console.log("hi")}> 
+        <p className = "nav-label">	&gt;</p>
+      </div>
+    </PlainLink>
+  </div>
+
 
   return (
     <div style={{background: "#FFE7E5"}}>
       <Sticky innerZ={3}>
         <div className = "toolbar">
-          {undoButton}
+          {backButton}
+          {paintByPixel}
           {colorPicker}
+          {clearObject}
           {defaultColorPicker}
-          {redoButton}
+          {sprayPaint}
+          {nextButton}
         </div>
       </Sticky>
       <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight, background:"#FFE7E5"}}>

@@ -9,7 +9,7 @@ export default function SpecialPixel(props) {
       return (
         <div
           className="specialPixelOn"
-        ><p style={{marginTop: -4, fontSize: 10, marginLeft: -1.1, position:'absolute', background: "#FF778C", paddingLeft: 2.5, paddingRight:2.5, borderRadius:6, color:"white"}}> {markerNum}</p></div>
+        ><p style={{marginTop: -4, fontSize: 10, marginLeft: -1.1, position:'absolute', background: "#FF6C7B", paddingLeft: 2.5, paddingRight:2.5, borderRadius:6, color:"white"}}> {markerNum}</p></div>
       );
     } else {
       if (rounded){

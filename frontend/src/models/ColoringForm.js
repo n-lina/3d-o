@@ -5,12 +5,9 @@ const ColoringForm = types
     selectedColor: "#F44336",
     defaultColor: "#FFFFFF",
     oldDefault: "#FFFFFF",
-    clearAll: false,
+    clear: false,
+    mode: false,
     maxWidth: 53
-
-    // undoStack: types.optional(types.array(types.array(types.string)), [["selected","",""]]),
-    // redoStack: types.optional(types.array(types.array(types.string)), [["selected","",""]]),
-    // sections: types.optional(types.array(ColoringSection), [])
   })
   .actions(self => ({
     getDimensions() {
@@ -18,21 +15,32 @@ const ColoringForm = types
       return [[20, 19],[21,10],[28,9], [16,10]]
     }, 
     setColor(col){
+      self.clear = false
       self.selectedColor = col
     }, 
     setDefaultColor(col){
+      self.clear = false
       self.oldDefault = self.defaultColor
       self.defaultColor = col
     },
-    undo(op){
-      return
-    },
-    redo(op){
-      return
-    },
-    clearAll(val){
-      self.clearAll = val
+    clearAll(){
+      if (self.defaultColor == "#FFFFFF"){
+        self.oldDefault = "#FFFFFE" 
+        self.defaultColor = "#FFFFFE"
+      }
+      else {
+        self.oldDefault = "#FFFFFF" 
+        self.defaultColor = "#FFFFFF"
+      }
+      self.clear = true
     }, 
+    unsetClear(){
+      self.clear = false
+    },
+    setMode(val){
+      self.clear = false
+      self.mode = val
+    }
   }))
   .views(self => ({
     // status() {

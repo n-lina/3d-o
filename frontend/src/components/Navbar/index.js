@@ -5,17 +5,22 @@ import {
   Bars,
   NavMenu,
   NavBtn,
-  NavBtnLink
+  NavBtnLink, 
+  PlainLink
 } from './NavbarElements';
+import {Link} from 'react-router-dom'
+
+import logo from "../../assets/circle-simple-logo.png"
 
 const Navbar = () => {
   return (
     <>
       <Nav>
-        <NavLink to='/'>
-          <img src={require('../../assets/logo.svg')} alt='logo' />
-        </NavLink>
-        <Bars />
+        <PlainLink to='/'><img style={{height: 60, margin: 20}}src={logo} alt='logo' /></PlainLink>
+        <PlainLink to='/'>
+          <p style ={{letterSpacing: 3, marginRight: 115, color:"white"}}>3d-o</p>
+        </PlainLink>
+        {/* <Bars /> */}
         <NavMenu>
           <NavLink to='/about'>
             <p style ={{letterSpacing: 2}}>about</p>
