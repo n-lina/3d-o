@@ -8,7 +8,8 @@ export const Nav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem calc((100vw - 1000px) / 2);
+  // padding: 0.5rem calc((100vw - 4000px) / 2);
+  padding: 0.5rem;
   z-index: 10;
   border-radius: 30px 30px 30px 30px;
 
@@ -26,19 +27,25 @@ export const NavLink = styled(Link)`
   cursor: pointer;
   border-radius: 30px;
   margin: 5px;
+  border-style: solid; 
+  border-color: #D14240;
 
   &:hover {
-    transition: all 0.3s ease-in-out;
-    background: #FFD8DF;
+    // transition: all 0.2s ease-in-out;
+    background: #FFE7EC;
     color: red;
     // height: 100%;
+    border-style: solid;
+    border-color: #FFE7EC;
   }
 
   &.active {
     color: red;
-    background: #FFD8DF;
+    background: #FFE7EC;
     // height: 100%;
     border-radius: 40px;
+    border-style: solid;
+    border-color: #FFE7EC;
   }
 `;
 

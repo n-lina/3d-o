@@ -42,19 +42,19 @@
 .color-picker-object {
   display:inline-block;
   z-index:5px; 
-  margin-left: 20px; 
-  margin-right: 20px;
+  margin-left: 0px; 
+  margin-right: 0px;
 }
 
 .color-picker-palette {
   margin-top: 12px;
-  margin-left: 25px; 
+  margin-left: 41px; 
   position:absolute
 }
 
 .color-picker-palette-d {
   margin-top: 12px;
-  margin-left: 39px; 
+  margin-left: 41px; 
   position:absolute
 }
 
@@ -68,8 +68,8 @@
 
 .mode-object { 
   display: inline-block;
-  margin-left: 30px; 
-  margin-right: 30px;
+  margin-left: 20px; 
+  margin-right: 20px;
   vertical-align: top;
 }
 
@@ -93,6 +93,9 @@
   border-color:white;
   margin-top: 15px;
   background: #D14240;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
 }
 
 .nav:hover {
@@ -111,7 +114,7 @@
 .nav-label {
   color: white;
   margin: 8px;
-  font-size: 25px
+  font-size: 25px;
 }
 
 
@@ -119,7 +122,26 @@
   letter-spacing: 2px;
   font-size: 14;
   color:white; 
-  margin-top: 0px
+  margin-top: 0px;
+  width: 125px;
+}
+
+
+.label-big {
+  letter-spacing: 2px;
+  font-size: 14;
+  color:white; 
+  margin-top: 0px;
+  width: 125px;
+}
+
+.label-big:hover {
+  letter-spacing: 2px;
+  font-size: 14;
+  color:white; 
+  margin-top: 0px;
+  width: 125px;
+  color:#D14240; 
 }
 
 .label:hover {
@@ -146,8 +168,8 @@
   padding-top: 8px;
   padding-bottom: 8px;
   border-style:solid;
-  border-color:#FFD8DF;
-  background: #FFD8DF;  
+  border-color:#FFE7EC;
+  background: #FFE7EC;  
   margin-top: 7px;
 }
 
@@ -160,9 +182,9 @@
   padding-top: 8px;
   padding-bottom: 8px;
   border-style:solid;
-  border-color: #FFD8DF;
+  border-color: #FFE7EC;
   border-width: thick;
-  background: #FFD8DF;
+  background: #FFE7EC;
   margin-top: 5px;
 }
 
@@ -184,7 +206,42 @@
 
 .logo-object {
   display: inline-block;
-  margin-left: 20px; 
-  margin-right: 20px;
+  margin-left: 0px; 
+  margin-right: 0px;
   vertical-align: top;
+}
+
+.icon {
+  width: 46px; 
+  height:46px; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon:hover {
+  width: 51px; 
+  height:51px; 
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 35px;
+}
+
+.info-popup {
+  width: 100px; 
+  height: 100px; 
+  position: absolute;
+  background: white; 
+  border-radius: 30px;
+  border-style: solid;
+  border-color: pink;
 }

@@ -101,7 +101,7 @@ export default function OrigamiObject(props) {
     let sections = [];
   
     for (let i = 0; i < dimensions.length; i++) {
-      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} formObject={formObject} />);
+      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} formObject={formObject} sectionNum={i} />);
     }
   
     return (

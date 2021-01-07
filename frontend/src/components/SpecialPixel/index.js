@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./specialPixel.css";
 
 export default function SpecialPixel(props) {
-  const {on, num, markerNum, rowNum, rounded} = props;
+  const {on, num, markerNum, displayRowNum, rounded} = props;
 
   if (on){
     if (markerNum){
@@ -27,12 +27,12 @@ export default function SpecialPixel(props) {
     }
   } 
   else {
-    if (rowNum){
+    if (displayRowNum){
       return (
         <div
           className="rowMarkerPixel"
         >
-          <p style={{fontSize:9, marginLeft: 5, marginTop:0, position:'absolute'}}>{rowNum}</p>
+          <p style={{fontSize:9, marginLeft: 5, marginTop:0, position:'absolute'}}>{displayRowNum}</p>
           </div>
       );
     }

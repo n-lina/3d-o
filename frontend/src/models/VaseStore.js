@@ -1,5 +1,6 @@
 import { types } from "mobx-state-tree";
 import * as THREE from "three";
+import React from "react"
 
 function getCurvePointsNew(_pts, tension, numOfSegments) {
 
@@ -218,3 +219,17 @@ const VaseStore = types
   }));
 
 export default VaseStore;
+
+const VaseContext = React.createContext();
+
+export const VaseProvider = ({ children, store }) => {
+    return (
+      <VaseContext.Provider value={store}>{children}</VaseContext.Provider>
+    );
+  };
+
+export const useVaseStore = () => React.useContext(VaseContext);
+
+export const withVaseStore = (Component) => (props) => {
+    return <Component {...props} store={useVaseStore()} />;
+  };

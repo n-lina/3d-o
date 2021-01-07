@@ -8,17 +8,15 @@ import {
   NavBtnLink, 
   PlainLink
 } from './NavbarElements';
-import {Link} from 'react-router-dom'
-
-import logo from "../../assets/circle-simple-logo.png"
+import logo from "../../assets/complex-logo.png"
 
 const Navbar = () => {
   return (
     <>
       <Nav>
-        <PlainLink to='/'><img style={{height: 60, margin: 20}}src={logo} alt='logo' /></PlainLink>
+        <PlainLink to='/'><img style={{height: 60, margin: 20, float: 'left'}}src={logo} alt='logo' /></PlainLink>
         <PlainLink to='/'>
-          <p style ={{letterSpacing: 3, marginRight: 115, color:"white"}}>3d-o</p>
+          <p style ={{letterSpacing: 3, marginRight: 100, color:"white", float: 'left'}}>3d-o</p>
         </PlainLink>
         {/* <Bars /> */}
         <NavMenu>

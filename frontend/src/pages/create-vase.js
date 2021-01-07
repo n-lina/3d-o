@@ -21,9 +21,9 @@ import { observer } from "mobx-react";
 
 const vase = VaseStore.create();
 
-onPatch(vase, patch => {
-  // console.log(patch);
-});
+// onPatch(vase, patch => {
+//   // console.log(patch);
+// });
 makeInspectable(vase);
 
 const sliderStyle = {  // Give the slider some width
