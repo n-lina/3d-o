@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import DrawingSection from "../DrawingSection";
 import "./OrigamiObject.css";
+import { observer } from "mobx-react";
 
-
-export default function OrigamiObject(props) {
+const OrigamiObject = (props) => {
     const { dimensions, formObject} = props;
   
     const objectRef = useRef();
@@ -109,9 +109,8 @@ export default function OrigamiObject(props) {
         <div id="sections" ref={objectRef}>
           {sections}
         </div>
-        {/* <button onClick={() => exportComponentAsPNG(panelRef)} className="button">
-          Export as PNG
-        </button> */}
       </div>
     );
   }
+
+export default observer(OrigamiObject)

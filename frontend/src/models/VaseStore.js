@@ -144,6 +144,7 @@ const VaseStore = types
     bottom_rim: true, 
     bottom_disk: true, 
     scale_h: 36,
+    textures: types.optional(types.array(types.string), ["top", "", "", "bottom"])
   })
   .actions(self => ({
     update_top_rim(top_rim){
@@ -181,7 +182,10 @@ const VaseStore = types
         self.d2_h = vals[2]
         self.d1_h = vals[1]
     },
-
+    storePic(picData, sectionNum){
+        self.textures[sectionNum] = picData
+        console.log(picData)
+    },
     updateCurvedPts(){
         const s_dtop_h = self.scale_h/2
         const s_dbottom_h = -1 * s_dtop_h

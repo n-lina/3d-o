@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef} from "react";
 import "./pixel.css";
+import { observer } from "mobx-react";
 
-export default function Pixel(props) {
+const Pixel = (props) => {
   const {formObject, sectionNum, rowNum} = props;
 
   const [pixelColor, setPixelColor] = useState("#FFFFFF");
@@ -9,7 +10,7 @@ export default function Pixel(props) {
   const [canChangeColor, setCanChangeColor] = useState(true);
 
   function borderColor(defaultColor) {
-    if (formObject.makeTexture) return pixelColor
+    // if (formObject.makeTexture) return pixelColor
     var color = defaultColor.substring(2, 8);
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
@@ -58,8 +59,10 @@ export default function Pixel(props) {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: pixelColor, height: formObject.makeTexture ? 20 : 13, borderColor: borderColor(formObject.defaultColor)}}
+      style={{ background: pixelColor, width: formObject.makeTexture ? 13 : 20, borderColor: borderColor(formObject.defaultColor), borderWidth: formObject.makeTexture ? 0 : 0.5}}
     ></div>
   );
 
 }
+
+export default observer(Pixel);

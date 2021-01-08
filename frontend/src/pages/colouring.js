@@ -14,6 +14,8 @@ import { FiTrash } from "react-icons/fi";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { exportComponentAsPNG } from "react-component-export-image";
 import {useStores} from "../models/RootStoreContext"
+import DelayLink from 'react-delay-link';
+
 
 /* stretch goals 
 - spray painting 
@@ -32,8 +34,6 @@ const Colouring = () => {
 
   const diagramRef = useRef();
   const {vaseStore, coloringFormStore} = useStores();
-
-  console.log(vaseStore.cm)
 
   function changeColor(color) {
     coloringFormStore.setColor(color.hex);
@@ -118,6 +118,7 @@ const Colouring = () => {
   const logoObject = <div className = "logo-object">
     <p className = "label" >3d-o</p>
     <img className = "logo" src={logo} onClick={() => exportComponentAsPNG(diagramRef)} alt=""/>
+    {/* <img className = "logo" src={logo} onClick={() => coloringFormStore.setMakeTexture(true)} alt=""/> */}
     {showInfo && <div className="info-popup">info here</div>}
   </div>  
 
@@ -131,13 +132,23 @@ const Colouring = () => {
 
   const nextButton = 
   <div className = "next">
-    <PlainLink to="/result">
+    {/* <PlainLink to="/result">
       <div className = "nav"
-        onClick={() => console.log("hi")}> 
+        onClick={nextPage}> 
         <IoChevronForward size={25} style={{color: 'white'}}/>
       </div>
-    </PlainLink>
+    </PlainLink> */}
+    <DelayLink delay={0} to="/result" clickAction={nextPage} replace={false}>
+      <div className = "nav">
+          <IoChevronForward size={25} style={{color: 'white'}}/>
+      </div>
+    </DelayLink>
   </div>
+
+  function nextPage(){
+    coloringFormStore.setMakeTexture(true)
+    coloringFormStore.exportComponent(diagramRef, 100)
+  }
 
   const clear = <div className = "logo-object">
     <p className = "label">clear</p>
@@ -186,8 +197,10 @@ const Colouring = () => {
           {nextButton}
         </div>
       </Sticky>
-      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height:myHeight, background:"#FFE7E5"}}>
-      {canvas}
+      <div style={{background: "#FFE7E5", height: myHeight}}>
+        <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: coloringFormStore.makeTexture ? 0 : myHeight, background:"#FFE7E5"}}>
+          {canvas}
+        </div>
       </div>
     </div>
   );

@@ -1,76 +1,41 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import {
   NavBtn,
   NavBtnLink
 } from '../components/Navbar/NavbarElements';
 import { Canvas} from "react-three-fiber";
-// import Box from "../components/Box"
 import Vase from "../components/Vase"
 import './create-vase.css'
 import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
 import SwitchSelector from "react-switch-selector";
-
-
-
-import { onPatch } from "mobx-state-tree";
-import makeInspectable from "mobx-devtools-mst";
-import VaseStore from "../models/VaseStore";
 import { observer } from "mobx-react";
+import { useStores } from "../models/RootStoreContext"
 
+const CreateVase = () => {
 
-const vase = VaseStore.create();
+  const { vaseStore } = useStores();
 
-// onPatch(vase, patch => {
-//   // console.log(patch);
-// });
-makeInspectable(vase);
-
-const sliderStyle = {  // Give the slider some width
-  position: 'relative',
-  width: '100%',
-  height: 15,
-  // border: '1px solid steelblue',
-}
-
-const railStyle = {
-  position: 'absolute',
-  width: '100%',
-  height: 9,
-  // marginTop: 35,
-  borderRadius: 5,
-  backgroundColor: 'pink',
-}
-
-export function Handle({
-  handle: { id, value, percent },
-  getHandleProps
-}) {
-  return (
-    <div className = "straw"
-      style={{
-        left: `${percent}%`,
-        position: 'absolute',
-        marginLeft: -15,
-        marginTop: -20,
-        zIndex: 2,
-        textAlign: 'right',
-        cursor: 'pointer',
-      }}
-      {...getHandleProps(id)}
-    >
-      <div style={{ fontFamily: 'Arial', fontSize: 16, marginTop: 15, marginLeft: 5, position:'absolute', zIndex: 3, color: "#fff"}}>
-        {value}
-      </div>
-    </div>
-  )
-}
-
-export function MultiHandle({
-  handle: { id, value, percent },
-  getHandleProps
-}) {
-  if (id == "$$-0" || id == "$$-4"){
+  const sliderStyle = {  // Give the slider some width
+    position: 'relative',
+    width: '100%',
+    height: 15,
+    // border: '1px solid steelblue',
+  }
+  
+  const railStyle = {
+    position: 'absolute',
+    width: '100%',
+    height: 9,
+    // marginTop: 35,
+    borderRadius: 5,
+    backgroundColor: 'pink',
+  }
+  
+  function Handle({
+    handle: { id, value, percent },
+    getHandleProps
+  }) {
     return (
       <div className = "straw"
         style={{
@@ -82,45 +47,199 @@ export function MultiHandle({
           textAlign: 'right',
           cursor: 'pointer',
         }}
+        {...getHandleProps(id)}
       >
         <div style={{ fontFamily: 'Arial', fontSize: 16, marginTop: 15, marginLeft: 5, position:'absolute', zIndex: 3, color: "#fff"}}>
           {value}
         </div>
       </div>
     )
-  } else {
-    return (
-      <div className = "straw"
-        style={{
-          left: `${percent}%`,
-          position: 'absolute',
-          marginLeft: -15,
-          marginTop: -20,
-          zIndex: 3,
-          textAlign: 'right',
-          cursor: 'pointer',
-        }}
-        {...getHandleProps(id)}
-      >
-        <div style={{ fontFamily: 'Arial', fontSize: 16, marginTop: 15, marginLeft: 5, position:'absolute', zIndex: 4, color: "#fff"}}>
-          {value}
+  }
+  
+  function MultiHandle({
+    handle: { id, value, percent },
+    getHandleProps
+  }) {
+    if (id == "$$-0" || id == "$$-4"){
+      return (
+        <div className = "straw"
+          style={{
+            left: `${percent}%`,
+            position: 'absolute',
+            marginLeft: -15,
+            marginTop: -20,
+            zIndex: 2,
+            textAlign: 'right',
+            cursor: 'pointer',
+          }}
+        >
+          <div style={{ fontFamily: 'Arial', fontSize: 16, marginTop: 15, marginLeft: 5, position:'absolute', zIndex: 3, color: "#fff"}}>
+            {value}
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div className = "straw"
+          style={{
+            left: `${percent}%`,
+            position: 'absolute',
+            marginLeft: -15,
+            marginTop: -20,
+            zIndex: 3,
+            textAlign: 'right',
+            cursor: 'pointer',
+          }}
+          {...getHandleProps(id)}
+        >
+          <div style={{ fontFamily: 'Arial', fontSize: 16, marginTop: 15, marginLeft: 5, position:'absolute', zIndex: 4, color: "#fff"}}>
+            {value}
+          </div>
+        </div>
+      )
+    }
   }
-}
-
-const sliderHeight = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.height]} onUpdate={(val) => vase.update_height(val[0])} >
-  <Rail>
+  
+  const sliderHeight = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.height]} onUpdate={(val) => vaseStore.update_height(val[0])} >
+    <Rail>
+      {({ getRailProps }) => (
+        <div style={railStyle} {...getRailProps()} />
+      )}
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+  
+  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.dtop]} onUpdate={(val) => vaseStore.update_dtop(val[0])} >
+    <Rail>
+      {({ getRailProps }) => (
+        <div style={railStyle} {...getRailProps()} />
+      )}
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+  
+  const slider_d3 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.d3]} onUpdate={(val) => vaseStore.update_d3(val[0])} >
+    <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
     )}
-  </Rail>
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+  
+  const slider_d2 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.d2]} onUpdate={(val) => vaseStore.update_d2(val[0])} >
+    <Rail>
+      {({ getRailProps }) => (
+        <div style={railStyle} {...getRailProps()} />
+      )}
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+  
+  const slider_d1 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.d1]} onUpdate={(val) => vaseStore.update_d1(val[0])} >
+    <Rail>
+      {({ getRailProps }) => (
+        <div style={railStyle} {...getRailProps()} />
+      )}
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+  
+  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.dbottom]} onUpdate={(val) => vaseStore.update_dbottom(val[0])} >
+    <Rail>
+      {({ getRailProps }) => (
+        <div style={railStyle} {...getRailProps()} />
+      )}
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+  
+  const dSlider = <Slider
+  rootStyle={sliderStyle}
+  domain={[0, 100]}
+  mode={2}
+  values={[0, vaseStore.d1_h, vaseStore.d2_h, vaseStore.d3_h, 100] /* three values = three handles */}
+  onUpdate={(val)=>vaseStore.update_d_heights(val)}
+  step={5}
+  >
+  <div style={railStyle} />
   <Handles>
     {({ handles, getHandleProps }) => (
       <div className="slider-handles">
         {handles.map(handle => (
-          <Handle
+          <MultiHandle
             key={handle.id}
             handle={handle}
             getHandleProps={getHandleProps}
@@ -129,206 +248,75 @@ const sliderHeight = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1}
       </div>
     )}
   </Handles>
-</Slider>
-
-const slider_dtop = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.dtop]} onUpdate={(val) => vase.update_dtop(val[0])} >
-  <Rail>
-    {({ getRailProps }) => (
-      <div style={railStyle} {...getRailProps()} />
-    )}
-  </Rail>
-  <Handles>
-    {({ handles, getHandleProps }) => (
-      <div className="slider-handles">
-        {handles.map(handle => (
-          <Handle
-            key={handle.id}
-            handle={handle}
-            getHandleProps={getHandleProps}
-          />
-        ))}
-      </div>
-    )}
-  </Handles>
-</Slider>
-
-const slider_d3 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.d3]} onUpdate={(val) => vase.update_d3(val[0])} >
-  <Rail>
-  {({ getRailProps }) => (
-    <div style={railStyle} {...getRailProps()} />
-  )}
-  </Rail>
-  <Handles>
-    {({ handles, getHandleProps }) => (
-      <div className="slider-handles">
-        {handles.map(handle => (
-          <Handle
-            key={handle.id}
-            handle={handle}
-            getHandleProps={getHandleProps}
-          />
-        ))}
-      </div>
-    )}
-  </Handles>
-</Slider>
-
-const slider_d2 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.d2]} onUpdate={(val) => vase.update_d2(val[0])} >
-  <Rail>
-    {({ getRailProps }) => (
-      <div style={railStyle} {...getRailProps()} />
-    )}
-  </Rail>
-  <Handles>
-    {({ handles, getHandleProps }) => (
-      <div className="slider-handles">
-        {handles.map(handle => (
-          <Handle
-            key={handle.id}
-            handle={handle}
-            getHandleProps={getHandleProps}
-          />
-        ))}
-      </div>
-    )}
-  </Handles>
-</Slider>
-
-const slider_d1 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.d1]} onUpdate={(val) => vase.update_d1(val[0])} >
-  <Rail>
-    {({ getRailProps }) => (
-      <div style={railStyle} {...getRailProps()} />
-    )}
-  </Rail>
-  <Handles>
-    {({ handles, getHandleProps }) => (
-      <div className="slider-handles">
-        {handles.map(handle => (
-          <Handle
-            key={handle.id}
-            handle={handle}
-            getHandleProps={getHandleProps}
-          />
-        ))}
-      </div>
-    )}
-  </Handles>
-</Slider>
-
-const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vase.dbottom]} onUpdate={(val) => vase.update_dbottom(val[0])} >
-  <Rail>
-    {({ getRailProps }) => (
-      <div style={railStyle} {...getRailProps()} />
-    )}
-  </Rail>
-  <Handles>
-    {({ handles, getHandleProps }) => (
-      <div className="slider-handles">
-        {handles.map(handle => (
-          <Handle
-            key={handle.id}
-            handle={handle}
-            getHandleProps={getHandleProps}
-          />
-        ))}
-      </div>
-    )}
-  </Handles>
-</Slider>
-
-const dSlider = <Slider
-rootStyle={sliderStyle}
-domain={[0, 100]}
-mode={2}
-values={[0, vase.d1_h, vase.d2_h, vase.d3_h, 100] /* three values = three handles */}
-onUpdate={(val)=>vase.update_d_heights(val)}
-step={5}
->
-<div style={railStyle} />
-<Handles>
-  {({ handles, getHandleProps }) => (
-    <div className="slider-handles">
-      {handles.map(handle => (
-        <MultiHandle
-          key={handle.id}
-          handle={handle}
-          getHandleProps={getHandleProps}
-        />
-      ))}
-    </div>
-  )}
-</Handles>
-</Slider>
-
-const options = [
-  {
-      label: "y",
-      value: true,
-      selectedBackgroundColor: "#E28988",
-  },  {
-      label: "n",
-      value: false,
-      selectedBackgroundColor: "#E28988"
-  }
-];
-
-const unitOptions = [
-  {
-      label: "cm",
-      value: true,
-      selectedBackgroundColor: "#E28988",
-  },  {
-      label: "in",
-      value: false,
-      selectedBackgroundColor: "#E28988"
-  }
-];
-
-const top_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
-    <SwitchSelector
-        onChange={(val) => vase.update_top_rim(val)}
-        options={options}
-        initialSelectedIndex={vase.top_rim ? 0 : 1}
-        backgroundColor={"#FFE7E5"}
-        fontColor={"#D75A58"}
-        optionBorderRadius={30}
-    />
-</div>
-
-const bottom_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
-    <SwitchSelector
-        onChange={(val) => vase.update_bottom_rim(val)}
-        options={options}
-        initialSelectedIndex={vase.bottom_rim ? 0 : 1}
-        backgroundColor={"#FFE7E5"}
-        fontColor={"#D75A58"}
-        optionBorderRadius={30}
-    />
-</div>
-
-const bottom_disk_switch = <div className="switch"  style={{width: 100, height: 50}}>
-    <SwitchSelector
-        onChange={(val) => vase.update_bottom_disk(val)}
-        options={options}
-        initialSelectedIndex={vase.bottom_disk ? 0 : 1}
-        backgroundColor={"#FFE7E5"}
-        fontColor={"#D75A58"}
-        optionBorderRadius={30}
-    />
-</div>
-
-const units_switch = <div className="switch" style={{width: 100, height: 50}}>
-    <SwitchSelector
-        onChange={(val) => vase.update_units(val)}
-        options={unitOptions}
-        initialSelectedIndex={vase.units ? 0 : 1}
-        backgroundColor={"#FFE7E5"}
-        fontColor={"#D75A58"}
-        optionBorderRadius={30}
-    />
-</div>
-
-const CreateVase = () => {
+  </Slider>
+  
+  const options = [
+    {
+        label: "y",
+        value: true,
+        selectedBackgroundColor: "#E28988",
+    },  {
+        label: "n",
+        value: false,
+        selectedBackgroundColor: "#E28988"
+    }
+  ];
+  
+  const unitOptions = [
+    {
+        label: "cm",
+        value: true,
+        selectedBackgroundColor: "#E28988",
+    },  {
+        label: "in",
+        value: false,
+        selectedBackgroundColor: "#E28988"
+    }
+  ];
+  
+  const top_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
+      <SwitchSelector
+          onChange={(val) => vaseStore.update_top_rim(val)}
+          options={options}
+          initialSelectedIndex={vaseStore.top_rim ? 0 : 1}
+          backgroundColor={"#FFE7E5"}
+          fontColor={"#D75A58"}
+          optionBorderRadius={30}
+      />
+  </div>
+  
+  const bottom_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
+      <SwitchSelector
+          onChange={(val) => vaseStore.update_bottom_rim(val)}
+          options={options}
+          initialSelectedIndex={vaseStore.bottom_rim ? 0 : 1}
+          backgroundColor={"#FFE7E5"}
+          fontColor={"#D75A58"}
+          optionBorderRadius={30}
+      />
+  </div>
+  
+  const bottom_disk_switch = <div className="switch"  style={{width: 100, height: 50}}>
+      <SwitchSelector
+          onChange={(val) => vaseStore.update_bottom_disk(val)}
+          options={options}
+          initialSelectedIndex={vaseStore.bottom_disk ? 0 : 1}
+          backgroundColor={"#FFE7E5"}
+          fontColor={"#D75A58"}
+          optionBorderRadius={30}
+      />
+  </div>
+  
+  const units_switch = <div className="switch" style={{width: 100, height: 50}}>
+      <SwitchSelector
+          onChange={(val) => vaseStore.update_units(val)}
+          options={unitOptions}
+          initialSelectedIndex={vaseStore.units ? 0 : 1}
+          backgroundColor={"#FFE7E5"}
+          fontColor={"#D75A58"}
+          optionBorderRadius={30}
+      />
+  </div>
 
   return (
     <>
@@ -343,7 +331,7 @@ const CreateVase = () => {
             <spotLight position={[-10, 0, 25]} intensity={0.6} />
              {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
             {/* <pointLight position={[-10, -10, -10]} /> */}
-            <Vase vase={vase} />
+            <Vase vase={vaseStore} />
           </Canvas>
           <div className="containerCaption">
             <br/>

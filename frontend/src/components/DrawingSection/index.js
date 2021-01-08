@@ -1,15 +1,20 @@
   
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import "./drawingSection.css";
 import Row from "../Row";
 import SpecialRow from "../SpecialRow";
+import { observer } from "mobx-react";
 
 // import { exportComponentAsPNG } from "react-component-export-image";
 
-export default function DrawingSection(props) {
+const DrawingSection = (props) => {
   const { width, height, specialTop, specialBottom, sectionNum, increasing, formObject} = props;
 
   const panelRef = useRef();
+
+  useEffect(()=>{
+    if(formObject.makeTexture) formObject.exportComponent(panelRef, sectionNum)
+  }, [formObject.makeTexture])
 
   let rows = []; 
 
@@ -17,7 +22,7 @@ export default function DrawingSection(props) {
 
   for (let i = 0; i < height; i++) {
     if (i%2 == 1){
-      rows.push(<Row key={i} offset={10.5} width={width} displayRowNum={height-i} rowNum={i} formObject={formObject} sectionNum={sectionNum}/>);
+      rows.push(<Row key={i} offset={formObject.makeTexture ? 7 : 10.5} width={width} displayRowNum={height-i} rowNum={i} formObject={formObject} sectionNum={sectionNum}/>);
     }
     else{ 
       rows.push(<Row key={i} offset={0} width={width} displayRowNum={height-i} rowNum={i} formObject={formObject} sectionNum={sectionNum}/>);
@@ -41,7 +46,6 @@ export default function DrawingSection(props) {
     }
   } 
 
-
   return (
     <div id="drawingSection">
       <div id="pixels" ref={panelRef} style={{marginBottom: formObject.makeTexture ? 0 : 10, marginLeft: formObject.makeTexture ? 0 : 40, marginRight: formObject.makeTexture ? 0 : 40}}>
@@ -50,3 +54,5 @@ export default function DrawingSection(props) {
     </div>
   );
 }
+
+export default observer(DrawingSection)

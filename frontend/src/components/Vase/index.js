@@ -1,13 +1,13 @@
-import React, { useRef, useState, useMemo} from "react";
+import React, { useRef, useState, useMemo, useEffect} from "react";
 import {useFrame} from "react-three-fiber";
 import { observer } from "mobx-react";
 import * as THREE from "three";
-import rose from "../../assets/paper.PNG";
+import grid from "../../assets/paper.PNG";
 
 const Vase = (props) => {
     const {vase} = props
     // const mesh = useRef();
-    const texture = useMemo(() => new THREE.TextureLoader().load(rose), []);
+    const texture = useMemo(() => new THREE.TextureLoader().load(grid), []);
     // texture.wrapS = THREE.MirroredRepeatWrapping;
     // texture.wrapT = THREE.MirroredRepeatWrapping;
     // texture.repeat.set(2, 2.6);
