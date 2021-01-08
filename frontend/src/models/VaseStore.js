@@ -184,9 +184,9 @@ const VaseStore = types
     },
     storePic(picData, sectionNum){
         self.textures[sectionNum] = picData
-        console.log(picData)
+        // console.log(picData)
     },
-    updateCurvedPts(){
+    updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2
         const s_dbottom_h = -1 * s_dtop_h
         const scale_factor = self.scale_h/self.height
@@ -213,7 +213,32 @@ const VaseStore = types
             const r = new_pts[i+1]
             points.push( new THREE.Vector2(r, h));
         }
-        return points
+        if (!broken) return points
+        else{
+            let broken_pts = []
+            let broken_pts_three = []
+            let lo = 0 
+            let hi = 2
+            while (hi+3 < new_pts.length){
+                if (new_pts[hi] == new_pts[hi+2] && new_pts[hi+1] == new_pts[hi+3]){
+                    const temp = new_pts.slice(lo,hi+2)
+                    broken_pts.push(temp)
+                    lo = hi + 2
+                }
+                hi += 2
+            }
+            broken_pts.push(new_pts.slice(lo,new_pts.length))
+            for (let i=0; i<broken_pts.length; i+=1){
+                let temp = []
+                for(let j=0; j<broken_pts[i].length; j+= 2){
+                    const h = broken_pts[i][j]
+                    const r = broken_pts[i][j+1]
+                    temp.push( new THREE.Vector2(r, h));
+                }
+                broken_pts_three.push(temp)
+            }
+            return broken_pts_three
+        }
     }
   }))
   .views(self => ({
