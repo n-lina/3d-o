@@ -59,9 +59,7 @@ const ColoringForm = types
     clear: false,
     mode: false,
     maxWidth: 53,
-    maxHeight: 10,
     makeTexture: false,
-    endColors: types.optional(types.array(types.array(types.string)), []), 
     vaseTextureStore: types.optional(types.array(types.string), ["top", "", "", "bottom"]),
     vaseDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10]]),
     canvasPic: "",
@@ -80,6 +78,7 @@ const ColoringForm = types
   .actions(self => ({
     getDimensions() {
       self.maxWidth = 53
+      self.vaseDimensions = [[53, 10],[40,10],[28,9], [16,10]]
       return [[53, 10],[40,10],[28,9], [16,10]]
     }, 
     setColor(col){
@@ -111,19 +110,6 @@ const ColoringForm = types
     }, 
     setMakeTexture(val){
       self.makeTexture = val
-    }, 
-    saveColor(sectionNum, rowNum, color){
-      if (self.endColors.length > sectionNum){
-        if (self.endColors[sectionNum].length > rowNum){ // section and row already exist 
-          self.endColors[sectionNum][rowNum] = color
-        }
-        else{ // adding a new row
-          self.endColors[sectionNum].push(color)
-        }
-      }
-      else { // creating a new section
-        self.endColors.push([color])
-      }
     }, 
     exportComponent (node, sectionNum) {
       if(!node.current) {

@@ -6,7 +6,7 @@ import { observer } from "mobx-react";
 
 
 const Row = (props) => {
-  const { width, displayRowNum, rowNum, sectionNum, formObject} = props;
+  const { width, displayRowNum, formObject} = props;
   let {offset} = props;
   let pixels = [];
 

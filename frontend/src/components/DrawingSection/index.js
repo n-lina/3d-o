@@ -22,10 +22,10 @@ const DrawingSection = (props) => {
 
   for (let i = 0; i < height; i++) {
     if (i%2 == 1){
-      rows.push(<Row key={i} offset={formObject.makeTexture ? 7 : 10.5} width={width} displayRowNum={height-i} rowNum={i} formObject={formObject} sectionNum={sectionNum}/>);
+      rows.push(<Row key={i} offset={formObject.makeTexture ? 7 : 10.5} width={width} displayRowNum={height-i} formObject={formObject}/>);
     }
     else{ 
-      rows.push(<Row key={i} offset={0} width={width} displayRowNum={height-i} rowNum={i} formObject={formObject} sectionNum={sectionNum}/>);
+      rows.push(<Row key={i} offset={0} width={width} displayRowNum={height-i} formObject={formObject}/>);
     }
   }
   

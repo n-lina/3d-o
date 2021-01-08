@@ -3,7 +3,7 @@ import "./pixel.css";
 import { observer } from "mobx-react";
 
 const Pixel = (props) => {
-  const {formObject, sectionNum, rowNum} = props;
+  const {formObject} = props;
 
   const [pixelColor, setPixelColor] = useState("#FFFFFF");
   const [oldColor, setOldColor] = useState(pixelColor);
