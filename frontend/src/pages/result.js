@@ -3,6 +3,7 @@ import {useStores} from "../models/RootStoreContext"
 import { observer } from "mobx-react";
 import  ResultVase  from "../components/ResultVase"
 import { Canvas} from "react-three-fiber";
+import grid from "../assets/paper.PNG"
 
 const Result = () => {
   const { coloringFormStore, vaseStore } = useStores()
@@ -41,7 +42,7 @@ const Result = () => {
 
   return (
     <div style={{height: 500, width : 500}}>
-      <canvas ref={canvasRef}></canvas> <br/>
+      <canvas style={{display:"none"}} ref={canvasRef}></canvas> <br/>
       <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '100%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
         <spotLight position={[-275, 150, 90]} intensity = {1.5}/>
         <spotLight position={[100, 25, 90]} intensity = {1.3}/>

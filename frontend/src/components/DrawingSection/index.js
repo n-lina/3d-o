@@ -13,7 +13,9 @@ const DrawingSection = (props) => {
   const panelRef = useRef();
 
   useEffect(()=>{
-    if(formObject.makeTexture) formObject.exportComponent(panelRef, sectionNum)
+    if(formObject.makeTexture) {
+      formObject.exportComponent(panelRef, sectionNum)
+    }
   }, [formObject.makeTexture])
 
   let rows = []; 

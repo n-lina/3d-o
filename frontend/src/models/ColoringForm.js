@@ -72,6 +72,7 @@ const ColoringForm = types
       }
       else {
         self.vaseTextureStore[sectionNum] = picData
+        // console.log(picData)
       }
     }
   }))
@@ -120,8 +121,10 @@ const ColoringForm = types
           scrollY: -window.scrollY,
           useCORS: true,
           // ...html2CanvasOptions
+          imageTimeout: 0,
+          backgroundColor: self.defaultColor
       }).then(canvas => {
-          self.storePic(canvas.toDataURL(DEFAULT_PNG, 1.0), sectionNum)
+          self.storePic(canvas.toDataURL(DEFAULT_PNG, 0.1), sectionNum)
       });
     }
   }))

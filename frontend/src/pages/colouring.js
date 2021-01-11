@@ -130,14 +130,9 @@ const Colouring = () => {
     </div>
   </div>
 
+
   const nextButton = 
   <div className = "next">
-    {/* <PlainLink to="/result">
-      <div className = "nav"
-        onClick={nextPage}> 
-        <IoChevronForward size={25} style={{color: 'white'}}/>
-      </div>
-    </PlainLink> */}
     <DelayLink delay={0} to="/result" clickAction={nextPage} replace={false}>
       <div className = "nav">
           <IoChevronForward size={25} style={{color: 'white'}}/>

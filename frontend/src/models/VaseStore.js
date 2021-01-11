@@ -128,7 +128,6 @@ function getCurvePoints(pts, tension, isClosed, numOfSegments) {
 const VaseStore = types
   .model("Vase", {
     cm: false,
-    percent: false,
     dtop: 20,
     d3: 10, 
     d2: 10, 
@@ -242,9 +241,6 @@ const VaseStore = types
     }
   }))
   .views(self => ({
-    units() {
-        return self.cm ? "CM" : "IN"
-    }
   }));
 
 export default VaseStore;

@@ -2,22 +2,40 @@ import React, { useRef, useState, useMemo, useEffect} from "react";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import grid from "../../assets/paper.PNG";
+import {useUpdate} from "react-three-fiber"
 
 
 const ResultVase = (props) => {
     const {vaseStore} = props
     // const mesh = useRef();
-    console.log(vaseStore.textures[0])
-    const topData = vaseStore.textures[0]
-    const data2 = vaseStore.textures[1]
-    const data1 = vaseStore.textures[2]
-    const bottomData = vaseStore.textures[3]
 
     const texture = useMemo(() => new THREE.TextureLoader().load(grid), []);
-    const textureTop = useMemo(() => new THREE.TextureLoader().load(topData), []);
-    const texture2 = useMemo(() => new THREE.TextureLoader().load(data2), []);
-    const texture1 = useMemo(() => new THREE.TextureLoader().load(data1), []);
-    const textureBottom = useMemo(() => new THREE.TextureLoader().load(bottomData), []);
+    // const textureTop = useMemo(() => new THREE.TextureLoader().load(grid), []);
+    // const texture2 = useMemo(() => new THREE.TextureLoader().load(grid), []);
+    // const texture1 = useMemo(() => new THREE.TextureLoader().load(grid), []);
+    // const textureBottom = useMemo(() => new THREE.TextureLoader().load(grid), []);
+
+    let refTop = useRef()
+    let refTop2 = useRef() 
+    let ref2 = useRef()
+    let ref22 = useRef()
+    let ref1 = useRef() 
+    let ref12 = useRef() 
+    let refBot = useRef() 
+    let refBot2 = useRef() 
+
+    useEffect(() => {
+        refTop.current.map = new THREE.TextureLoader().load(vaseStore.textures[0])
+        refTop2.current.map = new THREE.TextureLoader().load(vaseStore.textures[0])
+        ref2.current.map = new THREE.TextureLoader().load(vaseStore.textures[1])
+        ref22.current.map = new THREE.TextureLoader().load(vaseStore.textures[1])
+        ref1.current.map = new THREE.TextureLoader().load(vaseStore.textures[2])
+        ref12.current.map = new THREE.TextureLoader().load(vaseStore.textures[2])
+        refBot.current.map = new THREE.TextureLoader().load(vaseStore.textures[3])
+        refBot2.current.map = new THREE.TextureLoader().load(vaseStore.textures[3])
+        // console.log(refTop.current)
+        
+    }, [vaseStore.textures[3]])
 
     // not working - its not picking up the new texture changes, need a useEffect with a boolean? look into useMEmo
 
@@ -55,11 +73,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[topPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {textureTop} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={refTop}  color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[topPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {textureTop} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={refTop2}  color="pink" side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -67,11 +85,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[pts2, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {texture1} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={ref2}   color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[pts2, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {texture1} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={ref22} color="pink" side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -79,11 +97,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[pts1, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {texture2} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={ref1} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[pts1, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {texture2} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={ref12}  color="pink" side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -91,11 +109,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[bottomPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {textureBottom} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={refBot} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[bottomPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial map = {textureBottom} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={refBot2} color="pink" side = {THREE.BackSide} />
         </mesh>
     </group>
 
