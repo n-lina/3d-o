@@ -1,4 +1,6 @@
 import React from 'react';
+import bg from "../assets/logo-bg-cropped.png"
+import bgOff from "../assets/logo-bg-off.png"
 
 const Contact = () => {
   return (
@@ -7,10 +9,13 @@ const Contact = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '90vh'
+        height: '80vh',
+        backgroundImage: `url(${bg})`, 
+        width: "98%", 
+        marginLeft: "1%"
       }}
     >
-      <h1>Contact Us</h1>
+      <div style={{background: "white", height: 200, width: 400, borderRadius: 40, borderColor: "red", borderStyle: "solid"}}></div>
     </div>
   );
 };

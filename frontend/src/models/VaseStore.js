@@ -143,6 +143,7 @@ const VaseStore = types
     bottom_rim: true, 
     bottom_disk: true, 
     scale_h: 36,
+    default_color: "#FFFFFF",
     textures: types.optional(types.array(types.string), ["top", "", "", "bottom"])
   })
   .actions(self => ({
@@ -184,6 +185,9 @@ const VaseStore = types
     storePic(picData, sectionNum){
         self.textures[sectionNum] = picData
         // console.log(picData)
+    },
+    setDefaultColor(color){
+        self.default_color = color
     },
     updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2

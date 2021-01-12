@@ -53,13 +53,13 @@ const ResultVase = (props) => {
     if (vaseStore.top_rim){
         top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 
         <torusGeometry args={[(s_dtop/2)+0.1,0.4,10,50]}/>
-        <meshPhongMaterial color="#FF7E98" />
+        <meshPhongMaterial color={vaseStore.default_color} />
         </mesh>
     }
     if (vaseStore.bottom_rim){
         bottom_rim_mesh = <mesh position = {[0,s_dbottom_h-0.1,0]} rotation = {[1.57,0,0]}> 
         <torusGeometry args={[(s_dbottom/2)+0.1, 0.4, 10, 50]}/>
-        <meshPhongMaterial color="#FF7E98" />
+        <meshPhongMaterial color={vaseStore.default_color} />
         </mesh>
     }
 
@@ -73,11 +73,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[topPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={refTop}  color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={refTop}  color={vaseStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[topPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={refTop2}  color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={refTop2}  color={vaseStore.default_color} side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -85,11 +85,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[pts2, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={ref2}   color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={ref2}   color={vaseStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[pts2, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={ref22} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={ref22} color={vaseStore.default_color} side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -97,11 +97,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[pts1, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={ref1} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={ref1} color={vaseStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[pts1, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={ref12}  color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={ref12}  color={vaseStore.default_color} side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -109,11 +109,11 @@ const ResultVase = (props) => {
     <group>
         <mesh >
             <latheGeometry args={[bottomPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={refBot} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial ref={refBot} color={vaseStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh>
             <latheGeometry args={[bottomPts, 30, 0, 2*Math.PI]}/>
-            <meshPhongMaterial ref={refBot2} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial ref={refBot2} color={vaseStore.default_color} side = {THREE.BackSide} />
         </mesh>
     </group>
 
@@ -125,7 +125,7 @@ const ResultVase = (props) => {
     if (vaseStore.bottom_disk){
         bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
-            <meshPhongMaterial color="pink" map={texture} />
+            <meshPhongMaterial color={vaseStore.default_color} />
         </mesh>
     }
 
@@ -184,7 +184,7 @@ const ResultVase = (props) => {
             {bottomVase}
             {vaseStore.top_rim && top_rim_mesh}
             {vaseStore.bottom_rim && bottom_rim_mesh}
-            {/* {vaseStore.bottom_disk && bottom_disk_mesh} */}
+            {vaseStore.bottom_disk && bottom_disk_mesh}
         </group>
     )
   }

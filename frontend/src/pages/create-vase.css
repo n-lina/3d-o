@@ -66,3 +66,64 @@
   padding-bottom:4px;
   border-radius: 5px;
 }
+
+.banner {
+  width: 100%
+}
+
+.banner-b{
+  width: 100%;
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+}
+
+.done-button {
+  width: 350px; 
+  height: 54px; 
+  border-radius: 40px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-style:solid;
+  border-color:#D14240;
+  background: #D14240;  
+  margin-top: 7px;
+  display: inline-block;
+  margin-top: 165px;
+  position: absolute;
+  left: calc(50% - 180px);
+  top: 90px;
+}
+
+.done-button:hover {
+  width: 350px; 
+  height: 55px; 
+  border-radius: 40px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-style:solid;
+  border-color:#D14240;
+  border-width: 5px;
+  background: #D14240;  
+  margin-top: 7px;
+  display: inline-block;
+  margin-top: 162px;
+  left: calc(50% - 183px);
+}
+
+.download-label {
+  letter-spacing: 2px;
+  font-size: 18px;
+  color:white;
+  margin-top:12px;
+  margin-bottom:10px
+}
+
+.download-label span {
+margin: 10px;
+}
+

@@ -14,19 +14,19 @@ const DEFAULT_PNG = {
   html2CanvasOptions: {}
 };
 
-// const saveAs = (uri, filename) => {
-//   const link = document.createElement('a');
+const saveAs = (uri, filename) => {
+  const link = document.createElement('a');
 
-//   if (typeof link.download === 'string') {
-//       link.href = uri;
-//       link.download = filename;
-//       document.body.appendChild(link);
-//       link.click();
-//       document.body.removeChild(link);
-//   } else {
-//       window.open(uri);
-//   }
-// };
+  if (typeof link.download === 'string') {
+      link.href = uri;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  } else {
+      window.open(uri);
+  }
+};
 
 const exportComponentBak = (node, {
   fileName, 
@@ -122,11 +122,14 @@ const ColoringForm = types
           useCORS: true,
           // ...html2CanvasOptions
           imageTimeout: 0,
-          backgroundColor: self.defaultColor
+          backgroundColor: sectionNum != 100? self.defaultColor : "#FFFFFF"
       }).then(canvas => {
           self.storePic(canvas.toDataURL(DEFAULT_PNG, 0.1), sectionNum)
       });
-    }
+    },
+    saveDiagram () {
+      saveAs(self.canvasPic, "my-3do-diagram")
+    },
   }))
   .views(self => ({
     // status() {
