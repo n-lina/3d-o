@@ -130,12 +130,12 @@ margin: 10px;
 .info-box{
   background: white; 
   height: 200px; 
-  width: 400px; 
+  width: 350px; 
   border-radius: 40px; 
   border-color: red;
   border-style: solid; 
   display: inline-block;
-  margin-top: 132px;
+  margin-top: 160px;
   position: relative
 }
 
@@ -143,8 +143,10 @@ margin: 10px;
   height: 60px; 
   width: 60px; 
   position: absolute;
-  right: -20px; 
-  top: -20px;
+  right: 90px; 
+  top: -45px;
+  -webkit-transform: rotate(-10deg);
+  transform: rotate(-10deg);
 }
 
 .straw-l{
@@ -153,8 +155,41 @@ margin: 10px;
   height: 60px; 
   width: 60px; 
   position: absolute;
+  left: 90px; 
+  top: -45px;
+  -webkit-transform: rotate(-70deg);
+  transform: rotate(-70deg);
+}
+
+.straw-m{
+  -webkit-transform: rotate(-40deg);
+  transform: rotate(-40deg);
+  height: 60px; 
+  width: 60px; 
+  position: absolute;
+  left: 145px; 
+  top: -50px;
+}
+
+.straw-r2{
+  height: 60px; 
+  width: 60px; 
+  position: absolute;
+  right: -20px; 
+  bottom: -20px;
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+
+}
+
+.straw-l2{
+  -webkit-transform: scale(-1,-1);
+  transform: scale(-1,-1);
+  height: 60px; 
+  width: 60px; 
+  position: absolute;
   left: -20px; 
-  top: -20px;
+  bottom: -20px;
 }
 
 
