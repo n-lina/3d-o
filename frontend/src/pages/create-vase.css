@@ -127,3 +127,34 @@
 margin: 10px;
 }
 
+.info-box{
+  background: white; 
+  height: 200px; 
+  width: 400px; 
+  border-radius: 40px; 
+  border-color: red;
+  border-style: solid; 
+  display: inline-block;
+  margin-top: 132px;
+  position: relative
+}
+
+.straw-r{
+  height: 60px; 
+  width: 60px; 
+  position: absolute;
+  right: -20px; 
+  top: -20px;
+}
+
+.straw-l{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  height: 60px; 
+  width: 60px; 
+  position: absolute;
+  left: -20px; 
+  top: -20px;
+}
+
+
