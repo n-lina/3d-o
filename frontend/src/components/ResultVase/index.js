@@ -9,24 +9,15 @@ const ResultVase = (props) => {
     const {vaseStore} = props
     const itemsRef = useRef([]);
 
-    let refTop = useRef()
-    let refTop2 = useRef() 
-    let ref2 = useRef()
-    let ref22 = useRef()
-    let ref1 = useRef() 
-    let ref12 = useRef() 
-    let refBot = useRef() 
-    let refBot2 = useRef() 
-
     useEffect(() => {
-        itemsRef.current = itemsRef.current.slice(0, vaseStore.vaseDimensions.length*2);
+        itemsRef.current = itemsRef.current.slice(0, vaseStore.vaseDimensions.length);
      }, []);
 
     useEffect(() => {
             const len = vaseStore.vaseDimensions.length
             for(let i = 0; i < len; i += 1){
                 itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
-                itemsRef.current[i+len].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
+                console.log(vaseStore.textures[len-i-1])
             }
     }, [vaseStore.textures[3]])
 
@@ -126,7 +117,7 @@ const ResultVase = (props) => {
                 </mesh>
                 <mesh>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
-                    <meshLambertMaterial ref={el => itemsRef.current[i+points.length] = el} color={vaseStore.default_color} side = {THREE.BackSide} />
+                    <meshLambertMaterial color={vaseStore.default_color} side = {THREE.BackSide} />
                 </mesh>
             </group>   
             ))}
