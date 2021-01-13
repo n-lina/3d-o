@@ -24,11 +24,11 @@ const Result = () => {
     coloringFormStore.setMakeTexture(false)
     vaseStore.setDefaultColor(coloringFormStore.defaultColor)
 
-    for (let i = 0 ; i < 4; i++){
+    for (let i = 0 ; i < coloringFormStore.vaseTextureStore.length; i++){
       let topPic = new Image;
       topPic.src = coloringFormStore.vaseTextureStore[i]
       topPic.onload = function(){
-        const px_size = topPic.height/coloringFormStore.vaseDimensions[i][1]
+        const px_size = topPic.height/vaseStore.vaseDimensions[i][1]
         const half_px_width = px_size/2
         canvas.width = topPic.width-half_px_width;
         canvas.height = topPic.height;

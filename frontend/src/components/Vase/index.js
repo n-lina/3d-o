@@ -6,7 +6,6 @@ import grid from "../../assets/paper.PNG";
 
 const Vase = (props) => {
     const {vase} = props
-    // const mesh = useRef();
     const texture = useMemo(() => new THREE.TextureLoader().load(grid), []);
     // texture.wrapS = THREE.MirroredRepeatWrapping;
     // texture.wrapT = THREE.MirroredRepeatWrapping;

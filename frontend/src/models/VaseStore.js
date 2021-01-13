@@ -144,7 +144,10 @@ const VaseStore = types
     bottom_disk: true, 
     scale_h: 36,
     default_color: "#FFFFFF",
-    textures: types.optional(types.array(types.string), ["top", "", "", "bottom"])
+    tot_rows_per_section: types.optional(types.array(types.number), [15,9,10,10]), // bottom to top 
+    subsections: types.optional(types.array(types.array(types.number)),[[4,3],[2],[1],[0]]), // vase has 4 sections, each may be made of 1+ drawing sections
+    textures: types.optional(types.array(types.string), ["top", "", "", "",""]),
+    vaseDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
   })
   .actions(self => ({
     update_top_rim(top_rim){
@@ -189,6 +192,11 @@ const VaseStore = types
     setDefaultColor(color){
         self.default_color = color
     },
+    getDimensions() {
+        self.maxWidth = 53
+        self.vaseDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
+        return [[53, 10],[40,10],[28,9], [16,10], [24,5]]
+      },
     updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2
         const s_dbottom_h = -1 * s_dtop_h
@@ -218,6 +226,7 @@ const VaseStore = types
         }
         if (!broken) return points
         else{
+            let section_pts = []
             let broken_pts = []
             let broken_pts_three = []
             let lo = 0 
@@ -225,21 +234,38 @@ const VaseStore = types
             while (hi+3 < new_pts.length){
                 if (new_pts[hi] == new_pts[hi+2] && new_pts[hi+1] == new_pts[hi+3]){
                     const temp = new_pts.slice(lo,hi+2)
-                    broken_pts.push(temp)
+                    section_pts.push(temp)
                     lo = hi + 2
                 }
                 hi += 2
             }
-            broken_pts.push(new_pts.slice(lo,new_pts.length))
-            for (let i=0; i<broken_pts.length; i+=1){
+            section_pts.push(new_pts.slice(lo,new_pts.length))
+            for (let i=0; i<4; i+=1){ //section_pts.length = 4
+                let curr_idx = 0
+                for (let j=0; j<self.subsections[i].length; j+=1){
+                    if (self.subsections[i].length > 1){
+                        // console.log(self.vaseDimensions[self.subsections[i][j]][1])
+                        let slice_size = Math.round((self.vaseDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
+                        slice_size = slice_size * 2
+                        const slice = section_pts[i].slice(curr_idx,curr_idx + slice_size+2)
+                        curr_idx += slice_size
+                        broken_pts.push(slice)
+                    } 
+                    else {
+                        broken_pts.push(section_pts[i])
+                    }
+                }
+            }
+            for(let j=0; j<broken_pts.length; j+= 1){
                 let temp = []
-                for(let j=0; j<broken_pts[i].length; j+= 2){
-                    const h = broken_pts[i][j]
-                    const r = broken_pts[i][j+1]
+                for(let k = 0; k < broken_pts[j].length; k += 2){
+                    const h = broken_pts[j][k]
+                    const r = broken_pts[j][k+1]
                     temp.push( new THREE.Vector2(r, h));
                 }
                 broken_pts_three.push(temp)
             }
+            
             return broken_pts_three
         }
     }

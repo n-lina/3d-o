@@ -171,25 +171,53 @@ margin: 10px;
   top: -50px;
 }
 
-.straw-r2{
-  height: 60px; 
-  width: 60px; 
-  position: absolute;
-  right: -20px; 
-  bottom: -20px;
-  -webkit-transform: scaleY(-1);
-  transform: scaleY(-1);
-
+.app-name{
+  color: red; 
+  letter-spacing: 2px;
+  margin-top: 26px;
+  line-height: 22px;
+  margin-bottom: 16px;
 }
 
-.straw-l2{
-  -webkit-transform: scale(-1,-1);
-  transform: scale(-1,-1);
-  height: 60px; 
-  width: 60px; 
-  position: absolute;
-  left: -20px; 
-  bottom: -20px;
+.name {
+  color: red; 
+  letter-spacing: 4.5px; 
+  font-size: 22px;
+  line-height: 26px;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.left{
+  float: left;
+  margin-left: 85px;
+  margin-top: 16px;
+  /* text-align: left; */
+}
+
+.right{
+  float: right;
+  margin-right: 85px;
+  margin-top: 16px;
+  /* text-align: left; */
+}
+
+.link {
+  color: red; 
+  letter-spacing: 2px;
+  margin-top: 26px;
+  line-height: 26px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: white; 
+  letter-spacing: 2px;
+  margin-top: 26px;
+  line-height: 26px;
+  margin-bottom: 10px;
+  text-decoration: none;
 }
 
 

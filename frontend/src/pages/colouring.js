@@ -59,7 +59,7 @@ const Colouring = () => {
     }
   }
 
-  const myDimensions = coloringFormStore.getDimensions();
+  const myDimensions = vaseStore.getDimensions();
   const absolute = coloringFormStore.maxWidth > 52 ? true : false 
 
   let myHeight = 0 

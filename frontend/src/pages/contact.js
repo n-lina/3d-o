@@ -17,8 +17,18 @@ const Contact = () => {
         <img src={straw} className ="straw-l"/>
         <img src={straw} className ="straw-m"/>
         <img src={straw} className ="straw-r"/>
-        {/* <img src={straw} className ="straw-l2"/>
-        <img src={straw} className ="straw-r2"/> */}
+        <p className = "app-name">3d-o<br/>engineering x art</p>
+        <p className = "name">— lina nguyen —</p>
+        <div className="left">
+          <a href="/" target="_blank" className="link">linkedin</a>
+          <br/>
+          <a href="/" target="_blank" className="link">resume</a>
+        </div>
+        <div className="right">
+          <a href="/" target="_blank" className="link">github</a>
+          <br/>
+          <a href="/" target="_blank" className="link">email</a>
+        </div>
       </div>
     </div>
   );

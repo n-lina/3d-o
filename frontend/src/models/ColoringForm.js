@@ -60,8 +60,7 @@ const ColoringForm = types
     mode: false,
     maxWidth: 53,
     makeTexture: false,
-    vaseTextureStore: types.optional(types.array(types.string), ["top", "", "", "bottom"]),
-    vaseDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10]]),
+    vaseTextureStore: types.optional(types.array(types.string), ["top", "", "", "bottom","extra"]),
     canvasPic: "",
   })
   .actions(self => ({
@@ -76,12 +75,7 @@ const ColoringForm = types
       }
     }
   }))
-  .actions(self => ({
-    getDimensions() {
-      self.maxWidth = 53
-      self.vaseDimensions = [[53, 10],[40,10],[28,9], [16,10]]
-      return [[53, 10],[40,10],[28,9], [16,10]]
-    }, 
+  .actions(self => ({ 
     setColor(col){
       self.clear = false
       self.selectedColor = col
