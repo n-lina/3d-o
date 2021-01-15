@@ -40,11 +40,11 @@ const Vase = (props) => {
         )
     }
 
-    const dtop_marker = vase.top_rim ? getInputMarker((s_dtop/2) + 0.6, s_dtop_h) : getInputMarker((s_dtop/2) + 0.1, s_dtop_h) 
-    const dbottom_marker = vase.bottom_rim ? getInputMarker((s_dbottom/2) + 0.6, s_dbottom_h) : getInputMarker((s_dbottom/2) + 0.1, s_dbottom_h)
-    const d1_marker = getInputMarker((s_d1/2) + 0.1, s_d1_h)
-    const d2_marker = getInputMarker((s_d2/2) + 0.1, s_d2_h)
-    const d3_marker = getInputMarker((s_d3/2) + 0.1, s_d3_h)
+    const dtop_marker = vase.top_rim ? getInputMarker((s_dtop/2) + 0.6, s_dtop_h) : getInputMarker((Math.max(1,s_dtop)/2) + 0.1, s_dtop_h) 
+    const dbottom_marker = vase.bottom_rim ? getInputMarker((s_dbottom/2) + 0.6, s_dbottom_h) : getInputMarker((Math.max(1,s_dbottom)/2) + 0.1, s_dbottom_h)
+    const d1_marker = getInputMarker((Math.max(1,s_d1)/2) + 0.1, s_d1_h)
+    const d2_marker = getInputMarker((Math.max(1,s_d2)/2) + 0.1, s_d2_h)
+    const d3_marker = getInputMarker((Math.max(1,s_d3)/2) + 0.1, s_d3_h)
 
     if (vase.top_rim){
         top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 

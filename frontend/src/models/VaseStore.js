@@ -45,7 +45,7 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 
             //store points in array
             res.push(x);
-            res.push(y);
+            res.push(Math.max(y, 0.5));
 
         }
     }

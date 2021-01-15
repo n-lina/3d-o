@@ -121,7 +121,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.dtop]} onUpdate={(val) => vaseStore.update_dtop(val[0])} >
+  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[vaseStore.dtop]} onUpdate={(val) => vaseStore.update_dtop(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -142,7 +142,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_d3 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.d3]} onUpdate={(val) => vaseStore.update_d3(val[0])} >
+  const slider_d3 = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[vaseStore.d3]} onUpdate={(val) => vaseStore.update_d3(val[0])} >
     <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
@@ -163,7 +163,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_d2 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.d2]} onUpdate={(val) => vaseStore.update_d2(val[0])} >
+  const slider_d2 = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[vaseStore.d2]} onUpdate={(val) => vaseStore.update_d2(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -184,7 +184,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_d1 = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.d1]} onUpdate={(val) => vaseStore.update_d1(val[0])} >
+  const slider_d1 = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[vaseStore.d1]} onUpdate={(val) => vaseStore.update_d1(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -205,7 +205,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.dbottom]} onUpdate={(val) => vaseStore.update_dbottom(val[0])} >
+  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[vaseStore.dbottom]} onUpdate={(val) => vaseStore.update_dbottom(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -329,7 +329,7 @@ const CreateVase = () => {
             <spotLight position={[-150, -150, 110]} intensity = {0.6} />
             <spotLight position={[150, -150, 110]} intensity={0.6} />
             <spotLight position={[-10, 0, 25]} intensity={0.6} />
-             {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
+             {/* <spotLight position={[1, 10, 10]} angle={0.15} penumbra={1} /> */}
             {/* <pointLight position={[-10, -10, -10]} /> */}
             <Vase vase={vaseStore} />
           </Canvas>
