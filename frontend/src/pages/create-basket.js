@@ -101,7 +101,7 @@ const CreateBasket = () => {
     </Handles>
   </Slider>
   
-  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[basketStore.diameter]} onUpdate={(val) => basketStore.update_diameter(val[0])} >
+  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[basketStore.diameter]} onUpdate={(val) => basketStore.update_diameter(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -122,7 +122,7 @@ const CreateBasket = () => {
     </Handles>
   </Slider>
 
-  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[basketStore.dbottom]} onUpdate={(val) => basketStore.update_dbottom(val[0])} >
+  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[basketStore.dbottom]} onUpdate={(val) => basketStore.update_dbottom(val[0])} >
   <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
@@ -143,7 +143,7 @@ const CreateBasket = () => {
   </Handles>
   </Slider>
 
-  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[basketStore.dtop]} onUpdate={(val) => basketStore.update_dtop(val[0])} >
+  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[1, 100]} step={1} mode={2} values={[basketStore.dtop]} onUpdate={(val) => basketStore.update_dtop(val[0])} >
   <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
@@ -196,6 +196,17 @@ const CreateBasket = () => {
           optionBorderRadius={30}
       />
   </div>
+  
+  const bottom_switch = <div className="switch"  style={{width: 100, height: 50}}>
+  <SwitchSelector
+      onChange={(val) => basketStore.update_flat_bottom(val)}
+      options={options}
+      initialSelectedIndex={basketStore.flat_bottom ? 0 : 1}
+      backgroundColor={"#FFE7E5"}
+      fontColor={"#D75A58"}
+      optionBorderRadius={30}
+  />
+</div>
 
   const top_handle_switch = <div className="switch"  style={{width: 100, height: 50}}>
   <SwitchSelector
@@ -234,9 +245,9 @@ const CreateBasket = () => {
     <>
       <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: 'auto'}}>
         <div className="containerLeft" style={{background: '#FFE7E5', width: '57%', height: 'auto',float:'left'}}>
-          <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '80%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
+          <Canvas camera={{position:[0, 0, 90], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '80%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
             <spotLight position={[-275, 150, 90]} intensity = {1.5}/>
-            <spotLight position={[100, 25, 90]} intensity = {1.3}/>
+            <spotLight position={[10, 25, 90]} intensity = {1.3}/>
             <spotLight position={[-150, -150, 110]} intensity = {0.6} />
             <spotLight position={[150, -150, 110]} intensity={0.6} />
             <spotLight position={[-10, 0, 25]} intensity={0.6} />
@@ -265,6 +276,10 @@ const CreateBasket = () => {
               {slider_dbottom}
             </div>
           </div>
+          <div style={{float: 'left', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
+            <p className="textSwitch">flat bottom</p>
+            {bottom_switch}
+          </div>
           <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
             <p className="textSwitch">top rim</p>
             {top_rim_switch}
@@ -273,15 +288,15 @@ const CreateBasket = () => {
             <p className="textSwitch">bottom rim</p>
             {bottom_rim_switch}
           </div>
-          <div style={{float: 'right', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
-            <p className="textSwitch">lid</p>
-            {lid_switch}
-          </div>
-          <div style={{float: 'right', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
+          <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
             <p className="textSwitch">top handle</p>
             {top_handle_switch}
           </div>
-          <div style={{float: 'right', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
+          <div style={{float: 'left', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
+            <p className="textSwitch">lid</p>
+            {lid_switch}
+          </div>
+          <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
             <p className="textSwitch">side handles</p>
             {side_handles_switch}
           </div>

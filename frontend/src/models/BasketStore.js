@@ -45,7 +45,7 @@ function getCurvePointsBasket(_pts, tension, numOfSegments) {
 
             //store points in array
             res.push(x);
-            res.push(y);
+            res.push(Math.max(0.5, y));
 
         }
     }
@@ -55,16 +55,17 @@ function getCurvePointsBasket(_pts, tension, numOfSegments) {
 const BasketStore = types
   .model("Basket", {
     cm: false,
-    height: 50, 
-    diameter: 30, 
-    dtop: 30, 
-    dbottom: 30,
-    top_rim: false, 
-    bottom_rim: false, 
-    lid: false, 
-    top_handle: false, 
+    height: 20, 
+    diameter: 34, 
+    dtop: 20, 
+    dbottom: 20,
+    top_rim: true, 
+    bottom_rim: true, 
+    lid: true, 
+    top_handle: true, 
     side_handles: false, 
-    scale_h: 20,
+    scale_h: 15,
+    flat_bottom: false, 
     default_color: "#FFFFFF",
     textures: types.optional(types.array(types.string), ["top", "", "", "",""]),
     basketDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
@@ -100,6 +101,9 @@ const BasketStore = types
     update_dbottom(dbottom){
         self.dbottom = dbottom
     }, 
+    update_flat_bottom(val) {
+        self.flat_bottom = val
+    },
     storePic(picData, sectionNum){
         self.textures[sectionNum] = picData
         // console.log(picData)
