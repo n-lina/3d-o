@@ -1,9 +1,7 @@
 import React, { useRef, useState, useMemo, useEffect} from "react";
-import {useFrame} from "react-three-fiber";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import grid from "../../assets/paper.PNG";
-import { Curve } from "three";
 
 const Basket = (props) => {
     const {basketStore} = props
@@ -60,7 +58,7 @@ const Basket = (props) => {
         </group>
     }
 
-    if (basketStore.flat_bottom){
+    if (!basketStore.curved_bottom){
         bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
             <meshPhongMaterial color="pink" map={texture} />
@@ -126,7 +124,7 @@ const Basket = (props) => {
         </group>
     }
 
-    if (!basketStore.flat_bottom){
+    if (basketStore.curved_bottom){
         const percent_sphere = 0.2
         const rad_bottom = (s_dbottom/2) / Math.sin(Math.PI * percent_sphere)
         const bottom_dist = s_dbottom_h - (s_dbottom/2) / Math.tan(Math.PI * percent_sphere)
@@ -228,8 +226,8 @@ const Basket = (props) => {
             {dbottom_marker}
             {basketStore.top_handle && handle}
             {basketStore.side_handles && side_handles}
-            {basketStore.flat_bottom && bottom_disk_mesh}
-            {!basketStore.flat_bottom && curved_bottom}
+            {!basketStore.curved_bottom && bottom_disk_mesh}
+            {basketStore.curved_bottom && curved_bottom}
         </group>
     )
   }

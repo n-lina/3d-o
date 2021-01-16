@@ -199,9 +199,9 @@ const CreateBasket = () => {
   
   const bottom_switch = <div className="switch"  style={{width: 100, height: 50}}>
   <SwitchSelector
-      onChange={(val) => basketStore.update_flat_bottom(val)}
+      onChange={(val) => basketStore.update_curved_bottom(val)}
       options={options}
-      initialSelectedIndex={basketStore.flat_bottom ? 0 : 1}
+      initialSelectedIndex={basketStore.curved_bottom ? 0 : 1}
       backgroundColor={"#FFE7E5"}
       fontColor={"#D75A58"}
       optionBorderRadius={30}
@@ -243,9 +243,9 @@ const CreateBasket = () => {
 
   return (
     <>
-      <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: 'auto'}}>
+      <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '690px'}}>
         <div className="containerLeft" style={{background: '#FFE7E5', width: '57%', height: 'auto',float:'left'}}>
-          <Canvas camera={{position:[0, 0, 90], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '80%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
+          <Canvas camera={{position:[0, 0, 100], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '80%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
             <spotLight position={[-275, 150, 90]} intensity = {1.5}/>
             <spotLight position={[10, 25, 90]} intensity = {1.3}/>
             <spotLight position={[-150, -150, 110]} intensity = {0.6} />
@@ -258,7 +258,7 @@ const CreateBasket = () => {
             <a>Press <span>x</span> , <span>y</span> , and <span>z</span> to rotate the object ,<br/><span>q</span> and <span>w</span> to zoom in and out , <br/>and <span>space</span> to reset view to default . </a>
           </div>
         </div>
-        <div className="containerRight" style={{background: '#FFE7E5', width: '43%', height: '100%', overflow: 'visible', float:'right'}}>
+        <div className="containerRight" style={{width: '43%', height: '100%', overflow: 'visible', float:'right'}}>
           <br />
           <p className="textSwitch">units</p>
           {units_switch}
@@ -276,13 +276,13 @@ const CreateBasket = () => {
               {slider_dbottom}
             </div>
           </div>
-          <div style={{float: 'left', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
-            <p className="textSwitch">flat bottom</p>
-            {bottom_switch}
-          </div>
           <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
             <p className="textSwitch">top rim</p>
             {top_rim_switch}
+          </div>
+          <div style={{float: 'left', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
+            <p className="textSwitch">curved bottom</p>
+            {bottom_switch}
           </div>
           <div style={{float: 'left', width: '33.3%', overflow:'visible', marginTop:25, marginBottom:10}}>
             <p className="textSwitch">bottom rim</p>
@@ -300,12 +300,11 @@ const CreateBasket = () => {
             <p className="textSwitch">side handles</p>
             {side_handles_switch}
           </div>
-          <div style={{color:'#FFE7E5', marginTop: -10}}>.</div>
-          <div className="switch" style={{width: 80, marginBottom:35}}>
+          <div className="done-basket" style={{width: 80, marginBottom:35}}>
             <NavBtn>
               <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
                 <p className = "buttonText">done</p>
-                </NavBtnLink>
+              </NavBtnLink>
             </NavBtn>
           </div>
         </div>
