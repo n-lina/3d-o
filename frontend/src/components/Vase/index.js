@@ -69,7 +69,7 @@ const Vase = (props) => {
     if (vase.bottom_disk){
         bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
-            <meshPhongMaterial color="pink" map={texture} />
+            <meshPhongMaterial  map={texture} />
         </mesh>
     }
 
@@ -124,11 +124,11 @@ const Vase = (props) => {
         <group position={[0,0,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             <mesh >
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
             <mesh>
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
             </mesh>
             {vase.top_rim && top_rim_mesh}
             {vase.bottom_rim && bottom_rim_mesh}

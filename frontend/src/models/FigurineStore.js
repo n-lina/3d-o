@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { tryReference, types } from "mobx-state-tree";
 import * as THREE from "three";
 import React from "react"
 
@@ -55,55 +55,32 @@ function getCurvePointsFigurine(_pts, tension, numOfSegments) {
 const FigurineStore = types
   .model("Figurine", {
     cm: false,
-    height: 20, 
-    diameter: 34, 
-    dtop: 20, 
-    dbottom: 20,
-    top_rim: true, 
-    bottom_rim: true, 
-    lid: true, 
-    top_handle: true, 
-    side_handles: false, 
-    scale_h: 15,
-    curved_bottom: true, 
+    diameter: 10,
+    arms: false, 
+    legs: false, 
+    ears: "sphere",
+    body_scale: 0.7,
+    body_height: 0.35,
     default_color: "#FFFFFF",
     textures: types.optional(types.array(types.string), ["top", "", "", "",""]),
-    basketDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
+    figDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
   })
   .actions(self => ({
-    update_top_rim(top_rim){
-        self.top_rim = top_rim
+    update_ears(val){
+        self.ears = val
     },
-    update_bottom_rim(bottom_rim){
-        self.bottom_rim = bottom_rim
+    update_legs(val){
+        self.legs = val
     },
-    update_top_handle(top_handle){
-        self.top_handle = top_handle
-    },
-    update_side_handles(side_handles){
-        self.side_handles = side_handles
-    },
-    update_lid(lid){
-        self.lid = lid 
+    update_arms(val){
+        self.arms = val
     },
     update_units(units){
         self.cm = units
-    },
-    update_height(height){
-        self.height = height
     }, 
-    update_diameter(diameter){
-        self.diameter = diameter
+    update_diameter(d){
+        self.diameter = d
     }, 
-    update_dtop(dtop){
-        self.dtop = dtop
-    }, 
-    update_dbottom(dbottom){
-        self.dbottom = dbottom
-    }, 
-    update_curved_bottom(val) {
-        self.curved_bottom = val
-    },
     storePic(picData, sectionNum){
         self.textures[sectionNum] = picData
         // console.log(picData)
@@ -113,22 +90,20 @@ const FigurineStore = types
     },
     getDimensionsFigurine() {
         self.maxWidth = 53
-        self.basketDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
+        self.figDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
         return [[53, 10],[40,10],[28,9], [16,10], [24,5]]
       },
     updateCurvedPts(){
-        const s_dtop_h = self.scale_h/2
+        const s_dtop_h = self.diameter * self.body_height
         const s_dbottom_h = -1 * s_dtop_h
-        const scale_factor = self.scale_h/self.height
-    
-        const s_dtop = self.dtop * scale_factor
-        const s_dbottom = self.dbottom * scale_factor
-    
-        const s_diameter = self.diameter * scale_factor
+
+        const s_dtop_bottom = self.diameter * self.body_scale
+
+        const s_diameter = self.diameter 
         const s_diameter_h = 0
 
-        var myPoints = [s_dbottom_h,s_dbottom/2, s_diameter_h,s_diameter/2, s_dtop_h,s_dtop/2]; 
-        var tension = 0.8
+        var myPoints = [s_dbottom_h,s_dtop_bottom/2, s_diameter_h,s_diameter/2, s_dtop_h,s_dtop_bottom/2]; 
+        var tension = 0.65
         var numOfSegments = 10
         let points = [];
         const new_pts = getCurvePointsFigurine(myPoints, tension, numOfSegments)
@@ -138,7 +113,7 @@ const FigurineStore = types
             points.push( new THREE.Vector2(r, h));
         }
         return points
-    }
+    },
   }))
   .views(self => ({
   }));

@@ -7,140 +7,9 @@ const Figurine = (props) => {
     const {figStore} = props
     const texture = useMemo(() => new THREE.TextureLoader().load(grid), []);
 
-    const s_dtop_h = figStore.scale_h/2
-    const s_dbottom_h = -1 * s_dtop_h
-    const scale_factor = figStore.scale_h/figStore.height
-
-    const s_dtop = figStore.dtop * scale_factor
-    const s_dbottom = figStore.dbottom * scale_factor
-
-    const s_diameter = figStore.diameter * scale_factor
+    const s_diameter = figStore.diameter 
     const s_diameter_h = 0
 
-    // need rounded bottom shape , concave
-
-    let top_rim_mesh = <mesh/>
-    let bottom_rim_mesh = <mesh />
-    let handle = <mesh /> // handle options: 1 top, 2 sides, none 
-    let lid = <mesh/> // true false
-    let side_handles = <mesh/>
-    let bottom_disk_mesh = <mesh />
-    let curved_bottom = <mesh />
-
-    if (figStore.top_rim){
-        top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[(s_dtop/2)+0.1,0.2,10,50]}/>
-        <meshPhongMaterial color="#FF7E98" />
-        </mesh>
-    }
-    if (figStore.bottom_rim){
-        bottom_rim_mesh = <mesh position = {[0,s_dbottom_h-0.1,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[(s_dbottom/2)+0.1, 0.2, 10, 50]}/>
-        <meshPhongMaterial color="#FF7E98" />
-        </mesh>
-    }
-
-    if (figStore.top_handle){
-        const phi_len = Math.PI * 1
-        const theta_len = 0.1 * Math.PI
-        const theta_start = Math.PI * 0.45
-
-        handle = 
-        <group>
-            <mesh position={[0,s_dtop_h,0]} rotation={[-Math.PI/2,0,0]}>
-                <sphereGeometry args={[s_dtop/2, 20, 10, 0, phi_len, theta_start, theta_len]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
-            </mesh>
-            <mesh position={[0,s_dtop_h,0]}  rotation={[-Math.PI/2,0,0]}>
-                <sphereGeometry args={[s_dtop/2, 20, 10, 0, phi_len, theta_start, theta_len]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
-            </mesh>
-        </group>
-    }
-
-    if (!figStore.curved_bottom){
-        bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
-            <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
-            <meshPhongMaterial color="pink" map={texture} />
-        </mesh>
-    }
-
-    class CustomCircleCurve extends THREE.Curve {
-        constructor(scale) {
-          super();
-          this.scale = scale;
-        }
-        getPoint(t) {
-          const tx = 0;
-          const ty = Math.max(-0.5, Math.sin(2 * Math.PI * t));
-          const tz = Math.cos(2 * Math.PI * t);
-          return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
-        }
-      }
-
-    if (figStore.side_handles){
-        const tube_scale = s_dtop/5
-        const path = new CustomCircleCurve(tube_scale)
-        const segs = 40
-        const tube_rad = Math.min(0.5, tube_scale/10)
-        const rad_segs = 7
-        const closed = false
-
-        side_handles =  
-        <group>
-        <mesh position={[(-s_dtop/2)+(tube_rad*2), s_dtop_h + tube_rad + (0.5*tube_scale), 0]} >
-            <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
-            <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
-        </mesh>
-        <mesh position={[(s_dtop/2)-(tube_rad*2), s_dtop_h + tube_rad + (0.5*tube_scale), 0]}>
-            <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
-            <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
-        </mesh>
-        </group>
-    }
-
-    if (figStore.lid){
-        const lid_scale = 1
-        const percent_lid = 0.25
-        const rad_lid = (s_dtop * lid_scale/2) / Math.sin(Math.PI * percent_lid)
-        const lid_dist = s_dtop_h - (s_dtop* lid_scale/2) / Math.tan(Math.PI * percent_lid)
-        const deco_r = rad_lid/15
-        const deco_dist = lid_dist + rad_lid + deco_r - 0.2
-
-        lid = 
-        <group>
-            <mesh position={[0,lid_dist+0.1,0]}>
-                <sphereGeometry args={[rad_lid, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_lid]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
-            </mesh>
-            <mesh position={[0,lid_dist,0]}>
-                <sphereGeometry args={[rad_lid, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_lid]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
-            </mesh>
-            <mesh position={[0,deco_dist,0]}>
-                <sphereGeometry args={[deco_r, 20, 10]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
-            </mesh>
-        </group>
-    }
-
-    if (figStore.curved_bottom){
-        const percent_sphere = 0.2
-        const rad_bottom = (s_dbottom/2) / Math.sin(Math.PI * percent_sphere)
-        const bottom_dist = s_dbottom_h - (s_dbottom/2) / Math.tan(Math.PI * percent_sphere)
-
-        curved_bottom = <group>
-        <mesh position={[0,bottom_dist-0.1,0]}>
-            <sphereGeometry args={[rad_bottom, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_sphere]} />
-            <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide}/>
-        </mesh>
-        <mesh position={[0,bottom_dist-0.1,0]}>
-            <sphereGeometry args={[rad_bottom, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_sphere]} />
-            <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
-        </mesh>
-        </group>
-    }
-    
     function getInputMarker(rad, height){
         return (
             <mesh position = {[0,height,0]}>
@@ -150,8 +19,56 @@ const Figurine = (props) => {
         )
     }
 
-    const dtop_marker = figStore.top_rim ? getInputMarker((s_dtop/2) + 0.4, s_dtop_h) : getInputMarker((s_dtop/2) + 0.1, s_dtop_h) 
-    const dbottom_marker = figStore.bottom_rim ? getInputMarker((s_dbottom/2) + 0.4, s_dbottom_h) : getInputMarker((s_dbottom/2) + 0.1, s_dbottom_h)
+    const theta_len = 0.8
+    const goal_rad = (figStore.diameter * figStore.body_scale)/2
+    const head_rad = goal_rad/Math.sin((1-theta_len) * Math.PI)
+    const offset = head_rad*Math.cos((1-theta_len) * Math.PI) - 0.2
+
+    const head =
+    <group>
+        <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
+            <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI * theta_len]}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+        </mesh>
+        <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
+            <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI * theta_len]}/>
+            <meshPhongMaterial map = {texture}  side={THREE.BackSide}/>
+        </mesh>
+    </group>
+
+    let bunny_ears = <mesh/>
+    let cat_ears = <mesh/> 
+    let sphere_ears = <mesh/>
+    let bear_ears = <mesh/>
+
+    if(figStore.ears == "bear"){
+        bear_ears = <mesh/>
+    }
+
+    if(figStore.ears == "cat"){
+        cat_ears = <mesh/>
+    }
+
+    if(figStore.ears == "bunny"){
+        bunny_ears = <mesh/>
+    }
+
+    if(figStore.ears == "sphere"){
+        const ear_rad = head_rad/3.5
+        const y_pos = (figStore.diameter * figStore.body_height) + offset + ear_rad + (head_rad * Math.cos(Math.PI/4))
+        sphere_ears = 
+        <group>
+            <mesh position={[-(head_rad * Math.cos(Math.PI/4)),y_pos,0]} rotation={[0,0,Math.PI/4]}>
+                <sphereGeometry args={[ear_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI ]}/>
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            </mesh>
+            <mesh position={[(head_rad * Math.cos(Math.PI/4)),y_pos,0]} rotation={[0,0,-Math.PI/4]}>
+                <sphereGeometry args={[ear_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI ]}/>
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            </mesh>
+        </group>
+    }
+
     const diameter_marker = getInputMarker((s_diameter/2) + 0.1, s_diameter_h)
 
     const points = figStore.updateCurvedPts()
@@ -209,25 +126,21 @@ const Figurine = (props) => {
     }, []);
 
     return (
-        <group position={[0,-5,dist]} rotation={[x_rot,y_rot,z_rot]}> 
+        <group position={[0,-7,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             <mesh >
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
             <mesh>
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
             </mesh>
-            {figStore.lid && lid}
-            {figStore.top_rim && top_rim_mesh}
-            {figStore.bottom_rim && bottom_rim_mesh}
+            {head}
             {diameter_marker}
-            {dtop_marker}
-            {dbottom_marker}
-            {figStore.top_handle && handle}
-            {figStore.side_handles && side_handles}
-            {!figStore.curved_bottom && bottom_disk_mesh}
-            {figStore.curved_bottom && curved_bottom}
+            {figStore.ears == "bear" && bear_ears}
+            {figStore.ears == "bunny" && bunny_ears}
+            {figStore.ears == "cat" && cat_ears}
+            {figStore.ears == "sphere" && sphere_ears}
         </group>
     )
   }

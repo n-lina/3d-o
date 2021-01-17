@@ -49,11 +49,11 @@ const Basket = (props) => {
         <group>
             <mesh position={[0,s_dtop_h,0]} rotation={[-Math.PI/2,0,0]}>
                 <sphereGeometry args={[s_dtop/2, 20, 10, 0, phi_len, theta_start, theta_len]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
             </mesh>
             <mesh position={[0,s_dtop_h,0]}  rotation={[-Math.PI/2,0,0]}>
                 <sphereGeometry args={[s_dtop/2, 20, 10, 0, phi_len, theta_start, theta_len]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
             </mesh>
         </group>
     }
@@ -61,7 +61,7 @@ const Basket = (props) => {
     if (!basketStore.curved_bottom){
         bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
-            <meshPhongMaterial color="pink" map={texture} />
+            <meshPhongMaterial  map={texture} />
         </mesh>
     }
 
@@ -90,11 +90,11 @@ const Basket = (props) => {
         <group>
         <mesh position={[(-s_dtop/2)+(tube_rad*2), s_dtop_h + tube_rad + (0.5*tube_scale), 0]} >
             <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
-            <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
+            <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
         </mesh>
         <mesh position={[(s_dtop/2)-(tube_rad*2), s_dtop_h + tube_rad + (0.5*tube_scale), 0]}>
             <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
-            <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
+            <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
         </mesh>
         </group>
     }
@@ -111,15 +111,15 @@ const Basket = (props) => {
         <group>
             <mesh position={[0,lid_dist+0.1,0]}>
                 <sphereGeometry args={[rad_lid, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_lid]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
             </mesh>
             <mesh position={[0,lid_dist,0]}>
                 <sphereGeometry args={[rad_lid, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_lid]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
             </mesh>
             <mesh position={[0,deco_dist,0]}>
                 <sphereGeometry args={[deco_r, 20, 10]} />
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.FrontSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
             </mesh>
         </group>
     }
@@ -132,11 +132,11 @@ const Basket = (props) => {
         curved_bottom = <group>
         <mesh position={[0,bottom_dist-0.1,0]}>
             <sphereGeometry args={[rad_bottom, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_sphere]} />
-            <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide}/>
         </mesh>
         <mesh position={[0,bottom_dist-0.1,0]}>
             <sphereGeometry args={[rad_bottom, 20, 10, 0, Math.PI * 2, 0, Math.PI * percent_sphere]} />
-            <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+            <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
         </mesh>
         </group>
     }
@@ -212,11 +212,11 @@ const Basket = (props) => {
         <group position={[0,-5,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             <mesh >
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture} color="pink" side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
             <mesh>
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture} color="pink" side = {THREE.BackSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
             </mesh>
             {basketStore.lid && lid}
             {basketStore.top_rim && top_rim_mesh}
