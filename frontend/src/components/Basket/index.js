@@ -11,10 +11,10 @@ const Basket = (props) => {
     const s_dbottom_h = -1 * s_dtop_h
     const scale_factor = basketStore.scale_h/basketStore.height
 
-    const s_dtop = basketStore.dtop * scale_factor
-    const s_dbottom = basketStore.dbottom * scale_factor
+    const s_dtop = Math.max(1,basketStore.dtop * scale_factor)
+    const s_dbottom = Math.max(1,basketStore.dbottom * scale_factor)
 
-    const s_diameter = basketStore.diameter * scale_factor
+    const s_diameter = Math.max(1, basketStore.diameter * scale_factor)
     const s_diameter_h = 0
 
     // need rounded bottom shape , concave

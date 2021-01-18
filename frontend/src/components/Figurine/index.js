@@ -41,16 +41,97 @@ const Figurine = (props) => {
     let sphere_ears = <mesh/>
     let bear_ears = <mesh/>
 
+    class CustomCircleCurve extends THREE.Curve {
+        constructor(scale) {
+          super();
+          this.scale = scale;
+        }
+        getPoint(t) {
+          const tx = Math.cos(2 * Math.PI * t);
+          const ty = Math.max(-0.5, Math.sin(2 * Math.PI * t));
+          const tz = 0;
+          return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+        }
+    }
+
     if(figStore.ears == "bear"){
-        bear_ears = <mesh/>
+        const tube_scale = head_rad/3
+        const path = new CustomCircleCurve(tube_scale)
+        const segs = 40
+        const tube_rad = Math.min(0.5, tube_scale/7)
+        const rad_segs = 7
+        const closed = false
+        const y_pos = (figStore.diameter * figStore.body_height) + offset + tube_scale/4 + (head_rad * Math.cos(Math.PI/4))
+
+        bear_ears =  
+        <group>
+        <mesh position={[-(head_rad * Math.cos(Math.PI/4) + tube_scale/5),y_pos,0]} rotation={[0,0,Math.PI/4]} >
+            <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
+            <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
+        </mesh>
+        <mesh position={[(head_rad * Math.cos(Math.PI/4) + tube_scale/5),y_pos,0]} rotation={[0,0,-Math.PI/4]}>
+            <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
+            <meshPhongMaterial map = {texture}  side = {THREE.FrontSide} />
+        </mesh>
+        </group>
     }
 
     if(figStore.ears == "cat"){
-        cat_ears = <mesh/>
+        const shape = new THREE.Shape();
+        const y_pos = (figStore.diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
+        const half_side_len = (head_rad/1.5)/2
+        shape.moveTo(-half_side_len,0);
+        shape.quadraticCurveTo(-half_side_len/1.2, half_side_len * 1.3, 0,half_side_len * 1.8);
+        shape.quadraticCurveTo(half_side_len/1.2, half_side_len * 1.3, half_side_len,0);
+        shape.lineTo(-half_side_len,0);
+
+        const extrudeSettings = {
+            steps: 1,  
+            depth: 1,  
+            bevelEnabled: false,  
+          };
+
+        cat_ears = 
+        <group>
+        <mesh position={[(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,-Math.PI/4.5]}>
+            <extrudeGeometry args={[shape, extrudeSettings]}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+        </mesh>
+        <mesh position={[-(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,Math.PI/4.5]}>
+            <extrudeGeometry args={[shape, extrudeSettings]}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+        </mesh>
+        </group>
+
     }
 
     if(figStore.ears == "bunny"){
-        bunny_ears = <mesh/>
+        const bshape = new THREE.Shape();
+        const y_pos = (figStore.diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
+        const half_side_len = (head_rad/2)/2
+        bshape.moveTo(-half_side_len,0);
+        bshape.lineTo(-half_side_len, half_side_len * 3)
+        bshape.quadraticCurveTo(-half_side_len/2, (half_side_len * 4), 0,half_side_len * 4);
+        bshape.quadraticCurveTo(half_side_len/2, half_side_len * 4, half_side_len, half_side_len * 3);
+        bshape.lineTo(half_side_len,0);
+
+        const extrudeSettings = {
+            steps: 1,  
+            depth: 1,  
+            bevelEnabled: false,  
+          };
+
+        bunny_ears = 
+        <group>
+        <mesh position={[(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,-Math.PI/4]}>
+            <extrudeGeometry args={[bshape, extrudeSettings]}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+        </mesh>
+        <mesh position={[-(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,Math.PI/4]}>
+            <extrudeGeometry args={[bshape, extrudeSettings]}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+        </mesh>
+        </group>
     }
 
     if(figStore.ears == "sphere"){

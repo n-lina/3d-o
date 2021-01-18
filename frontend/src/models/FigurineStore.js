@@ -58,7 +58,7 @@ const FigurineStore = types
     diameter: 10,
     arms: false, 
     legs: false, 
-    ears: "sphere",
+    ears: "bunny",
     body_scale: 0.7,
     body_height: 0.35,
     default_color: "#FFFFFF",

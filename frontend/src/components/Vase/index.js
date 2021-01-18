@@ -15,8 +15,8 @@ const Vase = (props) => {
     const s_dbottom_h = -1 * s_dtop_h
     const scale_factor = vase.scale_h/vase.height
 
-    const s_dtop = Math.max(vase.dtop * scale_factor)
-    const s_dbottom = Math.max(vase.dbottom * scale_factor)
+    const s_dtop = Math.max(1,vase.dtop * scale_factor)
+    const s_dbottom = Math.max(1,vase.dbottom * scale_factor)
 
     const s_d1 = Math.max(1, vase.d1 * scale_factor)
     const s_d1_h = (vase.d1_h/100) * vase.scale_h - s_dtop_h
