@@ -56,9 +56,8 @@ const FigurineStore = types
   .model("Figurine", {
     cm: false,
     diameter: 10,
-    arms: false, 
-    legs: false, 
-    ears: "bunny",
+    arms: true, 
+    ears: "bear",
     body_scale: 0.7,
     body_height: 0.35,
     default_color: "#FFFFFF",
@@ -68,9 +67,6 @@ const FigurineStore = types
   .actions(self => ({
     update_ears(val){
         self.ears = val
-    },
-    update_legs(val){
-        self.legs = val
     },
     update_arms(val){
         self.arms = val

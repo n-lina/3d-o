@@ -226,4 +226,30 @@ margin: 10px;
   margin-top: 40px;
 }
 
+.containerCaption-fig{
+  /* height:125x; */
+  background:#D14240;
+  margin-bottom:1%;
+  margin-left:1%;
+  width:99%;
+  border-radius: 30px;
+  color: white;
+  letter-spacing: 2px; 
+}
+
+.containerCaption-fig a {
+  line-height: 30px;
+}
+
+.containerCaption-fig a span{
+  background:pink;
+  color: red;
+  letter-spacing:2px;
+  padding-left:7px;
+  padding-right:5px;
+  padding-top:2px;
+  padding-bottom:4px;
+  border-radius: 5px;
+}
+
 

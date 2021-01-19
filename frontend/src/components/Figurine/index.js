@@ -40,6 +40,7 @@ const Figurine = (props) => {
     let cat_ears = <mesh/> 
     let sphere_ears = <mesh/>
     let bear_ears = <mesh/>
+    let arms = <mesh/>
 
     class CustomCircleCurve extends THREE.Curve {
         constructor(scale) {
@@ -150,6 +151,23 @@ const Figurine = (props) => {
         </group>
     }
 
+    if (figStore.arms){
+        const arm_rad = figStore.diameter/7
+        const y_pos = (figStore.diameter * figStore.body_height)/2
+        const x_pos = (figStore.diameter * figStore.body_scale)/2 + arm_rad*1.3
+        arms = 
+        <group>
+            <mesh position={[-(x_pos),y_pos,0]} rotation={[0,0,Math.PI/2.65]}>
+                <cylinderGeometry args={[arm_rad, arm_rad, arm_rad*1.3, 15]} />
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            </mesh>
+            <mesh position={[x_pos,y_pos,0]} rotation={[0,0,-Math.PI/2.65]}>
+                <cylinderGeometry args={[arm_rad, arm_rad, arm_rad*1.3, 15]} />
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            </mesh>
+        </group>
+    }
+
     const diameter_marker = getInputMarker((s_diameter/2) + 0.1, s_diameter_h)
 
     const points = figStore.updateCurvedPts()
@@ -222,6 +240,7 @@ const Figurine = (props) => {
             {figStore.ears == "bunny" && bunny_ears}
             {figStore.ears == "cat" && cat_ears}
             {figStore.ears == "sphere" && sphere_ears}
+            {figStore.arms && arms}
         </group>
     )
   }
