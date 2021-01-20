@@ -76,23 +76,17 @@ const Swan = (props) => {
         [bottomRad/5, topHeight, 0]  // 18
     );
 
-    const back_vertices = []
-    back_vertices.push(
+    const F_vertices = []
+    F_vertices.push(
         // bottom row
         [-getX(Math.PI/2.8, bottomRad), 0, getY(Math.PI/2.8, bottomRad)],  // 0
         [-getX(Math.PI/2.4, bottomRad), 0, getY(Math.PI/2.4, bottomRad)],  // 1
         [getX(Math.PI/2, bottomRad), 0, getY(Math.PI/2, bottomRad)],  // 2
         [getX(Math.PI/2.4, bottomRad), 0, getY(Math.PI/2.4, bottomRad)],  // 3
         [getX(Math.PI/2.8, bottomRad), 0, getY(Math.PI/2.8, bottomRad)],  // 4
-        // middle row
-        [-getX(Math.PI/2.8, midRad), midHeight/3, getY(Math.PI/2.8, midRad)],  // 5
-        [-getX(Math.PI/2.4, midRad), midHeight/3, getY(Math.PI/2.4, midRad)],  // 6
-        [getX(Math.PI/2, midRad), midHeight/3, getY(Math.PI/2, midRad)],  // 7
-        [getX(Math.PI/2.4, midRad), midHeight/3, getY(Math.PI/2.4, midRad)],  // 8
-        [getX(Math.PI/2.8, midRad), midHeight/3, getY(Math.PI/2.8, midRad)],  // 9
-        // heights
-        [bottomRad/5, topHeight/3, 0]  // 10
+        [0, topHeight/3, bottomRad/1.3]  // 5
     );
+
 
     const L_vertices = []
     for (let i = 0; i < vertices.length; i++){
@@ -100,6 +94,14 @@ const Swan = (props) => {
         temp.push(-1 * vertices[i][0],vertices[i][1],vertices[i][2])
         L_vertices.push(temp)
     }
+
+    const B_vertices = []
+    for (let i = 0; i < F_vertices.length-1; i++){
+        let temp = []
+        temp.push(F_vertices[i][0],F_vertices[i][1], -1 * F_vertices[i][2])
+        B_vertices.push(temp)
+    }
+    B_vertices.push([0, topHeight/4, -bottomRad * 1.1])
 
     const y_pos_wing = swanStore.diameter * swanStore.height_scale
     const wings = 
@@ -120,7 +122,48 @@ const Swan = (props) => {
             <Wing vertices={L_vertices} purpose={"wing"}/>
             <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
         </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={F_vertices} purpose={"front-back"}/>
+            <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+        </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={F_vertices} purpose={"front-back"}/>
+            <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
+        </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={B_vertices} purpose={"front-back"}/>
+            <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+        </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={B_vertices} purpose={"front-back"}/>
+            <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
+        </mesh>
     </group>
+
+    const shape = new THREE.Shape();
+    const x = -2.5;
+    const y = -5;
+    shape.moveTo(x + 2.5, y + 2.5);
+    shape.bezierCurveTo(x + 2.5, y + 2.5, x + 2, y, x, y);
+    shape.bezierCurveTo(x - 3, y, x - 3, y + 3.5, x - 3, y + 3.5);
+    shape.bezierCurveTo(x - 3, y + 5.5, x - 1.5, y + 7.7, x + 2.5, y + 9.5);
+    shape.bezierCurveTo(x - 3, y, x - 3, y + 3.5, x - 3, y + 3.5);
+    shape.bezierCurveTo(x + 2.5, y + 2.5, x + 2, y, x, y);
+    // shape.bezierCurveTo(x + 6, y + 7.7, x + 8, y + 4.5, x + 8, y + 3.5);
+    // shape.bezierCurveTo(x + 8, y + 3.5, x + 8, y, x + 5, y);
+    // shape.bezierCurveTo(x + 3.5, y, x + 2.5, y + 2.5, x + 2.5, y + 2.5);
+
+    const extrudeSettings = {
+        steps: 100,  
+        depth: 1,  
+        bevelEnabled: false,   
+      };
+      
+
+    const neck_mesh = <mesh>
+        <extrudeGeometry args={[shape, extrudeSettings]}/>
+        <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+    </mesh>
 
 
     const diameter_marker = getInputMarker((swanStore.diameter/2) + 0.1, 0)
@@ -179,10 +222,11 @@ const Swan = (props) => {
 
     return (
         <group position={[0,-7,dist]} rotation={[x_rot,y_rot,z_rot]}> 
-            {swan_body}
-            {wings}
+            {/* {swan_body} */}
+            {/* {wings} */}
             {diameter_marker}
             {swanStore.rim && rim_mesh}
+            {neck_mesh}
         </group>
     )
   }

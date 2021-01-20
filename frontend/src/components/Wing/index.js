@@ -38,6 +38,14 @@ const Wing = (props) => {
             new THREE.Face3(18, 10, 9),
         )
     }
+    else if (purpose == "front-back"){
+        faces.push(
+            new THREE.Face3(5, 4, 3),
+            new THREE.Face3(5, 3, 2),
+            new THREE.Face3(5, 2, 1),
+            new THREE.Face3(5, 1, 0),
+        )
+    }
 
     function update(geometry){
         geometry.computeFaceNormals()

@@ -57,7 +57,7 @@ const SwanStore = types
     cm: false,
     diameter: 20,
     body_height: 0.35,
-    top_scale: 0.98,
+    top_scale: 1,
     bottom_scale:0.6, 
     height_scale: 0.35,
     default_color: "#FFFFFF", 
