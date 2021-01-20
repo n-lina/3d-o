@@ -2,6 +2,7 @@ import React, { useRef, useState, useMemo, useEffect} from "react";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import grid from "../../assets/paper.PNG";
+import Wing from "../Wing"
 
 const Figurine = (props) => {
     const {figStore} = props
@@ -168,9 +169,8 @@ const Figurine = (props) => {
         </group>
     }
 
-    const diameter_marker = getInputMarker((s_diameter/2) + 0.1, s_diameter_h)
-
     const points = figStore.updateCurvedPts()
+    const diameter_marker = getInputMarker((s_diameter/2) + 0.1, s_diameter_h)
 
     let [x_rot,changeXrot] = useState(0);
     let [y_rot,changeYrot] = useState(0);

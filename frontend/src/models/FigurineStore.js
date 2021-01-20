@@ -55,7 +55,7 @@ function getCurvePointsFigurine(_pts, tension, numOfSegments) {
 const FigurineStore = types
   .model("Figurine", {
     cm: false,
-    diameter: 10,
+    diameter: 12,
     arms: true, 
     ears: "bear",
     body_scale: 0.7,
