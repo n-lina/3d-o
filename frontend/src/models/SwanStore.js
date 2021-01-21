@@ -55,7 +55,7 @@ function getCurvePointsSwan(_pts, tension, numOfSegments) {
 const SwanStore = types
   .model("Swan", {
     cm: false,
-    diameter: 20,
+    diameter: 16,
     body_height: 0.35,
     top_scale: 1,
     bottom_scale:0.6, 
