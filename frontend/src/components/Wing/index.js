@@ -47,6 +47,19 @@ const Wing = (props) => {
         )
     }
 
+    else if (purpose == "one-wing"){
+        faces.push(
+            new THREE.Face3(9, 8, 7),
+            new THREE.Face3(9, 7, 6),
+            new THREE.Face3(9, 6, 5),
+            new THREE.Face3(9, 5, 4),
+            new THREE.Face3(9, 4, 3),
+            new THREE.Face3(9, 3, 2),
+            new THREE.Face3(9, 2, 1),
+            new THREE.Face3(9, 1, 0),
+        )
+    }
+
     function update(geometry){
         geometry.computeFaceNormals()
         geometry.computeVertexNormals();

@@ -46,9 +46,9 @@ const Swan = (props) => {
     }
 
     const bottomRad = swanStore.diameter * swanStore.top_scale * 0.5
-    const midRad = swanStore.diameter * swanStore.top_scale * 0.5 * 0.77
+    const midRad = swanStore.diameter * swanStore.top_scale * 0.5 * 0.73
     const midHeight = swanStore.diameter * swanStore.height_scale * 1.7 * 0.5
-    const topHeight = swanStore.diameter * swanStore.height_scale * 1.7
+    const topHeight = swanStore.diameter * swanStore.height_scale * 1.9
 
     const vertices =
     [
@@ -73,7 +73,21 @@ const Swan = (props) => {
         [getX(Math.PI/3.7, midRad), midHeight, -getY(Math.PI/3.7, midRad)],  // 16
         [getX(Math.PI/2.8, midRad), midHeight, -getY(Math.PI/2.8, midRad)],  // 17
         // heights
-        [bottomRad/5, topHeight, 0]  // 18
+        [bottomRad/6, topHeight, 0]  // 18
+    ];
+
+    const big_vertices = 
+    [
+        [-getX(-Math.PI/6, bottomRad), 0, -getY(-Math.PI/6, bottomRad)],  // 0
+        [-getX(0, bottomRad), 0, -getY(0, bottomRad)],  // 1
+        [-getX(Math.PI/8, bottomRad), 0, -getY(Math.PI/8, bottomRad)],  // 2
+        [-getX(5*Math.PI/16, bottomRad), 0, -getY(5*Math.PI/16, bottomRad)],  // 3        
+        [getX(Math.PI/2, bottomRad), 0, -getY(Math.PI/2, bottomRad)],  // 4
+        [getX(5*Math.PI/16, bottomRad), 0, -getY(5*Math.PI/16, bottomRad)],  // 5  
+        [getX(Math.PI/8, bottomRad), 0, -getY(Math.PI/8, bottomRad)],  // 6
+        [getX(0, bottomRad), 0, -getY(0, bottomRad)],  // 7
+        [getX(-Math.PI/6, bottomRad), 0, -getY(-Math.PI/6, bottomRad)],  // 8
+        [0, topHeight*1.1, -bottomRad*1.7]  // 9
     ];
 
     const F_vertices = [
@@ -135,6 +149,17 @@ const Swan = (props) => {
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={B_vertices} purpose={"front-back"}/>
+            <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
+        </mesh>
+    </group>
+
+    const one_wing = <group>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={big_vertices} purpose={"one-wing"}/>
+            <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+        </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={big_vertices} purpose={"one-wing"}/>
             <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
         </mesh>
     </group>
@@ -222,6 +247,7 @@ const Swan = (props) => {
         <group position={[0,-7,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             {swan_body}
             {wings}
+            {/* {one_wing} */}
             {diameter_marker}
             {swanStore.rim && rim_mesh}
             {neck_mesh}
