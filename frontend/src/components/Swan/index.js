@@ -87,7 +87,7 @@ const Swan = (props) => {
         [getX(Math.PI/8, bottomRad), 0, -getY(Math.PI/8, bottomRad)],  // 6
         [getX(0, bottomRad), 0, -getY(0, bottomRad)],  // 7
         [getX(-Math.PI/6, bottomRad), 0, -getY(-Math.PI/6, bottomRad)],  // 8
-        [0, topHeight*1.1, -bottomRad*1.7]  // 9
+        [0, topHeight*1.1, -bottomRad*1.25]  // 9
     ];
 
     const F_vertices = [
@@ -100,6 +100,15 @@ const Swan = (props) => {
         [0, topHeight/3, bottomRad/1.3]  // 5
     ];
 
+    const big_F_vertices = [
+        // bottom row
+        [-getX(Math.PI/4, bottomRad), 0, getY(Math.PI/4, bottomRad)],  // 0
+        [-getX(Math.PI/3, bottomRad), 0, getY(Math.PI/3, bottomRad)],  // 1
+        [getX(Math.PI/2, bottomRad), 0, getY(Math.PI/2, bottomRad)],  // 2
+        [getX(Math.PI/3, bottomRad), 0, getY(Math.PI/3, bottomRad)],  // 3
+        [getX(Math.PI/4, bottomRad), 0, getY(Math.PI/4, bottomRad)],  // 4
+        [0, topHeight/1.7, bottomRad/1.8]  // 5
+    ];
 
     const L_vertices = []
     for (let i = 0; i < vertices.length; i++){
@@ -160,6 +169,14 @@ const Swan = (props) => {
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={big_vertices} purpose={"one-wing"}/>
+            <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
+        </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={big_F_vertices} purpose={"front-back"}/>
+            <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+        </mesh>
+        <mesh position={[0,y_pos_wing,0]}>
+            <Wing vertices={big_F_vertices} purpose={"front-back"}/>
             <meshPhongMaterial map = {texture} side={THREE.BackSide} shininess = {26}/>
         </mesh>
     </group>
@@ -248,8 +265,8 @@ const Swan = (props) => {
     return (
         <group position={[0,-7,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             {swan_body}
-            {wings}
-            {/* {one_wing} */}
+            {/* {wings} */}
+            {one_wing}
             {diameter_marker}
             {swanStore.rim && rim_mesh}
             {neck_mesh}
