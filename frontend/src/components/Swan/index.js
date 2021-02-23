@@ -174,16 +174,18 @@ const Swan = (props) => {
     shape.lineTo(-param/2.5, param - (1.5*t))
     shape.quadraticCurveTo(param/2 , (param * 1.9) - t, param -t/1.5 , (param * 1.5) - t/1.5)
     shape.quadraticCurveTo((param + param/3.5) -t/1.5, (param*1.5/2) + t/1.5, param -t/1.5, t/1.5)
+    
+    const depth = param/6
 
     const extrudeSettings = {
         steps: 100,  
-        depth: 1,  
+        depth: depth,  
         bevelEnabled: false,   
       };
       
 
     const offset = swanStore.diameter * swanStore.height_scale + (param*1.3) + ((topHeight/3) * 0)
-    const neck_mesh = <mesh position={[-0.5,offset,(bottomRad/1)]} rotation={[0, Math.PI/2, 0]}>
+    const neck_mesh = <mesh position={[-depth/2,offset,(bottomRad/1)]} rotation={[0, Math.PI/2, 0]}>
         <extrudeGeometry args={[shape, extrudeSettings]}/>
         <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
     </mesh>

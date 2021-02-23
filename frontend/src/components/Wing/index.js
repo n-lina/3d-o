@@ -5,7 +5,6 @@ import grid from "../../assets/paper.PNG";
 
 const Wing = (props) => {
     const {vertices, purpose} = props
-
     const my_vertices = useMemo(() => vertices.map(v => new THREE.Vector3(...v)), [])
 
     const faces = []
@@ -60,6 +59,27 @@ const Wing = (props) => {
         )
     }
 
+    const uvs = [[
+        // front
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 1), new THREE.Vector2(0, 1) ],
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1) ],
+        // right
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 1), new THREE.Vector2(0, 1) ],
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1) ],
+        // back
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 1), new THREE.Vector2(0, 1) ],
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1) ],
+        // left
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 1), new THREE.Vector2(0, 1) ],
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1) ],
+        // top
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 1), new THREE.Vector2(0, 1) ],
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1) ],
+        // bottom
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 1), new THREE.Vector2(0, 1) ],
+        [ new THREE.Vector2(0, 0), new THREE.Vector2(1, 0), new THREE.Vector2(1, 1) ],
+    ]]
+
     function update(geometry){
         geometry.computeFaceNormals()
         geometry.computeVertexNormals();
@@ -73,7 +93,7 @@ const Wing = (props) => {
     }
 
     return (
-        <geometry vertices={my_vertices} faces={faces} onUpdate={update}/>
+        <geometry vertices={my_vertices} faces={faces} faceVertexUVs={uvs} onUpdate={update}/>
     )
   }
 
