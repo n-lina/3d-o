@@ -265,8 +265,8 @@ const Swan = (props) => {
     return (
         <group position={[0,-7,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             {swan_body}
-            {/* {wings} */}
-            {one_wing}
+            {!swanStore.wings && one_wing}
+            {swanStore.wings && wings}
             {diameter_marker}
             {swanStore.rim && rim_mesh}
             {neck_mesh}
