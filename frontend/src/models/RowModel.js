@@ -3,9 +3,12 @@ import PxModel from './PxModel'
 
 const RowModel = types
   .model("RowModel", {
-    RowData: types.optional(types.array(PxModel), [])
+    rowData: types.optional(types.array(PxModel), [])
   })
   .actions(self => ({
+    addPx(){
+      self.rowData.push(PxModel.create())
+    }
   }))
   .actions(self => ({ 
   }))

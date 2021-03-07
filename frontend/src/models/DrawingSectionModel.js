@@ -3,9 +3,12 @@ import RowModel from './RowModel'
 
 const DrawingSectionModel = types
   .model("DrawingSectionModel", {
-    DrawingSectionData: types.optional(types.array(RowModel), [])
+    drawingSectionData: types.optional(types.array(RowModel), [])
   })
   .actions(self => ({
+    addRow(){
+      self.drawingSectionData.push(RowModel.create())
+    }
   }))
   .actions(self => ({ 
   }))

@@ -117,6 +117,9 @@ const ColoringForm = types
     saveDiagram () {
       saveAs(self.canvasPic, "my-3do-diagram")
     },
+    addDrawingSection(){
+      self.coloringFormData.push(DrawingSectionModel.create())
+    }
   }))
   .views(self => ({
     // status() {

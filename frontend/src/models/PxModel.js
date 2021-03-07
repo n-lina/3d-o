@@ -7,13 +7,13 @@ const PxModel = types
     canChangeColor: true
   })
   .actions(self => ({
-    setPxColor(col){
+    setPixelColor(col){
       self.pixelColor = col
     }, 
     setOldColor(col){
       self.oldColor = col
     }, 
-    setCanChangeCol(val){
+    setCanChangeColor(val){
       self.canChangeColor = val
     }
   }))
