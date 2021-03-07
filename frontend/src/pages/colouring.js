@@ -3,18 +3,19 @@ import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
 import Sticky from 'react-stickynode';
-import ColoringForm from '../models/ColoringForm';
+// import ColoringForm from '../models/ColoringForm';
 // import { onPatch } from "mobx-state-tree";
-import makeInspectable from "mobx-devtools-mst";
+// import makeInspectable from "mobx-devtools-mst";
 import { observer } from "mobx-react";
 import logo from "../assets/complex-logo.png"
-import {PlainLink} from '../components/Navbar/NavbarElements';
+import {PlainLink as Link} from '../components/Navbar/NavbarElements';
 import { AiOutlineInfo } from "react-icons/ai";
 import { FiTrash } from "react-icons/fi";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { exportComponentAsPNG } from "react-component-export-image";
 import {useStores} from "../models/RootStoreContext"
 import DelayLink from 'react-delay-link';
+
 
 
 /* stretch goals 
@@ -124,8 +125,7 @@ const Colouring = () => {
 
   const backButton = 
   <div className = "back">
-    <div className = "nav"
-      onClick={() => console.log("hi")}> 
+    <div className = "nav" onClick={() => console.log("hi")}> 
       <IoChevronBack size={25} style={{color: 'white'}}/>
     </div>
   </div>
@@ -134,15 +134,15 @@ const Colouring = () => {
   const nextButton = 
   <div className = "next">
     <DelayLink delay={0} to="/result" clickAction={nextPage} replace={false}>
-      <div className = "nav">
+      <div className = "nav"> 
           <IoChevronForward size={25} style={{color: 'white'}}/>
       </div>
     </DelayLink>
   </div>
 
   function nextPage(){
-    coloringFormStore.setMakeTexture(true)
-    coloringFormStore.exportComponent(diagramRef, 100)
+    // coloringFormStore.setMakeTexture(true)
+    coloringFormStore.exportComponent(diagramRef)
   }
 
   const clear = <div className = "logo-object">

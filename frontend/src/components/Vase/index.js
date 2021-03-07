@@ -3,6 +3,7 @@ import {useFrame} from "react-three-fiber";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import grid from "../../assets/paper.PNG";
+// import temp from "../../assets/tempp.png";
 
 const Vase = (props) => {
     const {vase} = props

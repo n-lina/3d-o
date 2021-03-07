@@ -144,10 +144,12 @@ const VaseStore = types
     bottom_disk: true, 
     scale_h: 36,
     default_color: "#FFFFFF",
-    tot_rows_per_section: types.optional(types.array(types.number), [15,9,10,10]), // bottom to top 
-    subsections: types.optional(types.array(types.array(types.number)),[[4,3],[2],[1],[0]]), // vase has 4 sections, each may be made of 1+ drawing sections
-    textures: types.optional(types.array(types.string), ["top", "", "", "",""]),
-    vaseDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
+    tot_rows_per_section: types.optional(types.array(types.number), [15,9,10,10,10]), // bottom to top 
+    subsections: types.optional(types.array(types.array(types.number)),[[5,4],[3,2],[1],[0]]), 
+    // vase has 4 sections, each may be made of 1+ drawing sections // bottom to top
+    // it's numbered like that so you can refer to the corresponding section in vaseDimensions
+    textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
+    vaseDimensions: types.optional(types.array(types.array(types.number)), [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]), // top to bottom 
   })
   .actions(self => ({
     update_top_rim(top_rim){
@@ -185,8 +187,8 @@ const VaseStore = types
         self.d2_h = vals[2]
         self.d1_h = vals[1]
     },
-    storePic(picData, sectionNum){
-        self.textures[sectionNum] = picData
+    storePic(picData){
+        self.textures.push(picData)
         // console.log(picData)
     },
     setDefaultColor(color){
@@ -194,8 +196,8 @@ const VaseStore = types
     },
     getDimensions() {
         self.maxWidth = 53
-        self.vaseDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
-        return [[53, 10],[40,10],[28,9], [16,10], [24,5]]
+        self.vaseDimensions = [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
+        return [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
       },
     updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2

@@ -3,14 +3,14 @@ import "./pixel.css";
 import { observer } from "mobx-react";
 
 const Pixel = (props) => {
-  const {formObject} = props;
+  const {formObject, PxModel} = props;
 
-  const [pixelColor, setPixelColor] = useState("#FFFFFF");
-  const [oldColor, setOldColor] = useState(pixelColor);
-  const [canChangeColor, setCanChangeColor] = useState(true);
+  // const [PxModel.pixelColor, PxModel.setPixelColor] = useState("#FFFFFF");
+  // const [PxModel.oldColor, PxModel.setOldColor] = useState(PxModel.pixelColor);
+  // const [PxModel.canChangeColor, PxModel.setCanChangeColor] = useState(true);
 
   function borderColor(defaultColor) {
-    // if (formObject.makeTexture) return pixelColor
+    // if (formObject.makeTexture) return PxModel.pixelColor
     var color = defaultColor.substring(2, 8);
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
@@ -21,16 +21,16 @@ const Pixel = (props) => {
 
   useEffect(()=>{
     if(formObject.clear) {
-      setPixelColor(formObject.defaultColor)
+      PxModel.setPixelColor(formObject.defaultColor)
     }
-    else if (pixelColor == formObject.oldDefault) setPixelColor(formObject.defaultColor)
+    else if (PxModel.pixelColor == formObject.oldDefault) PxModel.setPixelColor(formObject.defaultColor)
   }, [formObject.defaultColor])
 
 
   function applyColor() {
     formObject.unsetClear();
-    setPixelColor(formObject.selectedColor);
-    setCanChangeColor(false);
+    PxModel.setPixelColor(formObject.selectedColor);
+    PxModel.setCanChangeColor(false);
   }
 
   function applyColorSpray() {
@@ -40,16 +40,16 @@ const Pixel = (props) => {
   }
 
   function changeColorOnHover() {
-    setOldColor(pixelColor);
-    setPixelColor(formObject.selectedColor);
+    PxModel.setOldColor(PxModel.pixelColor);
+    PxModel.setPixelColor(formObject.selectedColor);
   }
 
   function resetColor() {
-    if (canChangeColor) {
-      setPixelColor(oldColor);
+    if (PxModel.canChangeColor) {
+      PxModel.setPixelColor(PxModel.oldColor);
     }
 
-    setCanChangeColor(true);
+    PxModel.setCanChangeColor(true);
   }
 
   return (
@@ -59,7 +59,7 @@ const Pixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: pixelColor, width: formObject.makeTexture ? 13 : 20, borderColor: borderColor(formObject.defaultColor), borderWidth: formObject.makeTexture ? 0 : 0.5}}
+      style={{ background: PxModel.pixelColor, width: formObject.makeTexture ? 13 : 20, borderColor: borderColor(formObject.defaultColor), borderWidth: formObject.makeTexture ? 0 : 0.5}}
     ></div>
   );
 

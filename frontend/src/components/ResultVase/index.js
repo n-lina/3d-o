@@ -1,7 +1,6 @@
 import React, { useRef, useState, useMemo, useEffect, createRef} from "react";
 import { observer } from "mobx-react";
 import * as THREE from "three";
-import grid from "../../assets/paper.PNG";
 import {useUpdate} from "react-three-fiber"
 
 
@@ -14,12 +13,12 @@ const ResultVase = (props) => {
      }, []);
 
     useEffect(() => {
-            const len = vaseStore.vaseDimensions.length
-            for(let i = 0; i < len; i += 1){
-                itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
-                console.log(vaseStore.textures[len-i-1])
-            }
-    }, [vaseStore.textures[3]])
+        const len = vaseStore.vaseDimensions.length
+        for(let i = 0; i < len; i += 1){
+            itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
+            console.log(vaseStore.textures[len-i-1])
+        }
+    }, [])
 
 
     const s_dtop_h = vaseStore.scale_h/2
@@ -113,7 +112,7 @@ const ResultVase = (props) => {
             <group key={i}>
                 <mesh >
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
-                    <meshPhongMaterial ref={el => itemsRef.current[i] = el} color={vaseStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                    <meshPhongMaterial ref={el => itemsRef.current[i] = el} opacity={1} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
                 </mesh>
                 <mesh>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>

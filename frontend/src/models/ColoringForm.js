@@ -1,5 +1,6 @@
 import { types } from "mobx-state-tree";
 import html2canvas from 'html2canvas';
+import DrawingSectionModel from './DrawingSectionModel'
 import ReactDOM from 'react-dom';
 
 const fileType = {
@@ -9,7 +10,7 @@ const fileType = {
 };
 
 const DEFAULT_PNG = {
-  fileName: 'component.png',
+  fileName: 'my-3do-diagram.png',
   type: fileType.PNG,
   html2CanvasOptions: {}
 };
@@ -59,20 +60,14 @@ const ColoringForm = types
     clear: false,
     mode: false,
     maxWidth: 53,
-    makeTexture: false,
-    vaseTextureStore: types.optional(types.array(types.string), ["top", "", "", "bottom","extra"]),
+    // vaseTextureStore: types.optional(types.array(types.string), ["top", "", "", "bottom","extra"]),
     canvasPic: "",
+    coloringFormData: types.optional(types.array(DrawingSectionModel), [])
   })
   .actions(self => ({
-    storePic(picData, sectionNum){
-      if (sectionNum == 100) {
-        self.canvasPic = picData
-        return
-      }
-      else {
-        self.vaseTextureStore[sectionNum] = picData
-        // console.log(picData)
-      }
+    storePic(picData){
+      self.canvasPic = picData
+      return
     }
   }))
   .actions(self => ({ 
@@ -103,10 +98,7 @@ const ColoringForm = types
       self.clear = false
       self.mode = val
     }, 
-    setMakeTexture(val){
-      self.makeTexture = val
-    }, 
-    exportComponent (node, sectionNum) {
+    exportComponent (node) {
       if(!node.current) {
           throw new Error("'node' must be a RefObject")
       }
@@ -116,14 +108,18 @@ const ColoringForm = types
           useCORS: true,
           // ...html2CanvasOptions
           imageTimeout: 0,
-          backgroundColor: sectionNum != 100? self.defaultColor : "#FFFFFF"
+          backgroundColor: "#FFFFFF"
       }).then(canvas => {
-          self.storePic(canvas.toDataURL(DEFAULT_PNG, 0.1), sectionNum)
+          // self.canvasPic = canvas.toDataURL(DEFAULT_PNG, 0.1)
+          self.storePic(canvas.toDataURL(DEFAULT_PNG, 0.1))
       });
     },
     saveDiagram () {
       saveAs(self.canvasPic, "my-3do-diagram")
     },
+    addDrawingSection(){
+      self.coloringFormData.push(DrawingSectionModel.create())
+    }
   }))
   .views(self => ({
     // status() {

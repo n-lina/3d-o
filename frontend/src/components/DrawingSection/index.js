@@ -8,43 +8,41 @@ import { observer } from "mobx-react";
 // import { exportComponentAsPNG } from "react-component-export-image";
 
 const DrawingSection = (props) => {
-  const { width, height, specialTop, specialBottom, sectionNum, increasing, formObject} = props;
+  const { width, height, specialTop, specialBottom, sectionNum, increasing, formObject, DrawingSectionModel} = props;
 
   const panelRef = useRef();
 
-  useEffect(()=>{
-    if(formObject.makeTexture) {
-      formObject.exportComponent(panelRef, sectionNum)
-    }
-  }, [formObject.makeTexture])
-
   let rows = []; 
 
-  if(!formObject.makeTexture) rows.push(<SpecialRow key={-1} offset={0} width={width} specialTop={specialTop} />)
+  rows.push(<SpecialRow key={-1} offset={0} width={width} specialTop={specialTop} />)
 
+  if(DrawingSectionModel.drawingSectionData.length == 0){
+    for (let i = 0; i < height; i++){
+      DrawingSectionModel.addRow()
+    }
+  }
   for (let i = 0; i < height; i++) {
     if (i%2 == 1){
-      rows.push(<Row key={i} offset={formObject.makeTexture ? 7 : 10.5} width={width} displayRowNum={height-i} formObject={formObject}/>);
+      DrawingSectionModel.drawingSectionData[i].setOffset()
+      rows.push(<Row key={i} offset={10.5} width={width} displayRowNum={height-i} formObject={formObject} RowModel={DrawingSectionModel.drawingSectionData[i]}/>);
     }
     else{ 
-      rows.push(<Row key={i} offset={0} width={width} displayRowNum={height-i} formObject={formObject}/>);
+      rows.push(<Row key={i} offset={0} width={width} displayRowNum={height-i} formObject={formObject} RowModel={DrawingSectionModel.drawingSectionData[i]}/>);
     }
   }
   
-  if (!formObject.makeTexture){
-    if(increasing){
-      if (height%2 == 1){
-        rows.push(<SpecialRow key={height} offset={10.5} width={width} specialBottom={specialBottom} />)
-      } else {
-        rows.push(<SpecialRow key={height} offset={10.5*2} width={width} specialBottom={specialBottom} />)
-      }
+  if(increasing){
+    if (height%2 == 1){
+      rows.push(<SpecialRow key={height} offset={10.5} width={width} specialBottom={specialBottom} />)
+    } else {
+      rows.push(<SpecialRow key={height} offset={10.5*2} width={width} specialBottom={specialBottom} />)
     }
-    else{
-      if (height%2 == 1){
-        rows.push(<SpecialRow key={height} offset={0} width={width} specialBottom={specialBottom} />)
-      } else {
-        rows.push(<SpecialRow key={height} offset={10.5} width={width} specialBottom={specialBottom} />)
-      }
+  }
+  else{
+    if (height%2 == 1){
+      rows.push(<SpecialRow key={height} offset={0} width={width} specialBottom={specialBottom} />)
+    } else {
+      rows.push(<SpecialRow key={height} offset={10.5} width={width} specialBottom={specialBottom} />)
     }
   } 
 

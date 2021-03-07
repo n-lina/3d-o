@@ -11,50 +11,59 @@ import { FiDownload } from "react-icons/fi";
 import { exportComponentAsPNG } from "react-component-export-image";
 
 const Result = () => {
-  const { coloringFormStore, vaseStore } = useStores()
+  const {coloringFormStore, vaseStore} = useStores()
 
   const canvasRef = useRef()
-  // const contextRef = useRef()
-
-  // coloringFormStore.setMakeTexture(false)
+  vaseStore.setDefaultColor(coloringFormStore.defaultColor)
   
   useEffect(() => {
     const canvas = canvasRef.current
     const context = canvas.getContext("2d")
-    coloringFormStore.setMakeTexture(false)
-    vaseStore.setDefaultColor(coloringFormStore.defaultColor)
+    // console.log(coloringFormStore.coloringFormData)
+    // console.log(coloringFormStore.coloringFormData[0].drawingSectionData[0].rowData[0].pixelColor)
+    // console.log("Num sections", coloringFormStore.coloringFormData.length)
+    const px_size = 20
+    const half_px_width = px_size/2
+    const defaultCol = coloringFormStore.defaultColor;
 
-    for (let i = 0 ; i < coloringFormStore.vaseTextureStore.length; i++){
-      let topPic = new Image;
-      topPic.src = coloringFormStore.vaseTextureStore[i]
-      topPic.onload = function(){
-        const px_size = topPic.height/vaseStore.vaseDimensions[i][1]
-        const half_px_width = px_size/2
-        canvas.width = topPic.width-half_px_width;
-        canvas.height = topPic.height;
-        context.drawImage(topPic,0,0);
-        const end_idx = topPic.width-px_size;
-        for (let j = px_size+1; j < topPic.height; j+=2*(px_size)){
-          var imgData = context.getImageData(end_idx,j,Math.ceil(half_px_width),px_size);
-          context.putImageData(imgData, 0,j);
+    for (let i = 0; i < coloringFormStore.coloringFormData.length; i++){
+      const sec_width = vaseStore.vaseDimensions[i][0]
+      const sec_height = vaseStore.vaseDimensions[i][1] 
+      canvas.width = sec_width * px_size
+      canvas.height = sec_height * px_size
+      context.fillStyle = defaultCol
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      for (let r = 0; r < sec_height; r++){
+        let offset = 0 
+        if (coloringFormStore.coloringFormData[i].drawingSectionData[r].offset){
+          offset = half_px_width
+          const last_idx = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData.length
+          context.fillStyle = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[last_idx-1].pixelColor
+          context.fillRect(0, px_size * r, half_px_width, px_size)
         }
-        var texture = canvas.toDataURL("image/png", 1.0)
-        vaseStore.storePic(texture, i)
-      };
+        for (let c = 0; c < sec_width; c++){
+          if (coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor == defaultCol) continue
+          context.fillStyle = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor
+          context.fillRect((px_size * c) + offset, px_size * r, px_size, px_size)
+        }
+      }
+      var texture = canvas.toDataURL("image/png", 1.0)
+      vaseStore.storePic(texture)
     }
-  }, [coloringFormStore.vaseTextureStore[3]])
+  }, [])
 
-  const modelRef = useRef()  
+  // const modelRef = useRef()  
 
   return (
+    // <canvas ref={canvasRef}/> // to test texture generation
     <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '600px'}}>
       <div className="containerLeft" style={{background: '#FFE7E5', width: '52%', height: 'auto',float:'left'}}>
           <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: "80%", borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
-            <spotLight position={[-275, 150, 90]} intensity = {1.5}/>
-            <spotLight position={[100, 25, 90]} intensity = {1.3}/>
-            <spotLight position={[-150, -150, 110]} intensity = {0.6} />
-            <spotLight position={[150, -150, 110]} intensity={0.6} />
-            <spotLight position={[-10, 0, 25]} intensity={0.6} />
+            <spotLight position={[-275, 150, 90]} intensity = {0.8}/>
+            <spotLight position={[100, 25, 90]} intensity = {0.8}/>
+            <spotLight position={[-150, -150, 110]} intensity = {0.3} />
+            <spotLight position={[150, -150, 110]} intensity={0.1} />
+            <spotLight position={[-10, 0, 25]} intensity={0.1} />
             <ResultVase vaseStore={vaseStore} />
           </Canvas>
         <div className="containerCaption">
