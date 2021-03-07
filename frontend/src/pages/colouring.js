@@ -23,7 +23,12 @@ const Colouring = () => {
   const [dColorPalette, setDColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']) 
 
   const diagramRef = useRef();
-  const {vaseStore, coloringFormStore} = useStores();
+  const {coloringFormStore, vaseStore, swanStore, figStore, basketStore} = useStores();
+  let modelStore;
+  if (coloringFormStore.model == "vase") modelStore = vaseStore
+  if (coloringFormStore.model == "swan") modelStore = swanStore
+  else if (coloringFormStore.model == "fig") modelStore = figStore
+  else if (coloringFormStore.model == "basket") modelStore = basketStore
 
   function changeColor(color) {
     coloringFormStore.setColor(color.hex);
@@ -49,7 +54,7 @@ const Colouring = () => {
     }
   }
 
-  const myDimensions = vaseStore.getDimensions();
+  const myDimensions = modelStore.getDimensions();
   const absolute = coloringFormStore.maxWidth > 52 ? true : false 
 
   let myHeight = 0 
@@ -62,6 +67,8 @@ const Colouring = () => {
     const y = myDimensions[i][1]
     myHeight += (y * (px_y + px_border)) + (1.5*myYMargin) + (2*marker_y)
   }
+
+  myHeight = Math.max(window.innerHeight, myHeight)
 
   const colorPicker = <div className = "color-picker-object">
       <p className = "label-big">pixel color</p>
@@ -107,7 +114,7 @@ const Colouring = () => {
 
   const logoObject = <div className = "logo-object">
     <p className = "label" >3d-o</p>
-    <img className = "logo" src={logo} onClick={() => exportComponentAsPNG(diagramRef)} alt=""/>
+    <img className = "logo" src={logo} onClick={() => exportComponentAsPNG(diagramRef, {fileName: "my-3do-diagram"})} alt=""/>
     {showInfo && <div className="info-popup">info here</div>}
   </div>  
 

@@ -147,9 +147,9 @@ const VaseStore = types
     tot_rows_per_section: types.optional(types.array(types.number), [15,9,10,10,10]), // bottom to top 
     subsections: types.optional(types.array(types.array(types.number)),[[5,4],[3,2],[1],[0]]), 
     // vase has 4 sections, each may be made of 1+ drawing sections // bottom to top
-    // it's numbered like that so you can refer to the corresponding section in vaseDimensions
+    // it's numbered like that so you can refer to the corresponding section in modelDimensions
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
-    vaseDimensions: types.optional(types.array(types.array(types.number)), [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]), // top to bottom 
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]), // top to bottom 
   })
   .actions(self => ({
     update_top_rim(top_rim){
@@ -195,9 +195,8 @@ const VaseStore = types
         self.default_color = color
     },
     getDimensions() {
-        self.maxWidth = 53
-        self.vaseDimensions = [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
-        return [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
+        self.maxWidth = 53 // un hard code
+        return self.modelDimensions
       },
     updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2
@@ -246,8 +245,8 @@ const VaseStore = types
                 let curr_idx = 0
                 for (let j=0; j<self.subsections[i].length; j+=1){
                     if (self.subsections[i].length > 1){
-                        // console.log(self.vaseDimensions[self.subsections[i][j]][1])
-                        let slice_size = Math.round((self.vaseDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
+                        // console.log(self.modelDimensions[self.subsections[i][j]][1])
+                        let slice_size = Math.round((self.modelDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
                         slice_size = slice_size * 2
                         const slice = section_pts[i].slice(curr_idx,curr_idx + slice_size+2)
                         curr_idx += slice_size

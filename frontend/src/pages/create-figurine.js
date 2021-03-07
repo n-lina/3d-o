@@ -15,7 +15,8 @@ import { useStores } from "../models/RootStoreContext"
 
 const CreateFigurine = () => {
 
-  const { figStore } = useStores();
+  const { figStore, coloringFormStore} = useStores();
+  coloringFormStore.setModel("fig")
 
   const options = [
     {

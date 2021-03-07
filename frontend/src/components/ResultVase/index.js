@@ -9,14 +9,14 @@ const ResultVase = (props) => {
     const itemsRef = useRef([]);
 
     useEffect(() => {
-        itemsRef.current = itemsRef.current.slice(0, vaseStore.vaseDimensions.length);
+        itemsRef.current = itemsRef.current.slice(0, vaseStore.modelDimensions.length);
      }, []);
 
     useEffect(() => {
-        const len = vaseStore.vaseDimensions.length
+        const len = vaseStore.modelDimensions.length
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
-            console.log(vaseStore.textures[len-i-1])
+            // console.log(vaseStore.textures[len-i-1])
         }
     }, [])
 

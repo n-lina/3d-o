@@ -61,8 +61,8 @@ const FigurineStore = types
     body_scale: 0.7,
     body_height: 0.35,
     default_color: "#FFFFFF",
-    textures: types.optional(types.array(types.string), ["top", "", "", "",""]),
-    figDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
+    textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10]]), // head then body?
   })
   .actions(self => ({
     update_ears(val){
@@ -84,11 +84,16 @@ const FigurineStore = types
     setDefaultColor(color){
         self.default_color = color
     },
-    getDimensionsFigurine() {
+    getDimensions() {
         self.maxWidth = 53
-        self.figDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
-        return [[53, 10],[40,10],[28,9], [16,10], [24,5]]
-      },
+        return self.modelDimensions
+    },
+    storePic(picData){
+        self.textures.push(picData)
+    },
+    setDefaultColor(color){
+        self.default_color = color
+    },
     updateCurvedPts(){
         const s_dtop_h = self.diameter * self.body_height
         const s_dbottom_h = -1 * s_dtop_h

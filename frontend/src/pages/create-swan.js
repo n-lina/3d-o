@@ -15,7 +15,9 @@ import { useStores } from "../models/RootStoreContext"
 
 const CreateSwan = () => {
 
-  const { swanStore } = useStores();
+  const { swanStore, coloringFormStore } = useStores();
+
+  coloringFormStore.setModel("swan")
 
   const ears_options = [
     {
@@ -157,7 +159,7 @@ const wings_switch = <div className="switch"  style={{width: 100, height: 50}}>
             <spotLight position={[-150, -150, 110]} intensity = {0.6} />
             <spotLight position={[150, -150, 110]} intensity={0.6} />
             <spotLight position={[-10, 0, 25]} intensity={0.6} />
-            <Swan swanStore={swanStore} />
+            <Swan swanStore={swanStore} result={false}/>
           </Canvas>
           <div className="containerCaption-fig">
             <div style={{height: 13}}/>

@@ -14,7 +14,8 @@ import { useStores } from "../models/RootStoreContext"
 
 const CreateVase = () => {
 
-  const { vaseStore } = useStores();
+  const { vaseStore, coloringFormStore} = useStores();
+  coloringFormStore.setModel("vase")
 
   const sliderStyle = {  // Give the slider some width
     position: 'relative',

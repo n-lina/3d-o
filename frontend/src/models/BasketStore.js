@@ -67,8 +67,8 @@ const BasketStore = types
     scale_h: 15,
     curved_bottom: true, 
     default_color: "#FFFFFF",
-    textures: types.optional(types.array(types.string), ["top", "", "", "",""]),
-    basketDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
+    textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
   })
   .actions(self => ({
     update_top_rim(top_rim){
@@ -113,9 +113,15 @@ const BasketStore = types
     },
     getDimensionsBasket() {
         self.maxWidth = 53
-        self.basketDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
+        self.modelDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
         return [[53, 10],[40,10],[28,9], [16,10], [24,5]]
-      },
+    },
+    storePic(picData){
+        self.textures.push(picData)
+    },
+    setDefaultColor(color){
+        self.default_color = color
+    },
     updateCurvedPts(){
         const s_dtop_h = self.scale_h/2
         const s_dbottom_h = -1 * s_dtop_h

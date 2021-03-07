@@ -63,6 +63,8 @@ const SwanStore = types
     default_color: "#FFFFFF", 
     wings: true, 
     rim: true,
+    texture: "", 
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]), // top to bottom 
   })
   .actions(self => ({
     update_units(units){
@@ -79,6 +81,16 @@ const SwanStore = types
     }, 
     setDefaultColor(color){
         self.default_color = color
+    },
+    storePic(picData){
+        self.texture = picData
+    },
+    setDefaultColor(color){
+        self.default_color = color
+    },
+    getDimensions() {
+        self.maxWidth = 53 // un hard code
+        return self.modelDimensions
     },
     swanBodyPts(){
         const s_dtop_h = self.diameter * self.height_scale

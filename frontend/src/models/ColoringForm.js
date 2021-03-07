@@ -60,8 +60,8 @@ const ColoringForm = types
     clear: false,
     mode: false,
     maxWidth: 53,
-    // vaseTextureStore: types.optional(types.array(types.string), ["top", "", "", "bottom","extra"]),
     canvasPic: "",
+    model: "vase", // vase, swan, fig, basket
     coloringFormData: types.optional(types.array(DrawingSectionModel), [])
   })
   .actions(self => ({
@@ -74,7 +74,10 @@ const ColoringForm = types
     setColor(col){
       self.clear = false
       self.selectedColor = col
-    }, 
+    },
+    setModel(model){
+      self.model = model
+    },
     setDefaultColor(col){
       self.clear = false
       self.oldDefault = self.defaultColor

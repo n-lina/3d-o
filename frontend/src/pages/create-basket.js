@@ -14,7 +14,8 @@ import { useStores } from "../models/RootStoreContext"
 
 const CreateBasket = () => {
 
-  const { basketStore } = useStores();
+  const { basketStore, coloringFormStore} = useStores();
+  coloringFormStore.setModel("basket")
 
   const options = [
     {

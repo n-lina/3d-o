@@ -2,8 +2,10 @@ import React, {useEffect, useRef} from 'react';
 import {useStores} from "../models/RootStoreContext"
 import { observer } from "mobx-react";
 import  ResultVase  from "../components/ResultVase"
+import  Swan  from "../components/Swan"
+import  Figurine  from "../components/Figurine"
+// import  ResultBasket  from "../components/ResultBasket"
 import { Canvas} from "react-three-fiber";
-import grid from "../assets/paper.PNG"
 import './create-vase.css'
 import upperbanner from "../assets/upper-banner.png"
 import lowerbanner from "../assets/lower-banner.png"
@@ -11,10 +13,17 @@ import { FiDownload } from "react-icons/fi";
 import { exportComponentAsPNG } from "react-component-export-image";
 
 const Result = () => {
-  const {coloringFormStore, vaseStore} = useStores()
-
+  const {coloringFormStore, vaseStore, swanStore, basketStore, figStore} = useStores()
+  const model = coloringFormStore.model; 
+  
   const canvasRef = useRef()
-  vaseStore.setDefaultColor(coloringFormStore.defaultColor)
+  let modelStore; 
+  if (coloringFormStore.model == "vase") modelStore = vaseStore
+  if (coloringFormStore.model == "swan") modelStore = swanStore
+  else if (coloringFormStore.model == "fig") modelStore = figStore
+  else if (coloringFormStore.model == "basket") modelStore = basketStore
+  modelStore.setDefaultColor(coloringFormStore.defaultColor)
+  console.log(modelStore.default_color)
   
   useEffect(() => {
     const canvas = canvasRef.current
@@ -27,8 +36,8 @@ const Result = () => {
     const defaultCol = coloringFormStore.defaultColor;
 
     for (let i = 0; i < coloringFormStore.coloringFormData.length; i++){
-      const sec_width = vaseStore.vaseDimensions[i][0]
-      const sec_height = vaseStore.vaseDimensions[i][1] 
+      const sec_width = modelStore.modelDimensions[i][0]
+      const sec_height = modelStore.modelDimensions[i][1] 
       canvas.width = sec_width * px_size
       canvas.height = sec_height * px_size
       context.fillStyle = defaultCol
@@ -48,7 +57,7 @@ const Result = () => {
         }
       }
       var texture = canvas.toDataURL("image/png", 1.0)
-      vaseStore.storePic(texture)
+      modelStore.storePic(texture)
     }
   }, [])
 
@@ -64,7 +73,10 @@ const Result = () => {
             <spotLight position={[-150, -150, 110]} intensity = {0.3} />
             <spotLight position={[150, -150, 110]} intensity={0.1} />
             <spotLight position={[-10, 0, 25]} intensity={0.1} />
-            <ResultVase vaseStore={vaseStore} />
+            {coloringFormStore.model == "vase" && <ResultVase vaseStore={vaseStore} />}
+            {coloringFormStore.model == "swan" && <Swan swanStore={swanStore} result={true}/>}
+            {coloringFormStore.model == "fig" && <Figurine figStore={figStore} result={true}/>}
+            {/* {coloringFormStore.model == "basket" && <ResultBasket basketStore={basketStore} />} */}
           </Canvas>
         <div className="containerCaption">
             <div style={{height: 10}}></div>
