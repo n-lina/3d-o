@@ -10,7 +10,7 @@ const fileType = {
 };
 
 const DEFAULT_PNG = {
-  fileName: 'component.png',
+  fileName: 'my-3do-diagram.png',
   type: fileType.PNG,
   html2CanvasOptions: {}
 };

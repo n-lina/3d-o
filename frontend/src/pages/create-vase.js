@@ -324,7 +324,7 @@ const CreateVase = () => {
         <div className="containerLeft" style={{background: '#FFE7E5', width: '57%', height: 'auto',float:'left'}}>
           <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: '80%', borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
             {/* <ambientLight intensity={0} /> */}
-            <spotLight position={[-275, 150, 90]} intensity = {1.5}/>
+            <spotLight position={[-275, 150, 90]} intensity = {1.3}/>
             <spotLight position={[100, 25, 90]} intensity = {1.3}/>
             <spotLight position={[-150, -150, 110]} intensity = {0.6} />
             <spotLight position={[150, -150, 110]} intensity={0.6} />
