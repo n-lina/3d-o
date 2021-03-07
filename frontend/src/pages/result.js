@@ -18,31 +18,31 @@ const Result = () => {
 
   // coloringFormStore.setMakeTexture(false)
   
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const context = canvas.getContext("2d")
-    coloringFormStore.setMakeTexture(false)
-    vaseStore.setDefaultColor(coloringFormStore.defaultColor)
+  // useEffect(() => {
+  //   const canvas = canvasRef.current
+  //   const context = canvas.getContext("2d")
+  //   coloringFormStore.setMakeTexture(false)
+  //   vaseStore.setDefaultColor(coloringFormStore.defaultColor)
 
-    for (let i = 0 ; i < coloringFormStore.vaseTextureStore.length; i++){
-      let topPic = new Image;
-      topPic.src = coloringFormStore.vaseTextureStore[i]
-      topPic.onload = function(){
-        const px_size = topPic.height/vaseStore.vaseDimensions[i][1]
-        const half_px_width = px_size/2
-        canvas.width = topPic.width-half_px_width;
-        canvas.height = topPic.height;
-        context.drawImage(topPic,0,0);
-        const end_idx = topPic.width-px_size;
-        for (let j = px_size+1; j < topPic.height; j+=2*(px_size)){
-          var imgData = context.getImageData(end_idx,j,Math.ceil(half_px_width),px_size);
-          context.putImageData(imgData, 0,j);
-        }
-        var texture = canvas.toDataURL("image/png", 1.0)
-        vaseStore.storePic(texture, i)
-      };
-    }
-  }, [coloringFormStore.vaseTextureStore[3]])
+  //   for (let i = 0 ; i < coloringFormStore.vaseTextureStore.length; i++){
+  //     let topPic = new Image;
+  //     topPic.src = coloringFormStore.vaseTextureStore[i]
+  //     topPic.onload = function(){
+  //       const px_size = topPic.height/vaseStore.vaseDimensions[i][1]
+  //       const half_px_width = px_size/2
+  //       canvas.width = topPic.width-half_px_width;
+  //       canvas.height = topPic.height;
+  //       context.drawImage(topPic,0,0);
+  //       const end_idx = topPic.width-px_size;
+  //       for (let j = px_size+1; j < topPic.height; j+=2*(px_size)){
+  //         var imgData = context.getImageData(end_idx,j,Math.ceil(half_px_width),px_size);
+  //         context.putImageData(imgData, 0,j);
+  //       }
+  //       var texture = canvas.toDataURL("image/png", 1.0)
+  //       vaseStore.storePic(texture, i)
+  //     };
+  //   }
+  // }, [coloringFormStore.vaseTextureStore[3]])
 
   const modelRef = useRef()  
 

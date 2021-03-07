@@ -10,13 +10,13 @@ const Row = (props) => {
   let {offset} = props;
   let pixels = [];
 
-  if(!formObject.makeTexture) pixels.push(<SpecialPixel key={-1} on={false} displayRowNum={displayRowNum} />)
+  pixels.push(<SpecialPixel key={-1} on={false} displayRowNum={displayRowNum} />)
 
   for (let i = 0; i < width; i++) {
     pixels.push(<Pixel key={i} formObject={formObject}/>);
   }
 
-  if(!formObject.makeTexture) pixels.push(<SpecialPixel key={width} on={false} displayRowNum={displayRowNum} />)
+  pixels.push(<SpecialPixel key={width} on={false} displayRowNum={displayRowNum} />)
 
   return <div style={{marginLeft: offset}} className="row">{pixels}</div>;
 }

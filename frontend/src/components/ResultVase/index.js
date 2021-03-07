@@ -16,10 +16,10 @@ const ResultVase = (props) => {
     useEffect(() => {
             const len = vaseStore.vaseDimensions.length
             for(let i = 0; i < len; i += 1){
-                itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
-                console.log(vaseStore.textures[len-i-1])
+                itemsRef.current[i].map = new THREE.TextureLoader().load(grid)
+                // console.log(vaseStore.textures[len-i-1])
             }
-    }, [vaseStore.textures[3]])
+    }, [])
 
 
     const s_dtop_h = vaseStore.scale_h/2

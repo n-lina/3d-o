@@ -103,7 +103,6 @@ const OrigamiObject = (props) => {
     for (let i = 0; i < dimensions.length; i++) {
       sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} formObject={formObject} sectionNum={i} />);
     }
-  
     return (
       <div id="origamiObject">
         <div id="sections" ref={objectRef}>

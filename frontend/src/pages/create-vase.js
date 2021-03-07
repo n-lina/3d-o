@@ -381,7 +381,7 @@ const CreateVase = () => {
             <NavBtn>
               <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
                 <p className = "buttonText">done</p>
-                </NavBtnLink>
+              </NavBtnLink>
             </NavBtn>
           </div>
         </div>
