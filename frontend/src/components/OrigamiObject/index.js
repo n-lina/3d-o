@@ -106,7 +106,9 @@ const OrigamiObject = (props) => {
       }
     }
     for (let i = 0; i < dimensions.length; i++) {
-      sections.push(<DrawingSection key={i} width={dimensions[i][0]} height={dimensions[i][1]} specialTop={specialTop[i]} specialBottom={specialBottom[i]} increasing={increasing[i]} formObject={formObject} sectionNum={i} DrawingSectionModel={formObject.coloringFormData[i]} />);
+      formObject.coloringFormData[i].setWidthHeight(dimensions[i][0], dimensions[i][1])
+      formObject.coloringFormData[i].setIncreasing(increasing[i])
+      sections.push(<DrawingSection key={i} specialTop = {specialTop[i]} specialBottom = {specialBottom[i]} formObject={formObject} DrawingSectionModel={formObject.coloringFormData[i]} />);
     }
     return (
       <div id="origamiObject">

@@ -10,7 +10,6 @@ const Pixel = (props) => {
   // const [PxModel.canChangeColor, PxModel.setCanChangeColor] = useState(true);
 
   function borderColor(defaultColor) {
-    // if (formObject.makeTexture) return PxModel.pixelColor
     var color = defaultColor.substring(2, 8);
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
@@ -59,7 +58,7 @@ const Pixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: PxModel.pixelColor, width: formObject.makeTexture ? 13 : 20, borderColor: borderColor(formObject.defaultColor), borderWidth: formObject.makeTexture ? 0 : 0.5}}
+      style={{ background: PxModel.pixelColor, width: 20, borderColor: borderColor(formObject.defaultColor), borderWidth: 0.5}}
     ></div>
   );
 

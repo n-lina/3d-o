@@ -3,9 +3,6 @@ import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
 import Sticky from 'react-stickynode';
-// import ColoringForm from '../models/ColoringForm';
-// import { onPatch } from "mobx-state-tree";
-// import makeInspectable from "mobx-devtools-mst";
 import { observer } from "mobx-react";
 import logo from "../assets/complex-logo.png"
 import {PlainLink as Link} from '../components/Navbar/NavbarElements';
@@ -15,14 +12,6 @@ import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { exportComponentAsPNG } from "react-component-export-image";
 import {useStores} from "../models/RootStoreContext"
 import DelayLink from 'react-delay-link';
-
-
-
-/* stretch goals 
-- spray painting 
-- using lines and shapes to color 
-- larger brush size 
-- rotation option -- need to use smth other than index for keys, and map for default / starting position */
 
 const Colouring = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -119,7 +108,6 @@ const Colouring = () => {
   const logoObject = <div className = "logo-object">
     <p className = "label" >3d-o</p>
     <img className = "logo" src={logo} onClick={() => exportComponentAsPNG(diagramRef)} alt=""/>
-    {/* <img className = "logo" src={logo} onClick={() => coloringFormStore.setMakeTexture(true)} alt=""/> */}
     {showInfo && <div className="info-popup">info here</div>}
   </div>  
 
@@ -141,7 +129,6 @@ const Colouring = () => {
   </div>
 
   function nextPage(){
-    // coloringFormStore.setMakeTexture(true)
     coloringFormStore.exportComponent(diagramRef)
   }
 
@@ -192,10 +179,8 @@ const Colouring = () => {
           {nextButton}
         </div>
       </Sticky>
-      <div style={{background: "#FFE7E5", height: myHeight}}>
-        <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: coloringFormStore.makeTexture ? 0 : myHeight, background:"#FFE7E5"}}>
-          {canvas}
-        </div>
+      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: myHeight, background:"#FFE7E5"}}>
+        {canvas}
       </div>
     </div>
   );
