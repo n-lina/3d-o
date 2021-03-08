@@ -131,54 +131,54 @@ const Swan = (props) => {
     <group>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={vertices} purpose={"wing"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={vertices} purpose={"wing"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.BackSide} />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.BackSide} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={L_vertices} purpose={"wing"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={L_vertices} purpose={"wing"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.BackSide} />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.BackSide} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={F_vertices} purpose={"front-back"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={F_vertices} purpose={"front-back"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.BackSide} />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.BackSide} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={B_vertices} purpose={"front-back"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={B_vertices} purpose={"front-back"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.BackSide} />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.BackSide} />
         </mesh>
     </group>
 
     const one_wing = <group>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={big_vertices} purpose={"one-wing"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={big_vertices} purpose={"one-wing"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.BackSide} />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.BackSide} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={big_F_vertices} purpose={"front-back"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26} />
         </mesh>
         <mesh position={[0,y_pos_wing,0]}>
             <Wing vertices={big_F_vertices} purpose={"front-back"}/>
-            <meshLambertMaterial color={swanStore.default_color} side={THREE.BackSide} />
+            <meshPhongMaterial color={swanStore.default_color} side={THREE.BackSide} />
         </mesh>
     </group>
 
@@ -205,7 +205,7 @@ const Swan = (props) => {
     const offset = swanStore.diameter * swanStore.height_scale + (param*1.3) + ((topHeight/3) * 0)
     const neck_mesh = <mesh position={[-depth/2,offset,(bottomRad/1)]} rotation={[0, Math.PI/2, 0]}>
         <extrudeGeometry args={[shape, extrudeSettings]}/>
-        <meshPhongMaterial map = {texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+        <meshPhongMaterial color={swanStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
     </mesh>
 
 

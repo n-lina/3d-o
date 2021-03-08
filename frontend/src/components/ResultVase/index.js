@@ -1,8 +1,6 @@
-import React, { useRef, useState, useMemo, useEffect, createRef} from "react";
+import React, { useRef, useState, useMemo, useEffect} from "react";
 import { observer } from "mobx-react";
 import * as THREE from "three";
-import {useUpdate} from "react-three-fiber"
-
 
 const ResultVase = (props) => {
     const {vaseStore} = props
@@ -112,7 +110,7 @@ const ResultVase = (props) => {
             <group key={i}>
                 <mesh >
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
-                    <meshPhongMaterial ref={el => itemsRef.current[i] = el} opacity={1} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                    <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
                 </mesh>
                 <mesh>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>

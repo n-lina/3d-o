@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import  ResultVase  from "../components/ResultVase"
 import  Swan  from "../components/Swan"
 import  Figurine  from "../components/Figurine"
-// import  ResultBasket  from "../components/ResultBasket"
+import  ResultBasket  from "../components/ResultBasket"
 import { Canvas} from "react-three-fiber";
 import './create-vase.css'
 import upperbanner from "../assets/upper-banner.png"
@@ -67,7 +67,7 @@ const Result = () => {
     // <canvas ref={canvasRef}/> // to test texture generation
     <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '600px'}}>
       <div className="containerLeft" style={{background: '#FFE7E5', width: '52%', height: 'auto',float:'left'}}>
-          <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: "80%", borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
+          <Canvas camera={{position:[0, 0, 95], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: "80%", borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
             <spotLight position={[-275, 150, 90]} intensity = {0.8}/>
             <spotLight position={[100, 25, 90]} intensity = {0.8}/>
             <spotLight position={[-150, -150, 110]} intensity = {0.3} />
@@ -76,7 +76,7 @@ const Result = () => {
             {coloringFormStore.model == "vase" && <ResultVase vaseStore={vaseStore} />}
             {coloringFormStore.model == "swan" && <Swan swanStore={swanStore} result={true}/>}
             {coloringFormStore.model == "fig" && <Figurine figStore={figStore} result={true}/>}
-            {/* {coloringFormStore.model == "basket" && <ResultBasket basketStore={basketStore} />} */}
+            {coloringFormStore.model == "basket" && <ResultBasket basketStore={basketStore} />}
           </Canvas>
         <div className="containerCaption">
             <div style={{height: 10}}></div>

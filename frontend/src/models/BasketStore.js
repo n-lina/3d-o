@@ -67,8 +67,12 @@ const BasketStore = types
     scale_h: 15,
     curved_bottom: true, 
     default_color: "#FFFFFF",
+    tot_rows_per_section: types.optional(types.array(types.number), [15,29]), // bottom to top 
+    subsections: types.optional(types.array(types.array(types.number)),[[4,3],[2,1,0]]), 
+    // basket has 2 sections, each may be made of 1+ drawing sections // bottom to top
+    // it's numbered like that so you can refer to the corresponding section in modelDimensions
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
-    modelDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10],[28,9], [16,10], [24,5]]),
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[53,10],[40,10],[28,9],[16,10],[24,5]]),
   })
   .actions(self => ({
     update_top_rim(top_rim){
@@ -111,10 +115,9 @@ const BasketStore = types
     setDefaultColor(color){
         self.default_color = color
     },
-    getDimensionsBasket() {
+    getDimensions() {
         self.maxWidth = 53
-        self.modelDimensions = [[53, 10],[40,10],[28,9], [16,10], [24,5]]
-        return [[53, 10],[40,10],[28,9], [16,10], [24,5]]
+        return self.modelDimensions
     },
     storePic(picData){
         self.textures.push(picData)
@@ -122,7 +125,7 @@ const BasketStore = types
     setDefaultColor(color){
         self.default_color = color
     },
-    updateCurvedPts(){
+    updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2
         const s_dbottom_h = -1 * s_dtop_h
         const scale_factor = self.scale_h/self.height
@@ -143,7 +146,50 @@ const BasketStore = types
             const r = new_pts[i+1]
             points.push( new THREE.Vector2(r, h));
         }
-        return points
+        if (!broken) return points
+        else{
+            let section_pts = []
+            let broken_pts = []
+            let broken_pts_three = []
+            let lo = 0 
+            let hi = 2
+            while (hi+3 < new_pts.length){
+                if (new_pts[hi] == new_pts[hi+2] && new_pts[hi+1] == new_pts[hi+3]){
+                    const temp = new_pts.slice(lo,hi+2)
+                    section_pts.push(temp)
+                    lo = hi + 2
+                }
+                hi += 2
+            }
+            section_pts.push(new_pts.slice(lo,new_pts.length))
+            for (let i=0; i<2; i+=1){ //section_pts.length = 4
+                let curr_idx = 0
+                for (let j=0; j<self.subsections[i].length; j+=1){
+                    if (self.subsections[i].length > 1){
+                        // console.log(self.modelDimensions[self.subsections[i][j]][1])
+                        let slice_size = Math.round((self.modelDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
+                        slice_size = slice_size * 2
+                        const slice = section_pts[i].slice(curr_idx,curr_idx + slice_size+2)
+                        curr_idx += slice_size
+                        broken_pts.push(slice)
+                    } 
+                    else {
+                        broken_pts.push(section_pts[i])
+                    }
+                }
+            }
+            for(let j=0; j<broken_pts.length; j+= 1){
+                let temp = []
+                for(let k = 0; k < broken_pts[j].length; k += 2){
+                    const h = broken_pts[j][k]
+                    const r = broken_pts[j][k+1]
+                    temp.push( new THREE.Vector2(r, h));
+                }
+                broken_pts_three.push(temp)
+            }
+            
+            return broken_pts_three
+        }
     }
   }))
   .views(self => ({

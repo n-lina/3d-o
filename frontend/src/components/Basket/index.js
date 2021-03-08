@@ -29,13 +29,13 @@ const Basket = (props) => {
 
     if (basketStore.top_rim){
         top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[(s_dtop/2)+0.1,0.2,10,50]}/>
+        <torusGeometry args={[(s_dtop/2)+0.15,0.25,10,50]}/>
         <meshPhongMaterial color="#FF7E98" />
         </mesh>
     }
     if (basketStore.bottom_rim){
         bottom_rim_mesh = <mesh position = {[0,s_dbottom_h-0.1,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[(s_dbottom/2)+0.1, 0.2, 10, 50]}/>
+        <torusGeometry args={[(s_dbottom/2)+0.15, 0.25, 10, 50]}/>
         <meshPhongMaterial color="#FF7E98" />
         </mesh>
     }
@@ -150,8 +150,8 @@ const Basket = (props) => {
         )
     }
 
-    const dtop_marker = basketStore.top_rim ? getInputMarker((s_dtop/2) + 0.4, s_dtop_h) : getInputMarker((s_dtop/2) + 0.1, s_dtop_h) 
-    const dbottom_marker = basketStore.bottom_rim ? getInputMarker((s_dbottom/2) + 0.4, s_dbottom_h) : getInputMarker((s_dbottom/2) + 0.1, s_dbottom_h)
+    const dtop_marker = basketStore.top_rim ? getInputMarker((s_dtop/2) + 0.5, s_dtop_h) : getInputMarker((s_dtop/2) + 0.1, s_dtop_h) 
+    const dbottom_marker = basketStore.bottom_rim ? getInputMarker((s_dbottom/2) + 0.5, s_dbottom_h) : getInputMarker((s_dbottom/2) + 0.1, s_dbottom_h)
     const diameter_marker = getInputMarker((s_diameter/2) + 0.1, s_diameter_h)
 
     const points = basketStore.updateCurvedPts()
