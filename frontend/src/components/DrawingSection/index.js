@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from "react";
 import "./drawingSection.css";
 import Row from "../Row";
 import SpecialRow from "../SpecialRow";
+import TriangleSection from "../TriangleSection";
 import { observer } from "mobx-react";
 
 // import { exportComponentAsPNG } from "react-component-export-image";
@@ -13,6 +14,16 @@ const DrawingSection = (props) => {
   const panelRef = useRef();
 
   let rows = []; 
+  let swanUpper = [];
+
+  // TODO : unhardcode
+  const wing1 = <TriangleSection width={17} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true}/> 
+  const wing2 = <TriangleSection width={17} formObject={formObject} elevation={DrawingSectionModel.height} /> 
+  const chest = <TriangleSection width={5} formObject={formObject} elevation={DrawingSectionModel.height} />
+  const back = <TriangleSection width={4} formObject={formObject} elevation={DrawingSectionModel.height} />
+  swanUpper.push(wing1, chest, wing2, back)
+
+  const upper_offset = 0 + 10.5 // px size + half px
 
   if (formObject.model != "swan") rows.push(<SpecialRow key={-1} offset={0} width={DrawingSectionModel.width} specialTop={specialTop} />)
   
@@ -49,8 +60,11 @@ const DrawingSection = (props) => {
   } 
 
   return (
-    <div id="drawingSection">
+    <div id="drawingSection" >
       <div id="pixels" ref={panelRef} style={{marginBottom: 10, marginLeft: 40, marginRight: 40}}>
+        {formObject.model == "swan" && <div style={{display:"flex", alignItems:"flex-end", marginLeft: upper_offset, marginBottom: 3, justifyContent:"flex-start"}}>
+          {swanUpper}
+        </div>}
         {rows}
       </div>
     </div>

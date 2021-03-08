@@ -58,7 +58,7 @@ const Pixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: PxModel.pixelColor, width: 20, borderColor: borderColor(formObject.defaultColor), borderWidth: 0.5}}
+      style={{ background: PxModel.pixelColor, borderColor: borderColor(formObject.defaultColor), borderWidth: 0.5}}
     ></div>
   );
 
