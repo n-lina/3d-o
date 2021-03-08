@@ -3,7 +3,7 @@ import {useStores} from "../models/RootStoreContext"
 import { observer } from "mobx-react";
 import  ResultVase  from "../components/ResultVase"
 import  Swan  from "../components/Swan"
-import  Figurine  from "../components/Figurine"
+import  ResultFigurine  from "../components/ResultFigurine"
 import  ResultBasket  from "../components/ResultBasket"
 import { Canvas} from "react-three-fiber";
 import './create-vase.css'
@@ -75,7 +75,7 @@ const Result = () => {
             <spotLight position={[-10, 0, 25]} intensity={0.1} />
             {coloringFormStore.model == "vase" && <ResultVase vaseStore={vaseStore} />}
             {coloringFormStore.model == "swan" && <Swan swanStore={swanStore} result={true}/>}
-            {coloringFormStore.model == "fig" && <Figurine figStore={figStore} result={true}/>}
+            {coloringFormStore.model == "fig" && <ResultFigurine figStore={figStore}/>}
             {coloringFormStore.model == "basket" && <ResultBasket basketStore={basketStore} />}
           </Canvas>
         <div className="containerCaption">

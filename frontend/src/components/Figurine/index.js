@@ -5,12 +5,8 @@ import grid from "../../assets/paper.PNG";
 import Wing from "../Wing"
 
 const Figurine = (props) => {
-    const {figStore, result} = props
-    const image_head = result ? figStore.textures[0] : grid
-    const texture_head = useMemo(() => new THREE.TextureLoader().load(image_head), []) 
-
-    const image_body = result ? figStore.textures[1] : grid
-    const texture_body = useMemo(() => new THREE.TextureLoader().load(image_body), []) 
+    const {figStore} = props
+    const texture = useMemo(() => new THREE.TextureLoader().load(grid), []) 
 
     const s_diameter = figStore.diameter 
     const s_diameter_h = 0
@@ -33,11 +29,11 @@ const Figurine = (props) => {
     <group>
         <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
             <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI * theta_len]}/>
-            <meshPhongMaterial map = {texture_head}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+            <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
         </mesh>
         <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
             <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI * theta_len]}/>
-            <meshPhongMaterial map = {texture_head}  side={THREE.BackSide}/>
+            <meshPhongMaterial map = {texture}  side={THREE.BackSide}/>
         </mesh>
     </group>
 
@@ -73,11 +69,11 @@ const Figurine = (props) => {
         <group>
         <mesh position={[-(head_rad * Math.cos(Math.PI/4) + tube_scale/5),y_pos,0]} rotation={[0,0,Math.PI/4]} >
             <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
-            <meshPhongMaterial color={figStore.default_color} side = {THREE.FrontSide} />
+            <meshPhongMaterial map={texture} side = {THREE.FrontSide} />
         </mesh>
         <mesh position={[(head_rad * Math.cos(Math.PI/4) + tube_scale/5),y_pos,0]} rotation={[0,0,-Math.PI/4]}>
             <tubeGeometry args={[path, segs, tube_rad, rad_segs, closed]} />
-            <meshPhongMaterial  color={figStore.default_color} side = {THREE.FrontSide} />
+            <meshPhongMaterial  map={texture} side = {THREE.FrontSide} />
         </mesh>
         </group>
     }
@@ -101,11 +97,11 @@ const Figurine = (props) => {
         <group>
         <mesh position={[(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,-Math.PI/4.5]}>
             <extrudeGeometry args={[shape, extrudeSettings]}/>
-            <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+            <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
         </mesh>
         <mesh position={[-(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,Math.PI/4.5]}>
             <extrudeGeometry args={[shape, extrudeSettings]}/>
-            <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+            <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
         </mesh>
         </group>
 
@@ -131,11 +127,11 @@ const Figurine = (props) => {
         <group>
         <mesh position={[(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,-Math.PI/4]}>
             <extrudeGeometry args={[bshape, extrudeSettings]}/>
-            <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+            <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
         </mesh>
         <mesh position={[-(head_rad * Math.cos(Math.PI/4) - half_side_len/3),y_pos,0]} rotation={[0,0,Math.PI/4]}>
             <extrudeGeometry args={[bshape, extrudeSettings]}/>
-            <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
+            <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>        
         </mesh>
         </group>
     }
@@ -147,11 +143,11 @@ const Figurine = (props) => {
         <group>
             <mesh position={[-(head_rad * Math.cos(Math.PI/4)),y_pos,0]} rotation={[0,0,Math.PI/4]}>
                 <sphereGeometry args={[ear_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI ]}/>
-                <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
             <mesh position={[(head_rad * Math.cos(Math.PI/4)),y_pos,0]} rotation={[0,0,-Math.PI/4]}>
                 <sphereGeometry args={[ear_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI ]}/>
-                <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
         </group>
     }
@@ -164,11 +160,11 @@ const Figurine = (props) => {
         <group>
             <mesh position={[-(x_pos),y_pos,0]} rotation={[0,0,Math.PI/2.65]}>
                 <cylinderGeometry args={[arm_rad, arm_rad, arm_rad*1.3, 15]} />
-                <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
             <mesh position={[x_pos,y_pos,0]} rotation={[0,0,-Math.PI/2.65]}>
                 <cylinderGeometry args={[arm_rad, arm_rad, arm_rad*1.3, 15]} />
-                <meshPhongMaterial  color={figStore.default_color} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial  map={texture} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
         </group>
     }
@@ -232,14 +228,14 @@ const Figurine = (props) => {
         <group position={[0,-7,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             <mesh >
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture_body}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
+                <meshPhongMaterial map = {texture}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
             <mesh>
                 <latheGeometry args={[points, 30, 0, 2*Math.PI]}/>
-                <meshPhongMaterial map = {texture_body}  side = {THREE.BackSide} />
+                <meshPhongMaterial map = {texture}  side = {THREE.BackSide} />
             </mesh>
             {head}
-            {!result && diameter_marker}
+            {diameter_marker}
             {figStore.ears == "bear" && bear_ears}
             {figStore.ears == "bunny" && bunny_ears}
             {figStore.ears == "cat" && cat_ears}

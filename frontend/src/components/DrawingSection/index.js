@@ -14,8 +14,8 @@ const DrawingSection = (props) => {
 
   let rows = []; 
 
-  rows.push(<SpecialRow key={-1} offset={0} width={DrawingSectionModel.width} specialTop={specialTop} />)
-
+  if (formObject.model != "swan") rows.push(<SpecialRow key={-1} offset={0} width={DrawingSectionModel.width} specialTop={specialTop} />)
+  
   if(DrawingSectionModel.drawingSectionData.length == 0){
     for (let i = 0; i < DrawingSectionModel.height; i++){
       DrawingSectionModel.addRow()

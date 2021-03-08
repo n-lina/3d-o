@@ -62,7 +62,8 @@ const FigurineStore = types
     body_height: 0.35,
     default_color: "#FFFFFF",
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
-    modelDimensions: types.optional(types.array(types.array(types.number)), [[53, 10],[40,10]]), // head then body?
+    tot_rows_head: 33,
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[30,12],[40,11],[53,10],[40,10]]), // last = body
   })
   .actions(self => ({
     update_ears(val){
@@ -93,6 +94,19 @@ const FigurineStore = types
     },
     setDefaultColor(color){
         self.default_color = color
+    },
+    getBrokenHeadPts(tot_theta_len){
+        let theta_start = 0 
+        let theta_len = 0
+        let divisions = []
+        for (let i = 0; i < self.modelDimensions.length-1; i++){
+            const num_rows = self.modelDimensions[i][1]
+            const ratio = num_rows/self.tot_rows_head
+            theta_len = ratio * tot_theta_len
+            divisions.push([theta_start, theta_len])
+            theta_start += theta_len
+        }
+        return divisions
     },
     updateCurvedPts(){
         const s_dtop_h = self.diameter * self.body_height
