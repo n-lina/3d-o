@@ -73,6 +73,9 @@ const BasketStore = types
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
     modelDimensions: types.optional(types.array(types.array(types.number)), [[53,10],[40,10],[28,9],[16,10],[13,5]]),
+    // unused, only for consistency: 
+    arms: false, 
+    ears: "" 
   })
   .actions(self => ({
     update_top_rim(top_rim){

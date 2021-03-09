@@ -269,7 +269,7 @@ const Swan = (props) => {
             {!swanStore.wings && one_wing}
             {swanStore.wings && wings}
             {!result && diameter_marker}
-            {swanStore.rim && rim_mesh}
+            {swanStore.bottom_rim && rim_mesh}
             {neck_mesh}
         </group>
     )

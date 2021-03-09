@@ -118,11 +118,11 @@ const CreateSwan = () => {
     </Handles>
   </Slider>
 
-const rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
+const bottom_rim_switch = <div className="switch"  style={{width: 100, height: 50}}>
 <SwitchSelector
-    onChange={(val) => swanStore.update_rim(val)}
+    onChange={(val) => swanStore.update_bottom_rim(val)}
     options={options}
-    initialSelectedIndex={swanStore.rim ? 0 : 1}
+    initialSelectedIndex={swanStore.bottom_rim ? 0 : 1}
     backgroundColor={"#FFE7E5"}
     fontColor={"#D75A58"}
     optionBorderRadius={30}
@@ -186,8 +186,8 @@ const wings_switch = <div className="switch"  style={{width: 100, height: 50}}>
           {wings_switch}
           </div>
           <div style={{display: "inline-block", width: "50%"}}>
-          <p className="text">rim</p>
-          {rim_switch}
+          <p className="text">bottom_rim</p>
+          {bottom_rim_switch}
           </div>
           <div className="done-basket" style={{width: 80, marginBottom:35}}>
             <NavBtn>

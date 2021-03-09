@@ -64,6 +64,13 @@ const FigurineStore = types
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
     tot_rows_head: 33,
     modelDimensions: types.optional(types.array(types.array(types.number)), [[30,12],[40,11],[53,10],[40,10]]), // last = body
+    // unused, only for consistency: 
+    flat_bottom: false, 
+    top_rim: false, 
+    bottom_rim: false, 
+    lid: false, 
+    top_handle: false, 
+    side_handles: false, 
   })
   .actions(self => ({
     update_ears(val){

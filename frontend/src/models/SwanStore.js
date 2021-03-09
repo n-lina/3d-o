@@ -62,9 +62,17 @@ const SwanStore = types
     height_scale: 0.4,
     default_color: "#FFFFFF", 
     wings: true, // true = two wings
-    rim: true,
+    bottom_rim: true,
     texture: "", 
-    modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]), // top to bottom 
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]), // top to bottom
+    // unused, only for consistency: 
+    flat_bottom: false,
+    top_rim: false, 
+    arms: false, 
+    ears: "", 
+    lid: false, 
+    top_handle: false, 
+    side_handles: false, 
   })
   .actions(self => ({
     update_units(units){
@@ -73,8 +81,8 @@ const SwanStore = types
     update_wings(val){
         self.wings = val
     },
-    update_rim(val){
-        self.rim = val
+    update_bottom_rim(val){
+        self.bottom_rim = val
     },
     update_diameter(d){
         self.diameter = d
