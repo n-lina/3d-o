@@ -6,13 +6,13 @@ import { observer } from "mobx-react";
 
 
 const UntrackedRow = (props) => {
-  const {formObject, numPx, offset, display} = props;
+  const {formObject, numPx, offset, display, inverted} = props;
   let pixels = [];
 
   if(display) pixels.push(<SpecialPixel key={-1} on={false} displayRowNum={display}/>)
 
   for (let i = 0; i < numPx; i++) {
-    pixels.push(<UntrackedPixel key={i} formObject={formObject} />);
+    pixels.push(<UntrackedPixel key={i} formObject={formObject} inverted={inverted} />);
   }
   
   return <div style={{marginLeft: offset}} className="row">{pixels}</div>;

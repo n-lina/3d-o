@@ -17,7 +17,9 @@ const CreateSwan = () => {
 
   const { swanStore, coloringFormStore } = useStores();
 
-  coloringFormStore.setModel("swan")
+  useEffect(() => {
+    coloringFormStore.setModel("swan", swanStore.wings)
+  }, [swanStore.wings])
 
   const ears_options = [
     {

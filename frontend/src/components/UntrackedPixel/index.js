@@ -3,7 +3,7 @@ import "../Pixel/pixel.css";
 import { observer } from "mobx-react";
 
 const UntrackedPixel = (props) => {
-  const {formObject} = props;
+  const {formObject, inverted} = props;
 
   const [pixelColor, setPixelColor] = useState("#FFFFFF");
   const [oldColor, setOldColor] = useState(pixelColor);
@@ -58,7 +58,7 @@ const UntrackedPixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: pixelColor, width: 20, borderColor: borderColor(formObject.defaultColor), borderWidth: 0.5}}
+      style={{ background: pixelColor, width: 20, borderColor: borderColor(formObject.defaultColor), borderStyle: inverted ? "dashed" : "solid"}}
     ></div>
   );
 

@@ -68,6 +68,9 @@ const Colouring = () => {
     myHeight += (y * (px_y + px_border)) + (1.5*myYMargin) + (2*marker_y)
   }
 
+  if (coloringFormStore.model == "swan"){
+    myHeight += (swanStore.modelDimensions[0][0] * 0.75 * (px_y + px_border) * 1.2)
+  }
   myHeight = Math.max(window.innerHeight, myHeight)
 
   const colorPicker = <div className = "color-picker-object">

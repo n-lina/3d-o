@@ -4,7 +4,8 @@ const PxModel = types
   .model("PxModel", {
     pixelColor: "#FFFFFF", 
     oldColor: "#FFFFFF", 
-    canChangeColor: true
+    canChangeColor: true, 
+    inverted: false
   })
   .actions(self => ({
     setPixelColor(col){
@@ -15,6 +16,9 @@ const PxModel = types
     }, 
     setCanChangeColor(val){
       self.canChangeColor = val
+    }, 
+    setInverted(val=true){
+      self.inverted = val
     }
   }))
   .views(self => ({

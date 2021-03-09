@@ -16,14 +16,27 @@ const DrawingSection = (props) => {
   let rows = []; 
   let swanUpper = [];
 
-  // TODO : unhardcode
-  const wing1 = <TriangleSection width={17} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true}/> 
-  const wing2 = <TriangleSection width={17} formObject={formObject} elevation={DrawingSectionModel.height} /> 
-  const chest = <TriangleSection width={5} formObject={formObject} elevation={DrawingSectionModel.height} />
-  const back = <TriangleSection width={4} formObject={formObject} elevation={DrawingSectionModel.height} />
-  swanUpper.push(wing1, chest, wing2, back)
-
-  const upper_offset = 0 + 10.5 // px size + half px
+  if (formObject.model == "swan"){
+    if (formObject.swan_two_wings){
+      const wing_width = 2 * Math.round(0.195 * DrawingSectionModel.width)
+      const remainder = DrawingSectionModel.width - (2 * wing_width)
+      const chest_width = Math.ceil(remainder/2)
+      const back_width = Math.floor(remainder/2)
+      const wing1 = <TriangleSection width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true}/> 
+      const wing2 = <TriangleSection width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} /> 
+      const chest = <TriangleSection width={chest_width} formObject={formObject} elevation={DrawingSectionModel.height} />
+      const back = <TriangleSection width={back_width} formObject={formObject} elevation={DrawingSectionModel.height} inverted={true}/>
+      swanUpper.push(wing1, chest, wing2, back)
+    } 
+    else {
+      const wing_width = Math.round(0.75 * DrawingSectionModel.width)
+      const remainder = DrawingSectionModel.width - wing_width
+      const chest_width = remainder - 2
+      const wing = <TriangleSection width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true} inverted={true}/> 
+      const chest = <TriangleSection width={chest_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true} />
+      swanUpper.push(wing, chest)
+    }
+  }
 
   if (formObject.model != "swan") rows.push(<SpecialRow key={-1} offset={0} width={DrawingSectionModel.width} specialTop={specialTop} />)
   
@@ -62,7 +75,7 @@ const DrawingSection = (props) => {
   return (
     <div id="drawingSection" >
       <div id="pixels" ref={panelRef} style={{marginBottom: 10, marginLeft: 40, marginRight: 40}}>
-        {formObject.model == "swan" && <div style={{display:"flex", alignItems:"flex-end", marginLeft: upper_offset, marginBottom: 3, justifyContent:"flex-start"}}>
+        {formObject.model == "swan" && <div style={{display:"flex", alignItems:"flex-end", marginLeft: 10.5, marginBottom: 3, justifyContent:"flex-start"}}>
           {swanUpper}
         </div>}
         {rows}

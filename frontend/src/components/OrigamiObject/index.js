@@ -4,7 +4,7 @@ import "./OrigamiObject.css";
 import { observer } from "mobx-react";
 
 const OrigamiObject = (props) => {
-    const { dimensions, formObject} = props;
+    const {dimensions, formObject} = props;
   
     const objectRef = useRef();
 
@@ -17,6 +17,8 @@ const OrigamiObject = (props) => {
       specialBottom = Array(dimensions.length).fill({})
     }
     else {
+      if (dimensions[dimensions.length-2][0]-dimensions[dimensions.length-1][0] < 0) formObject.setInverted()
+
       for (let i = dimensions.length-2; i >= 0; i--){
         let sTopCurr = {}
         let sBottomCurr = {}

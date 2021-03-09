@@ -62,6 +62,8 @@ const ColoringForm = types
     maxWidth: 53,
     canvasPic: "",
     model: "vase", // vase, swan, fig, basket
+    inverted: false,
+    swan_two_wings: false,
     coloringFormData: types.optional(types.array(DrawingSectionModel), [])
   })
   .actions(self => ({
@@ -75,8 +77,11 @@ const ColoringForm = types
       self.clear = false
       self.selectedColor = col
     },
-    setModel(model){
+    setModel(model, swan_one_wing){
       self.model = model
+      if (model == "swan"){
+        self.swan_two_wings = swan_one_wing
+      }
     },
     setDefaultColor(col){
       self.clear = false
@@ -101,6 +106,9 @@ const ColoringForm = types
       self.clear = false
       self.mode = val
     }, 
+    setInverted(val=true){
+      self.inverted = val
+    },
     exportComponent (node) {
       if(!node.current) {
           throw new Error("'node' must be a RefObject")

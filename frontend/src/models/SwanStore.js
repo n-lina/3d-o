@@ -61,7 +61,7 @@ const SwanStore = types
     bottom_scale:0.6, 
     height_scale: 0.4,
     default_color: "#FFFFFF", 
-    wings: true, 
+    wings: true, // true = two wings
     rim: true,
     texture: "", 
     modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]), // top to bottom 

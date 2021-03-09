@@ -17,6 +17,7 @@ const Row = (props) => {
     }
   }
   for (let i = 0; i < RowModel.width; i++) {
+    if(formObject.inverted) RowModel.rowData[i].setInverted()
     pixels.push(<Pixel key={i} formObject={formObject} PxModel={RowModel.rowData[i]}/>);
   }
 
