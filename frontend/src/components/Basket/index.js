@@ -24,7 +24,7 @@ const Basket = (props) => {
     let handle = <mesh /> // handle options: 1 top, 2 sides, none 
     let lid = <mesh/> // true false
     let side_handles = <mesh/>
-    let bottom_disk_mesh = <mesh />
+    let flat_bottom_mesh = <mesh />
     let curved_bottom = <mesh />
 
     if (basketStore.top_rim){
@@ -58,8 +58,8 @@ const Basket = (props) => {
         </group>
     }
 
-    if (!basketStore.curved_bottom){
-        bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
+    if (basketStore.flat_bottom){
+        flat_bottom_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
             <meshPhongMaterial  map={texture} />
         </mesh>
@@ -124,7 +124,7 @@ const Basket = (props) => {
         </group>
     }
 
-    if (basketStore.curved_bottom){
+    if (!basketStore.flat_bottom){
         const percent_sphere = 0.2
         const rad_bottom = (s_dbottom/2) / Math.sin(Math.PI * percent_sphere)
         const bottom_dist = s_dbottom_h - (s_dbottom/2) / Math.tan(Math.PI * percent_sphere)
@@ -226,8 +226,8 @@ const Basket = (props) => {
             {dbottom_marker}
             {basketStore.top_handle && handle}
             {basketStore.side_handles && side_handles}
-            {!basketStore.curved_bottom && bottom_disk_mesh}
-            {basketStore.curved_bottom && curved_bottom}
+            {basketStore.flat_bottom && flat_bottom_mesh}
+            {!basketStore.flat_bottom && curved_bottom}
         </group>
     )
   }

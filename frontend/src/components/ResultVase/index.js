@@ -28,7 +28,7 @@ const ResultVase = (props) => {
 
     let top_rim_mesh = <mesh/>
     let bottom_rim_mesh = <mesh />
-    let bottom_disk_mesh = <mesh />
+    let flat_bottom_mesh = <mesh />
 
     if (vaseStore.top_rim){
         top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 
@@ -50,8 +50,8 @@ const ResultVase = (props) => {
     let [z_rot,changeZrot] = useState(0);
     let [dist,changeDist] = useState(0);
 
-    if (vaseStore.bottom_disk){
-        bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
+    if (vaseStore.flat_bottom){
+        flat_bottom_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
             <meshPhongMaterial color={vaseStore.default_color} />
         </mesh>
@@ -120,7 +120,7 @@ const ResultVase = (props) => {
             ))}
             {vaseStore.top_rim && top_rim_mesh}
             {vaseStore.bottom_rim && bottom_rim_mesh}
-            {vaseStore.bottom_disk && bottom_disk_mesh}
+            {vaseStore.flat_bottom && flat_bottom_mesh}
         </group>
     )
   }

@@ -297,11 +297,11 @@ const CreateVase = () => {
       />
   </div>
   
-  const bottom_disk_switch = <div className="switch"  style={{width: 100, height: 50}}>
+  const flat_bottom_switch = <div className="switch"  style={{width: 100, height: 50}}>
       <SwitchSelector
-          onChange={(val) => vaseStore.update_bottom_disk(val)}
+          onChange={(val) => vaseStore.update_flat_bottom(val)}
           options={options}
-          initialSelectedIndex={vaseStore.bottom_disk ? 0 : 1}
+          initialSelectedIndex={vaseStore.flat_bottom ? 0 : 1}
           backgroundColor={"#FFE7E5"}
           fontColor={"#D75A58"}
           optionBorderRadius={30}
@@ -375,7 +375,7 @@ const CreateVase = () => {
           </div>
           <div style={{float: 'right', width: '33.4%', overflow:'visible', marginTop:25, marginBottom:10}}>
             <p className="textSwitch">bottom cover</p>
-            {bottom_disk_switch}
+            {flat_bottom_switch}
           </div>
           <div style={{color:'#FFE7E5', marginTop: -10}}>.</div>
           <div className="switch" style={{width: 80, marginBottom:35}}>

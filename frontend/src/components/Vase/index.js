@@ -30,7 +30,7 @@ const Vase = (props) => {
 
     let top_rim_mesh = <mesh/>
     let bottom_rim_mesh = <mesh />
-    let bottom_disk_mesh = <mesh />
+    let flat_bottom_mesh = <mesh />
 
     function getInputMarker(rad, height){
         return (
@@ -67,8 +67,8 @@ const Vase = (props) => {
     let [z_rot,changeZrot] = useState(0);
     let [dist,changeDist] = useState(0);
 
-    if (vase.bottom_disk){
-        bottom_disk_mesh = <mesh position = {[0,s_dbottom_h,0]}>
+    if (vase.flat_bottom){
+        flat_bottom_mesh = <mesh position = {[0,s_dbottom_h,0]}>
             <cylinderGeometry args={[s_dbottom/2, s_dbottom/2, 0.8, 32]}/>
             <meshPhongMaterial  map={texture} />
         </mesh>
@@ -133,7 +133,7 @@ const Vase = (props) => {
             </mesh>
             {vase.top_rim && top_rim_mesh}
             {vase.bottom_rim && bottom_rim_mesh}
-            {vase.bottom_disk && bottom_disk_mesh}
+            {vase.flat_bottom && flat_bottom_mesh}
             {dbottom_marker}
             {d1_marker}
             {d2_marker}

@@ -200,9 +200,9 @@ const CreateBasket = () => {
   
   const bottom_switch = <div className="switch"  style={{width: 100, height: 50}}>
   <SwitchSelector
-      onChange={(val) => basketStore.update_curved_bottom(val)}
+      onChange={(val) => basketStore.update_flat_bottom(!val)}
       options={options}
-      initialSelectedIndex={basketStore.curved_bottom ? 0 : 1}
+      initialSelectedIndex={basketStore.flat_bottom ? 1 : 0}
       backgroundColor={"#FFE7E5"}
       fontColor={"#D75A58"}
       optionBorderRadius={30}

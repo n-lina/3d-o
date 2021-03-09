@@ -65,7 +65,7 @@ const BasketStore = types
     top_handle: true, 
     side_handles: false, 
     scale_h: 15,
-    curved_bottom: true, 
+    flat_bottom: false, 
     default_color: "#FFFFFF",
     tot_rows_per_section: types.optional(types.array(types.number), [15,29]), // bottom to top 
     subsections: types.optional(types.array(types.array(types.number)),[[4,3],[2,1,0]]), 
@@ -105,8 +105,8 @@ const BasketStore = types
     update_dbottom(dbottom){
         self.dbottom = dbottom
     }, 
-    update_curved_bottom(val) {
-        self.curved_bottom = val
+    update_flat_bottom(val) {
+        self.flat_bottom = val
     },
     storePic(picData, sectionNum){
         self.textures[sectionNum] = picData

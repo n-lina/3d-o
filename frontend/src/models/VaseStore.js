@@ -141,7 +141,7 @@ const VaseStore = types
     height: 50,
     top_rim: false, 
     bottom_rim: true, 
-    bottom_disk: true, 
+    flat_bottom: true, 
     scale_h: 36,
     default_color: "#FFFFFF",
     tot_rows_per_section: types.optional(types.array(types.number), [15,9,10,10,10]), // bottom to top 
@@ -158,8 +158,8 @@ const VaseStore = types
     update_bottom_rim(bottom_rim){
         self.bottom_rim = bottom_rim
     },
-    update_bottom_disk(bottom_disk){
-        self.bottom_disk = bottom_disk
+    update_flat_bottom(flat_bottom){
+        self.flat_bottom = flat_bottom
     },
     update_units(units){
         self.cm = units
