@@ -9,8 +9,8 @@ const UntrackedPixel = (props) => {
   const [oldColor, setOldColor] = useState(pixelColor);
   const [canChangeColor, setCanChangeColor] = useState(true);
 
-  function borderColor(defaultColor) {
-    var color = defaultColor.substring(2, 8);
+  function borderColor() {
+    var color = pixelColor.substring(2, 8);
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
     var b = parseInt(color.substring(4, 6), 16); // hexToB
@@ -58,7 +58,7 @@ const UntrackedPixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: pixelColor, width: 20, borderColor: borderColor(formObject.defaultColor), borderStyle: inverted ? "dashed" : "solid"}}
+      style={{ background: pixelColor, width: 20, borderColor: borderColor(), borderStyle: inverted ? "dashed" : "solid"}}
     ></div>
   );
 

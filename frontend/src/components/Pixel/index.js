@@ -9,8 +9,8 @@ const Pixel = (props) => {
   // const [PxModel.oldColor, PxModel.setOldColor] = useState(PxModel.pixelColor);
   // const [PxModel.canChangeColor, PxModel.setCanChangeColor] = useState(true);
 
-  function borderColor(defaultColor) {
-    var color = defaultColor.substring(2, 8);
+  function borderColor() {
+    var color = PxModel.pixelColor.substring(2, 8);
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
     var b = parseInt(color.substring(4, 6), 16); // hexToB
@@ -58,7 +58,7 @@ const Pixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: PxModel.pixelColor, borderColor: borderColor(formObject.defaultColor), borderStyle: PxModel.inverted ? "dashed" : "solid"}}
+      style={{ background: PxModel.pixelColor, borderColor: borderColor(), borderStyle: PxModel.inverted ? "dashed" : "solid"}}
     ></div>
   );
 

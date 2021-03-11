@@ -31,8 +31,8 @@ const Colouring = () => {
   else if (coloringFormStore.model == "basket") modelStore = basketStore
 
   function changeColor(color) {
-    coloringFormStore.setColor(color.hex);
     const search = (color.hex).toString().toUpperCase()
+    coloringFormStore.setColor(search);
     if (!colorPalette.includes(search)){
       let new_palette = colorPalette
       new_palette[colorPaletteIdx] = search
