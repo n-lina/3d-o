@@ -5,15 +5,18 @@ import * as THREE from "three";
 const Figurine = (props) => {
     const {figStore} = props
     const itemsRef = useRef([]);
+    const insideRef = useRef([]);
 
     useEffect(() => {
         itemsRef.current = itemsRef.current.slice(0, figStore.modelDimensions.length-1);
+        insideRef.current = insideRef.current.slice(0, figStore.modelDimensions.length-1);
      }, []);
 
     useEffect(() => {
         const len = figStore.modelDimensions.length-1
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(figStore.textures[i])
+            insideRef.current[i].map = new THREE.TextureLoader().load(figStore.textures[i])
             // console.log(figStore.textures[len-i-1])
         }
     }, [])
@@ -25,33 +28,23 @@ const Figurine = (props) => {
     const head_rad = goal_rad/Math.sin((1-theta_len) * Math.PI)
     const offset = head_rad*Math.cos((1-theta_len) * Math.PI) - 0.2
 
-    // const head =
-    // <group>
-    //     <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
-    //         <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI * theta_len]}/>
-    //         <meshPhongMaterial map = {texture_body}  side={THREE.FrontSide} specular="#121212" shininess = {26}/>
-    //     </mesh>
-    //     <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
-    //         <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, 0, Math.PI * theta_len]}/>
-    //         <meshPhongMaterial map = {texture_body}  side={THREE.BackSide}/>
-    //     </mesh>
-    // </group>
-
     const divs = figStore.getBrokenHeadPts(Math.PI*theta_len)
 
     const broken_head = 
-    divs.map((_, i) => (
-        <group key={i}>
+    <group>
+        {divs.map((_, i) => (
             <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
                 <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, divs[i][0], divs[i][1]]}/>
                 <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
+        ))}
+        {divs.map((_, i) => (
             <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
                 <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, divs[i][0], divs[i][1]]}/>
-                <meshPhongMaterial color={figStore.default_color} side={THREE.BackSide}/>
+                <meshPhongMaterial ref={el => insideRef.current[i] = el} side={THREE.BackSide}/>
             </mesh>
-        </group>  
-    ))
+        ))}
+    </group>
     
     let bunny_ears = <mesh/>
     let cat_ears = <mesh/> 

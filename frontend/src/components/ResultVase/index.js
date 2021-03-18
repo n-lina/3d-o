@@ -5,15 +5,18 @@ import * as THREE from "three";
 const ResultVase = (props) => {
     const {vaseStore} = props
     const itemsRef = useRef([]);
+    const insideRef = useRef([]);
 
     useEffect(() => {
         itemsRef.current = itemsRef.current.slice(0, vaseStore.modelDimensions.length);
+        insideRef.current = insideRef.current.slice(0, vaseStore.modelDimensions.length)
      }, []);
 
     useEffect(() => {
         const len = vaseStore.modelDimensions.length
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
+            insideRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
             // console.log(vaseStore.textures[len-i-1])
         }
     }, [])
@@ -106,18 +109,20 @@ const ResultVase = (props) => {
 
     return (
         <group position={[0,0,dist]} rotation={[x_rot,y_rot,z_rot]}> 
+            <group>
             {points.map((_, i) => (
-            <group key={i}>
                 <mesh >
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
                     <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
                 </mesh>
+            ))}
+            {points.map((_, i) => (
                 <mesh>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
-                    <meshLambertMaterial color={vaseStore.default_color} side = {THREE.BackSide} />
-                </mesh>
-            </group>   
+                    <meshLambertMaterial ref={el => insideRef.current[i] = el} side = {THREE.BackSide} />
+                </mesh> 
             ))}
+            </group>
             {vaseStore.top_rim && top_rim_mesh}
             {vaseStore.bottom_rim && bottom_rim_mesh}
             {vaseStore.flat_bottom && flat_bottom_mesh}

@@ -5,15 +5,18 @@ import * as THREE from "three";
 const ResultBasket = (props) => {
     const {basketStore} = props
     const itemsRef = useRef([]);
+    const insideRef = useRef([]);
 
     useEffect(() => {
         itemsRef.current = itemsRef.current.slice(0, basketStore.modelDimensions.length);
+        insideRef.current = insideRef.current.slice(0, basketStore.modelDimensions.length);
      }, []);
 
     useEffect(() => {
         const len = basketStore.modelDimensions.length
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(basketStore.textures[len-i-1])
+            insideRef.current[i].map = new THREE.TextureLoader().load(basketStore.textures[len-i-1])
             // console.log(basketStore.textures[len-i-1])
         }
     }, [])
@@ -24,11 +27,6 @@ const ResultBasket = (props) => {
 
     const s_dtop = Math.max(1,basketStore.dtop * scale_factor)
     const s_dbottom = Math.max(1,basketStore.dbottom * scale_factor)
-
-    const s_diameter = Math.max(1, basketStore.diameter * scale_factor)
-    const s_diameter_h = 0
-
-    // need rounded bottom shape , concave
 
     let top_rim_mesh = <mesh/>
     let bottom_rim_mesh = <mesh />
@@ -209,18 +207,20 @@ const ResultBasket = (props) => {
 
     return (
         <group position={[0,-5,dist]} rotation={[x_rot,y_rot,z_rot]}> 
+            <group>
             {points.map((_, i) => (
-            <group key={i}>
                 <mesh >
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
                     <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
                 </mesh>
+            ))}
+            {points.map((_, i) => (
                 <mesh>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
-                    <meshLambertMaterial color={basketStore.default_color} side = {THREE.BackSide} />
+                    <meshPhongMaterial ref={el => insideRef.current[i] = el} side = {THREE.BackSide} />
                 </mesh>
-            </group>   
             ))}
+            </group>   
             {basketStore.lid && lid}
             {basketStore.top_rim && top_rim_mesh}
             {basketStore.bottom_rim && bottom_rim_mesh}
