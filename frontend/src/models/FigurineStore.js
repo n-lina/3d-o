@@ -57,7 +57,7 @@ const FigurineStore = types
     cm: false,
     diameter: 13,
     arms: true, 
-    ears: "bear",
+    ears: "bear", // bear, bunny, cat, sphere
     body_scale: 0.7,
     body_height: 0.35,
     default_color: "#FFFFFF",

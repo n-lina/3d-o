@@ -5,13 +5,15 @@ import "./colouringPage.css";
 import Sticky from 'react-stickynode';
 import { observer } from "mobx-react";
 import logo from "../assets/complex-logo.png"
-import {PlainLink as Link} from '../components/Navbar/NavbarElements';
+// import {PlainLink as Link} from '../components/Navbar/NavbarElements';
 import { AiOutlineInfo } from "react-icons/ai";
 import { FiTrash } from "react-icons/fi";
 import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { exportComponentAsPNG } from "react-component-export-image";
 import {useStores} from "../models/RootStoreContext"
 import DelayLink from 'react-delay-link';
+import Appendages from "../components/Appendages";
+
 
 const Colouring = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -23,6 +25,7 @@ const Colouring = () => {
   const [dColorPalette, setDColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']) 
 
   const diagramRef = useRef();
+  const appendagesRef = useRef();
   const {coloringFormStore, vaseStore, swanStore, figStore, basketStore} = useStores();
   let modelStore;
   if (coloringFormStore.model == "vase") modelStore = vaseStore
@@ -71,6 +74,10 @@ const Colouring = () => {
   if (coloringFormStore.model == "swan"){
     myHeight += (swanStore.modelDimensions[0][0] * 0.75 * (px_y + px_border) * 1.2)
   }
+
+  if (modelStore.top_rim || modelStore.bottom_rim){
+    myHeight += 400
+  }
   myHeight = Math.max(window.innerHeight, myHeight)
 
   const colorPicker = <div className = "color-picker-object">
@@ -117,9 +124,14 @@ const Colouring = () => {
 
   const logoObject = <div className = "logo-object">
     <p className = "label" >3d-o</p>
-    <img className = "logo" src={logo} onClick={() => exportComponentAsPNG(diagramRef, {fileName: "my-3do-diagram"})} alt=""/>
+    <img className = "logo" src={logo} onClick={() => savePics()} alt=""/>
     {showInfo && <div className="info-popup">info here</div>}
   </div>  
+
+  function savePics(){
+    exportComponentAsPNG(diagramRef, {fileName: "3do-diagram"})
+    exportComponentAsPNG(appendagesRef, {fileName: "3do-diagram-appendages"})
+  }
 
   const backButton = 
   <div className = "back">
@@ -140,6 +152,7 @@ const Colouring = () => {
 
   function nextPage(){
     coloringFormStore.exportComponent(diagramRef)
+    coloringFormStore.exportComponent(appendagesRef, true)
   }
 
   const clear = <div className = "logo-object">
@@ -161,17 +174,37 @@ const Colouring = () => {
   </div>
 
   const canvas = absolute? 
-  <div ref = {diagramRef} className = "canvas">
-    <OrigamiObject 
-      dimensions={myDimensions}  
-      formObject={coloringFormStore}
-    />
+  <div className = "canvas">
+    <div ref = {diagramRef}>
+      <OrigamiObject 
+        dimensions={myDimensions}  
+        formObject={coloringFormStore}
+        modelType={coloringFormStore.model}
+      />
+    </div>
+    <div ref = {appendagesRef}>
+      <Appendages 
+        dimensions={myDimensions}
+        modelStore={modelStore}
+        modelType={coloringFormStore.model}
+      />
+    </div>
   </div> : 
-  <div ref = {diagramRef} className = "canvas-relative">
-    <OrigamiObject 
-      dimensions={myDimensions}  
-      formObject={coloringFormStore}
-    />
+  <div className = "canvas-relative">
+    <div ref = {diagramRef}>
+      <OrigamiObject 
+        dimensions={myDimensions}  
+        formObject={coloringFormStore}
+        modelType={coloringFormStore.model}
+      />
+    </div>
+    <div ref = {appendagesRef}>
+      <Appendages 
+        dimensions={myDimensions}
+        modelStore={modelStore}
+        modelType={coloringFormStore.model}
+      />
+    </div>
   </div>
 
   return (
@@ -189,7 +222,7 @@ const Colouring = () => {
           {nextButton}
         </div>
       </Sticky>
-      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: myHeight, background:"#FFE7E5"}}>
+      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: myHeight+1000, background:"#FFE7E5"}}>
         {canvas}
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, {useRef} from 'react';
 import DrawingSection from "../DrawingSection";
-import "./OrigamiObject.css";
 import { observer } from "mobx-react";
 
 const OrigamiObject = (props) => {

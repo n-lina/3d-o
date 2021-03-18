@@ -10,7 +10,7 @@ const fileType = {
 };
 
 const DEFAULT_PNG = {
-  fileName: 'my-3do-diagram.png',
+  fileName: '3do-diagram.png',
   type: fileType.PNG,
   html2CanvasOptions: {}
 };
@@ -61,6 +61,7 @@ const ColoringForm = types
     mode: false,
     maxWidth: 53,
     canvasPic: "",
+    appendPic: "",
     model: "vase", // vase, swan, fig, basket
     inverted: false,
     swan_two_wings: false,
@@ -69,6 +70,10 @@ const ColoringForm = types
   .actions(self => ({
     storePic(picData){
       self.canvasPic = picData
+      return
+    }, 
+    storeAppendPic(picData){
+      self.appendPic = picData
       return
     }
   }))
@@ -109,7 +114,7 @@ const ColoringForm = types
     setInverted(val=true){
       self.inverted = val
     },
-    exportComponent (node) {
+    exportComponent (node, appendage=false) {
       if(!node.current) {
           throw new Error("'node' must be a RefObject")
       }
@@ -122,20 +127,18 @@ const ColoringForm = types
           backgroundColor: "#FFFFFF"
       }).then(canvas => {
           // self.canvasPic = canvas.toDataURL(DEFAULT_PNG, 0.1)
-          self.storePic(canvas.toDataURL(DEFAULT_PNG, 0.1))
+          appendage? self.storeAppendPic(canvas.toDataURL(DEFAULT_PNG, 0.1)): self.storePic(canvas.toDataURL(DEFAULT_PNG, 0.1))
       });
     },
     saveDiagram () {
-      saveAs(self.canvasPic, "my-3do-diagram")
+      saveAs(self.canvasPic, "3do-diagram")
+      saveAs(self.appendPic, "3do-diagram-appendages")
     },
     addDrawingSection(){
       self.coloringFormData.push(DrawingSectionModel.create())
     }
   }))
   .views(self => ({
-    // status() {
-    //   return self.is_paid ? "Paid" : "Not Paid";
-    // }
   }));
 
 export default ColoringForm;
