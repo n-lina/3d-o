@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useEffect} from "react";
+import React from "react";
 import rim_image from "../../assets/rim.png";
 import half_rim_image from "../../assets/halfRim.png";
 import "./rim.css"

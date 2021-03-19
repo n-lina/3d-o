@@ -1,0 +1,48 @@
+  
+import React, { useRef, useEffect } from "react";
+import "../DrawingSection/drawingSection.css";
+import UntrackedRow from "../UntrackedRow";
+import SpecialRow from "../SpecialRow";
+import { observer } from "mobx-react";
+
+const UntrackedDrawingSection = (props) => {
+  const {specialTop, specialBottom, increasing, formObject, dimensions} = props;
+
+  let rows = []; 
+
+  rows.push(<SpecialRow key={-1} offset={0} width={dimensions[0]} specialTop={specialTop} />)
+  
+  for (let i = 0; i < dimensions[1]; i++) {
+    if (i%2 == 1){
+      rows.push(<UntrackedRow key={i} numPx={dimensions[0]} offset={10.5} formObject={formObject} display={dimensions[1]-i} inverted={false}/>);
+    }
+    else{ 
+      rows.push(<UntrackedRow key={i} numPx={dimensions[0]} offset={0} formObject={formObject} display={dimensions[1]-i} inverted={false}/>);
+    }
+  }
+  
+  if(increasing){
+    if (dimensions[1]%2 == 1){
+      rows.push(<SpecialRow key={dimensions[1]} offset={10.5} width={dimensions[0]} specialBottom={specialBottom} />)
+    } else {
+      rows.push(<SpecialRow key={dimensions[1]} offset={10.5*2} width={dimensions[0]} specialBottom={specialBottom} />)
+    }
+  }
+  else{
+    if (dimensions[1]%2 == 1){
+      rows.push(<SpecialRow key={dimensions[1]} offset={0} width={dimensions[0]} specialBottom={specialBottom} />)
+    } else {
+      rows.push(<SpecialRow key={dimensions[1]} offset={10.5} width={dimensions[0]} specialBottom={specialBottom} />)
+    }
+  } 
+
+  return (
+    <div id="drawingSection" >
+      <div id="pixels" style={{marginBottom: 10, marginLeft: 40, marginRight: 40}}>
+        {rows}
+      </div>
+    </div>
+  );
+}
+
+export default observer(UntrackedDrawingSection)

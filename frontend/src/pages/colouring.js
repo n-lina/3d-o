@@ -179,14 +179,13 @@ const Colouring = () => {
       <OrigamiObject 
         dimensions={myDimensions}  
         formObject={coloringFormStore}
-        modelType={coloringFormStore.model}
       />
     </div>
     <div ref = {appendagesRef}>
       <Appendages 
         dimensions={myDimensions}
         modelStore={modelStore}
-        modelType={coloringFormStore.model}
+        formObject={coloringFormStore}
       />
     </div>
   </div> : 
@@ -195,14 +194,13 @@ const Colouring = () => {
       <OrigamiObject 
         dimensions={myDimensions}  
         formObject={coloringFormStore}
-        modelType={coloringFormStore.model}
       />
     </div>
     <div ref = {appendagesRef}>
       <Appendages 
         dimensions={myDimensions}
         modelStore={modelStore}
-        modelType={coloringFormStore.model}
+        formObject={coloringFormStore}
       />
     </div>
   </div>
