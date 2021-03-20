@@ -185,10 +185,19 @@ const Colouring = () => {
   </div>
   </div>
 
+  let caption = `${coloringFormStore.model}`
+  if (coloringFormStore.model == "fig"){
+    caption = "figurine head"
+  }
+  else if (coloringFormStore.model == "swan"){
+    caption = "swan wings + body"
+  }
+
   const canvas = absolute? 
   <div className = "canvas">
     <div ref = {diagramRef}>
       <OrigamiObject 
+        caption={`${caption}`}
         dimensions={myDimensions}  
         formObject={coloringFormStore}
       />
@@ -204,6 +213,7 @@ const Colouring = () => {
   <div className = "canvas-relative">
     <div ref = {diagramRef}>
       <OrigamiObject 
+        caption={`${caption}`}
         dimensions={myDimensions}  
         formObject={coloringFormStore}
       />

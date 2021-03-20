@@ -1,11 +1,13 @@
 .rimDiv {
-    margin: 10px;
+    margin: 0px;
   }
 .rim {
+    margin: 20px;
     height: 300px;
     width: 300px;
 }
 .half_rim {
+    margin: 20px;
     height: 234px;
     width: 300px;
 }

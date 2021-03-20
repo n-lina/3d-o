@@ -49,13 +49,13 @@ const Vase = (props) => {
 
     if (vase.top_rim){
         top_rim_mesh = <mesh position = {[0,s_dtop_h+0.1,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[(s_dtop/2)+0.1,0.4,10,50]}/>
+        <torusGeometry args={[(s_dtop/2)+0.1,0.3,10,50]}/>
         <meshPhongMaterial color="#FF7E98" />
         </mesh>
     }
     if (vase.bottom_rim){
         bottom_rim_mesh = <mesh position = {[0,s_dbottom_h-0.1,0]} rotation = {[1.57,0,0]}> 
-        <torusGeometry args={[(s_dbottom/2)+0.1, 0.4, 10, 50]}/>
+        <torusGeometry args={[(s_dbottom/2)+0.1, 0.3, 10, 50]}/>
         <meshPhongMaterial color="#FF7E98" />
         </mesh>
     }

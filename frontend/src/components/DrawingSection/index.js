@@ -9,7 +9,7 @@ import { observer } from "mobx-react";
 // import { exportComponentAsPNG } from "react-component-export-image";
 
 const DrawingSection = (props) => {
-  const {specialTop, specialBottom, formObject, DrawingSectionModel} = props;
+  const {caption, specialTop, specialBottom, formObject, DrawingSectionModel} = props;
 
   const panelRef = useRef();
 
@@ -78,6 +78,7 @@ const DrawingSection = (props) => {
         {formObject.model == "swan" && <div style={{display:"flex", alignItems:"flex-end", marginLeft: 10.5, marginBottom: 3, justifyContent:"flex-start"}}>
           {swanUpper}
         </div>}
+        {caption && <p id="text">{caption}</p>}
         {rows}
       </div>
     </div>

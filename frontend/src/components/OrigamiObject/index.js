@@ -3,7 +3,7 @@ import DrawingSection from "../DrawingSection";
 import { observer } from "mobx-react";
 
 const OrigamiObject = (props) => {
-    const {dimensions, formObject} = props;
+    const {caption, dimensions, formObject} = props;
   
     const objectRef = useRef();
 
@@ -120,11 +120,15 @@ const OrigamiObject = (props) => {
     for (let i = 0; i < dimensions.length; i++) {
       formObject.coloringFormData[i].setWidthHeight(dimensions[i][0], dimensions[i][1])
       formObject.coloringFormData[i].setIncreasing(increasing[i])
-      sections.push(<DrawingSection key={i} specialTop = {specialTop[i]} specialBottom = {specialBottom[i]} formObject={formObject} DrawingSectionModel={formObject.coloringFormData[i]} />);
+      let caption = false
+      if (formObject.model == "fig" && i == dimensions.length-1) caption = "figurine body"
+      sections.push(<DrawingSection key={i} caption={caption} specialTop = {specialTop[i]} specialBottom = {specialBottom[i]} formObject={formObject} DrawingSectionModel={formObject.coloringFormData[i]} />);
     }
     return (
       <div id="origamiObject">
         <div id="sections" ref={objectRef}>
+          <p id="text">— 1/32 —</p>
+          <p id="text">{caption}</p>
           {sections}
         </div>
       </div>

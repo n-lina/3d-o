@@ -1,5 +1,6 @@
 import React from "react";
 import UntrackedOrigamiObject from "../UntrackedOrigamiObject";
+import "../DrawingSection/drawingSection.css"
 
 const Bottom = (props) => {
     const {flat, circ, caption, formObject} = props 
@@ -18,6 +19,7 @@ const Bottom = (props) => {
 
     return (
         <div>
+            <p id="text">{caption}</p>
             {object}
         </div>
     )
