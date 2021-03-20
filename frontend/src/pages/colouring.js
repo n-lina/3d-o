@@ -75,9 +75,21 @@ const Colouring = () => {
     myHeight += (swanStore.modelDimensions[0][0] * 0.75 * (px_y + px_border) * 1.2)
   }
 
+  else if (coloringFormStore.model == "fig"){
+    myHeight *= 2
+  }
+
+  if (modelStore.flat_bottom || coloringFormStore.model == "basket"){
+    myHeight *= 2
+    if(modelStore.lid){
+      myHeight *= 2
+    }
+  }
+
   if (modelStore.top_rim || modelStore.bottom_rim){
     myHeight += 400
   }
+
   myHeight = Math.max(window.innerHeight, myHeight)
 
   const colorPicker = <div className = "color-picker-object">
@@ -220,7 +232,7 @@ const Colouring = () => {
           {nextButton}
         </div>
       </Sticky>
-      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: myHeight+1000, background:"#FFE7E5"}}>
+      <div style={{position: 'relative', overflowX:'scroll', overflowY:'hidden', height: myHeight, background:"#FFE7E5"}}>
         {canvas}
       </div>
     </div>

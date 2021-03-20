@@ -10,7 +10,7 @@ const UntrackedPixel = (props) => {
   const [canChangeColor, setCanChangeColor] = useState(true);
 
   function borderColor() {
-    var color = pixelColor.substring(2, 8);
+    var color = pixelColor.substring(1, 8);
     var r = parseInt(color.substring(0, 2), 16); // hexToR
     var g = parseInt(color.substring(2, 4), 16); // hexToG
     var b = parseInt(color.substring(4, 6), 16); // hexToB
@@ -58,8 +58,10 @@ const UntrackedPixel = (props) => {
       onMouseEnter={changeColorOnHover}
       onMouseLeave={resetColor}
       onMouseOver={applyColorSpray}
-      style={{ background: pixelColor, width: 20, borderColor: borderColor(), borderStyle: inverted ? "dashed" : "solid"}}
-    ></div>
+      style={{ background: pixelColor, width: 20, borderColor: borderColor(), borderStyle: "solid"}}
+    >
+      {inverted && <div className="inverted" style={{color: borderColor()}}>-</div>}
+    </div>
   );
 
 }

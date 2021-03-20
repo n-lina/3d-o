@@ -209,13 +209,13 @@ const ResultBasket = (props) => {
         <group position={[0,-5,dist]} rotation={[x_rot,y_rot,z_rot]}> 
             <group>
             {points.map((_, i) => (
-                <mesh >
+                <mesh key={i}>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
                     <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
                 </mesh>
             ))}
             {points.map((_, i) => (
-                <mesh>
+                <mesh key={i}>
                     <latheGeometry args={[points[i], 30, 0, 2*Math.PI]}/>
                     <meshPhongMaterial ref={el => insideRef.current[i] = el} side = {THREE.BackSide} />
                 </mesh>

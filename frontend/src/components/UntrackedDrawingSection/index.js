@@ -6,18 +6,22 @@ import SpecialRow from "../SpecialRow";
 import { observer } from "mobx-react";
 
 const UntrackedDrawingSection = (props) => {
-  const {specialTop, specialBottom, increasing, formObject, dimensions} = props;
+  const {arm, open, bunny, specialTop, specialBottom, increasing, formObject, dimensions} = props;
 
   let rows = []; 
+  let inverted = false
 
-  rows.push(<SpecialRow key={-1} offset={0} width={dimensions[0]} specialTop={specialTop} />)
+  if (!bunny) rows.push(<SpecialRow key={-1} offset={0} width={dimensions[0]} specialTop={specialTop} />)
   
   for (let i = 0; i < dimensions[1]; i++) {
+    arm && i == dimensions[1]-1 ? inverted = true : inverted = false
     if (i%2 == 1){
-      rows.push(<UntrackedRow key={i} numPx={dimensions[0]} offset={10.5} formObject={formObject} display={dimensions[1]-i} inverted={false}/>);
+      let numPx = dimensions[0]
+      if (open) numPx -= 1
+      rows.push(<UntrackedRow key={i} numPx={numPx} offset={10.5} formObject={formObject} display={dimensions[1]-i} inverted={inverted}/>);
     }
     else{ 
-      rows.push(<UntrackedRow key={i} numPx={dimensions[0]} offset={0} formObject={formObject} display={dimensions[1]-i} inverted={false}/>);
+      rows.push(<UntrackedRow key={i} numPx={dimensions[0]} offset={0} formObject={formObject} display={dimensions[1]-i} inverted={inverted}/>);
     }
   }
   

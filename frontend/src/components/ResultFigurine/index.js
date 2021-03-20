@@ -33,13 +33,13 @@ const Figurine = (props) => {
     const broken_head = 
     <group>
         {divs.map((_, i) => (
-            <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
+            <mesh key={i} position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
                 <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, divs[i][0], divs[i][1]]}/>
                 <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
         ))}
         {divs.map((_, i) => (
-            <mesh position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
+            <mesh key={i} position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
                 <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, divs[i][0], divs[i][1]]}/>
                 <meshPhongMaterial ref={el => insideRef.current[i] = el} side={THREE.BackSide}/>
             </mesh>

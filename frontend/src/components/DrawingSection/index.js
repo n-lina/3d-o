@@ -22,18 +22,18 @@ const DrawingSection = (props) => {
       const remainder = DrawingSectionModel.width - (2 * wing_width)
       const chest_width = Math.ceil(remainder/2)
       const back_width = Math.floor(remainder/2)
-      const wing1 = <TriangleSection width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true}/> 
-      const wing2 = <TriangleSection width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} /> 
-      const chest = <TriangleSection width={chest_width} formObject={formObject} elevation={DrawingSectionModel.height} />
-      const back = <TriangleSection width={back_width} formObject={formObject} elevation={DrawingSectionModel.height} inverted={true}/>
+      const wing1 = <TriangleSection wing={true} width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true}/> 
+      const wing2 = <TriangleSection wing={true} width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} /> 
+      const chest = <TriangleSection wing={true} width={chest_width} formObject={formObject} elevation={DrawingSectionModel.height} />
+      const back = <TriangleSection wing={true} width={back_width} formObject={formObject} elevation={DrawingSectionModel.height} inverted={true}/>
       swanUpper.push(wing1, chest, wing2, back)
     } 
     else {
       const wing_width = Math.round(0.75 * DrawingSectionModel.width)
       const remainder = DrawingSectionModel.width - wing_width
       const chest_width = remainder - 2
-      const wing = <TriangleSection width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true} inverted={true}/> 
-      const chest = <TriangleSection width={chest_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true} />
+      const wing = <TriangleSection wing={true} width={wing_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true} inverted={true}/> 
+      const chest = <TriangleSection wing={true} width={chest_width} formObject={formObject} elevation={DrawingSectionModel.height} firstRowDisplay={true} />
       swanUpper.push(wing, chest)
     }
   }

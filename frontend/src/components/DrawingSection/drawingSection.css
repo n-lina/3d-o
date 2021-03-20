@@ -4,7 +4,16 @@
     align-items: center;
   }
   
-#pixels {
-    /* margin-left:40px;
-    margin-right:40px */
-  }
+#drawingSectionRotated {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  margin-left: 0px;
+  margin-right: 0px;
+  background: red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

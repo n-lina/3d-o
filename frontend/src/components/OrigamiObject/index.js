@@ -29,8 +29,11 @@ const OrigamiObject = (props) => {
         let distribute = 0 
         let remainder = 0
         let spacing = 0
-
-        if (diff > 0){ // increasing - 2 pcs per increase
+        if (diff == 0){
+          specialTop = Array(dimensions.length).fill({})
+          specialBottom = Array(dimensions.length).fill({})
+        }
+        else if (diff > 0){ // increasing - 2 pcs per increase
           sBottomCurr  = {0: 1, 1: 0, 2: -1}
           distribute = curr - (2 * diff)// pieces left to distribute for spacing 
           remainder = distribute >= 0 ? distribute % diff : curr-diff
