@@ -2,14 +2,12 @@ import React, {useRef} from 'react';
 import UntrackedDrawingSection from "../UntrackedDrawingSection";
 import { observer } from "mobx-react";
 
-const OrigamiObject = (props) => {
+const UntrackedOrigamiObject = (props) => {
     const {dimensions, formObject} = props;
   
     let increasing = []
     let specialTop = []
     let specialBottom = []
-
-    // if (dimensions[dimensions.length-2][0]-dimensions[dimensions.length-1][0] < 0) formObject.setInverted()
 
     for (let i = dimensions.length-2; i >= 0; i--){
       let sTopCurr = {}
@@ -95,10 +93,6 @@ const OrigamiObject = (props) => {
         increasing.unshift(false)
       }
     }
-    if (formObject.model == "fig"){
-      specialTop[specialTop.length-1] = {}
-      specialBottom[specialBottom.length-1] = {}
-    } 
     specialTop.unshift({})
     specialBottom.push({})
     increasing.push(false)
@@ -115,4 +109,4 @@ const OrigamiObject = (props) => {
     );
   }
 
-export default observer(OrigamiObject)
+export default observer(UntrackedOrigamiObject)

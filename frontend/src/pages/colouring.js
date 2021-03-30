@@ -73,6 +73,7 @@ const Colouring = () => {
 
   if (coloringFormStore.model == "swan"){
     myHeight += (swanStore.modelDimensions[0][0] * 0.75 * (px_y + px_border) * 1.2)
+    myHeight += 600
   }
 
   else if (coloringFormStore.model == "fig"){
@@ -87,7 +88,7 @@ const Colouring = () => {
   }
 
   if (modelStore.top_rim || modelStore.bottom_rim){
-    myHeight += 400
+    myHeight += 600
   }
 
   myHeight = Math.max(window.innerHeight, myHeight)
