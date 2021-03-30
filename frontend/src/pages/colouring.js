@@ -87,7 +87,7 @@ const Colouring = () => {
     }
   }
 
-  if (modelStore.top_rim || modelStore.bottom_rim){
+  if (modelStore.top_rim || modelStore.bottom_rim && ! coloringFormStore.model == "swan"){
     myHeight += 600
   }
 
