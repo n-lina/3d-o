@@ -98,6 +98,7 @@ const SwanStore = types
     },
     getDimensions() {
         self.maxWidth = 53 // un hard code
+        // calculations
         return self.modelDimensions
     },
     swanBodyPts(){

@@ -57,6 +57,7 @@ const ColoringForm = types
     selectedColor: "#FF0000",
     defaultColor: "#FFFFFF",
     oldDefault: "#FFFFFF",
+    preload: false,
     clear: false,
     mode: false,
     maxWidth: 53,
@@ -88,6 +89,10 @@ const ColoringForm = types
         self.swan_two_wings = swan_one_wing
       }
     },
+    preloadDefaultColor(col){
+      self.defaultColor = col
+      self.oldDefault = col
+    },
     setDefaultColor(col){
       self.clear = false
       self.oldDefault = self.defaultColor
@@ -114,6 +119,9 @@ const ColoringForm = types
     setInverted(val=true){
       self.inverted = val
     },
+    setPreload(val=true){
+      self.preload = val
+    },
     exportComponent (node, appendage=false) {
       if(!node.current) {
           throw new Error("'node' must be a RefObject")
@@ -135,7 +143,7 @@ const ColoringForm = types
       saveAs(self.appendPic, "3do-diagram-appendages")
     },
     addDrawingSection(){
-      self.coloringFormData.push(DrawingSectionModel.create())
+      self.coloringFormData.push(DrawingSectionModel.create({preColor: self.defaultColor}))
     }
   }))
   .views(self => ({

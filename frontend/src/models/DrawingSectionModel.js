@@ -6,11 +6,12 @@ const DrawingSectionModel = types
     drawingSectionData: types.optional(types.array(RowModel), []),
     width: 0, 
     height: 0, 
-    increasing: false
+    increasing: false, 
+    preColor: "#FFFFFF"
   })
   .actions(self => ({
     addRow(){
-      self.drawingSectionData.push(RowModel.create())
+      self.drawingSectionData.push(RowModel.create({preColor: self.preColor}))
     }, 
     setWidthHeight(w, h){
       self.width = w

@@ -7,10 +7,11 @@ const RowModel = types
     offset: 0, 
     width: 0, 
     displayRowNum: 0,
+    preColor: "#FFFFFF"
   })
   .actions(self => ({
     addPx(){
-      self.rowData.push(PxModel.create())
+      self.rowData.push(PxModel.create({oldColor: self.preColor, pixelColor: self.preColor}))
     },
     setOffset(val = 10.5){
       self.offset = val
