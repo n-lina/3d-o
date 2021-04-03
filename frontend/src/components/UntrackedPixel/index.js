@@ -3,9 +3,9 @@ import "../Pixel/pixel.css";
 import { observer } from "mobx-react";
 
 const UntrackedPixel = (props) => {
-  const {formObject, inverted, init} = props;
+  const {formObject, inverted} = props;
 
-  const [pixelColor, setPixelColor] = useState(init? init : formObject.defaultColor);
+  const [pixelColor, setPixelColor] = useState(formObject.defaultColor);
   const [oldColor, setOldColor] = useState(pixelColor);
   const [canChangeColor, setCanChangeColor] = useState(true);
 

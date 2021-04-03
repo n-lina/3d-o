@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
-import premade from "./premade.js";
+// import premade from "./premade";
 import Sticky from 'react-stickynode';
 import { observer } from "mobx-react";
 import logo from "../assets/complex-logo.png"
@@ -25,17 +25,17 @@ const Colouring = () => {
   const [colorPalette, setColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF']) 
   const [dColorPalette, setDColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF'])
   
-  useEffect(() => {
-    // coloringFormData = drawing sections
-    // drawingSectionData = rows
-    // rowData = pixels
-    if (coloringFormStore.preload){
-      for (let i = 0; i < premade["swan1"][0].length; i++){
-        const curr_px = premade["swan1"][0][i]
-        coloringFormStore.coloringFormData[curr_px[0]].drawingSectionData[curr_px[1]].rowData[curr_px[2]].setPixelColor(curr_px[3])
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   // coloringFormData = drawing sections
+  //   // drawingSectionData = rows
+  //   // rowData = pixels
+  //   if (coloringFormStore.preload){
+  //     for (let i = 0; i < premade["swan1"][0].length; i++){
+  //       const curr_px = premade["swan1"][0][i]
+  //       coloringFormStore.coloringFormData[curr_px[0]].drawingSectionData[curr_px[1]].rowData[curr_px[2]].setPixelColor(curr_px[3])
+  //     }
+  //   }
+  // }, [])
 
   const diagramRef = useRef();
   const appendagesRef = useRef();
@@ -207,9 +207,15 @@ const Colouring = () => {
     caption = "swan wings + body"
   }
 
+  const stats = 
+  <div>
+    <p id="text">— project statistics + instructions —</p>
+  </div>
+
   const canvas = absolute? 
   <div className = "canvas">
     <div ref = {diagramRef}>
+      {stats}
       <OrigamiObject 
         caption={`${caption}`}
         dimensions={myDimensions}  
@@ -226,10 +232,12 @@ const Colouring = () => {
   </div> : 
   <div className = "canvas-relative">
     <div ref = {diagramRef}>
+      {stats}
       <OrigamiObject 
         caption={`${caption}`}
         dimensions={myDimensions}  
         formObject={coloringFormStore}
+        counter={counter}
       />
     </div>
     <div ref = {appendagesRef}>
