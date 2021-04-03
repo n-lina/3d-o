@@ -343,7 +343,7 @@ const CreateVase = () => {
           <br />
           <p className="textSwitch">units</p>
           {units_switch}
-          <div>
+          <div style={{display:'inline-block', width: '100%'}}>
             <div style={{background: '#FFE7E5', width: '40.5%', float: 'left', marginBottom:30, marginLeft:25, marginTop:15}}>
               <p className="text">height</p>
               {sliderHeight}
@@ -377,8 +377,7 @@ const CreateVase = () => {
             <p className="textSwitch">bottom cover</p>
             {flat_bottom_switch}
           </div>
-          <div style={{color:'#FFE7E5', marginTop: -10}}>.</div>
-          <div className="switch" style={{width: 80, marginBottom:35}}>
+          <div style={{width: 80, marginBottom:35, display:'inline-block', marginTop: 30}}>
             <NavBtn>
               <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
                 <p className = "buttonText">done</p>
