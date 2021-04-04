@@ -127,7 +127,6 @@ const OrigamiObject = (props) => {
     return (
       <div id="origamiObject">
         <div id="sections" ref={objectRef}>
-          <p id="text">— 1/32 —</p>
           <p id="text">{caption}</p>
           {sections}
         </div>

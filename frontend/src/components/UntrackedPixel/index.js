@@ -19,16 +19,29 @@ const UntrackedPixel = (props) => {
   }
 
   useEffect(()=>{
-    if(formObject.clear) {
+    formObject.addPc()
+    formObject.updateCounter(pixelColor,formObject.defaultColor, true)
+  }, [])
+  
+  useEffect(()=>{
+    if(pixelColor == formObject.oldDefault) {
+      formObject.updateCounter(pixelColor,formObject.defaultColor)
       setPixelColor(formObject.defaultColor)
     }
-    else if (pixelColor == formObject.oldDefault) setPixelColor(formObject.defaultColor)
+    else if (formObject.clear){
+      formObject.updateCounter(pixelColor,formObject.defaultColor, true)
+      setPixelColor(formObject.defaultColor)
+    }
   }, [formObject.defaultColor])
 
 
   function applyColor() {
     formObject.unsetClear();
     setPixelColor(formObject.selectedColor);
+    if (pixelColor != oldColor){
+      formObject.updateCounter(oldColor, pixelColor)
+      setOldColor(pixelColor)
+    }
     setCanChangeColor(false);
   }
 

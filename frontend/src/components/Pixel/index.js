@@ -15,18 +15,28 @@ const Pixel = (props) => {
   }
 
   useEffect(()=>{
-    if(formObject.clear || PxModel.pixelColor == formObject.oldDefault) {
-      formObject.updateCounter(PxModel.pixelColor,formObject.defaultColor, true)
+    formObject.addPc()
+    formObject.updateCounter("","",true)
+  }, [])
+
+  useEffect(()=>{
+    if(PxModel.pixelColor == formObject.oldDefault) {
+      formObject.updateCounter(PxModel.pixelColor,formObject.defaultColor)
+      PxModel.setPixelColor(formObject.defaultColor)
+    }
+    else if (formObject.clear){
+      formObject.updateCounter("","", true)
       PxModel.setPixelColor(formObject.defaultColor)
     }
   }, [formObject.defaultColor])
 
-
   function applyColor() {
     formObject.unsetClear();
     PxModel.setPixelColor(formObject.selectedColor);
-    console.log(PxModel.pixelColor, PxModel.oldColor)
-    if (PxModel.pixelColor != PxModel.oldColor) formObject.updateCounter(PxModel.oldColor, PxModel.pixelColor)
+    if (PxModel.pixelColor != PxModel.oldColor){
+      formObject.updateCounter(PxModel.oldColor, PxModel.pixelColor)
+      PxModel.setOldColor(PxModel.pixelColor)
+    } 
     PxModel.setCanChangeColor(false);
   }
 

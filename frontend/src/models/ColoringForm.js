@@ -56,7 +56,7 @@ const ColoringForm = types
   .model("ColoringForm", {
     selectedColor: "#FF0000",
     defaultColor: "#FFFFFF",
-    oldDefault: "#FFFFFF",
+    oldDefault: "#FFFFFE",
     preload: false,
     clear: false,
     mode: false,
@@ -67,7 +67,8 @@ const ColoringForm = types
     inverted: false,
     swan_two_wings: false,
     coloringFormData: types.optional(types.array(DrawingSectionModel), []), 
-    counter: types.optional(types.array(types.array(types.string)), [])
+    counter: types.optional(types.array(types.array(types.string)), []),
+    totPcs: 0
   })
   .actions(self => ({
     storePic(picData){
@@ -146,11 +147,24 @@ const ColoringForm = types
     addDrawingSection(){
       self.coloringFormData.push(DrawingSectionModel.create({preColor: self.defaultColor}))
     }, 
+    addPc(){
+      self.totPcs += 1 
+    },
     updateCounter(oldCol, newCol, init=false){
+      if (init) {
+        self.counter =[[self.defaultColor, String(self.totPcs)]]
+        return
+      }
       let done = false
+      let idx_to_del = 0
+      let del = false
       for (let i = 0; i < self.counter.length; i++){
-        if (self.counter[i][0] == oldCol && !init){
-          if (self.counter[i][1] == "1") self.counter.splice(i,1)
+        console.log(self.counter[i][0], oldCol, newCol)
+        if (self.counter[i][0] == oldCol){
+          if (self.counter[i][1] == "1"){
+            del = true
+            idx_to_del = i
+          }
           else self.counter[i][1] = String(parseInt(self.counter[i][1]) - 1)
         }
         else if (self.counter[i][0] == newCol){
@@ -158,8 +172,13 @@ const ColoringForm = types
           self.counter[i][1] = String(parseInt(self.counter[i][1]) + 1)
         }
       }
-      if (!done) self.counter.push([newCol, "1"])
-      console.log(self.counter)
+      if (!done) {
+        console.log(newCol)
+        self.counter.push([newCol, "1"])
+      }
+      if (del){
+        self.counter.splice(idx_to_del,1)
+      }
     }
   }))
   .views(self => ({

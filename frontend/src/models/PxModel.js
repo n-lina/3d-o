@@ -3,7 +3,7 @@ import { types } from "mobx-state-tree";
 const PxModel = types
   .model("PxModel", {
     pixelColor: "#FFFFFF", 
-    oldColor: "#FFFFFF", 
+    oldColor: "#FFFFFE", 
     canChangeColor: true, 
     inverted: false
   })
