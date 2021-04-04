@@ -157,28 +157,24 @@ const ColoringForm = types
         return
       }
       let done = false
-      let idx_to_del = 0
-      let del = false
       for (let i = 0; i < self.counter.length; i++){
-        console.log(self.counter[i][0], oldCol, newCol)
+        const curr_val = parseInt(self.counter[i][1])
         if (self.counter[i][0] == oldCol){
-          if (self.counter[i][1] == "1"){
-            del = true
-            idx_to_del = i
+          if (curr_val <= 1){
+            self.counter.splice(i,1)
           }
-          else self.counter[i][1] = String(parseInt(self.counter[i][1]) - 1)
+          else self.counter[i][1] = String(curr_val - 1)
         }
-        else if (self.counter[i][0] == newCol){
+      }
+      for (let i = 0; i < self.counter.length; i++){
+        const curr_val = parseInt(self.counter[i][1])
+        if (self.counter[i][0] == newCol){
           done = true
-          self.counter[i][1] = String(parseInt(self.counter[i][1]) + 1)
+          self.counter[i][1] = String(curr_val + 1)
         }
       }
       if (!done) {
-        console.log(newCol)
         self.counter.push([newCol, "1"])
-      }
-      if (del){
-        self.counter.splice(idx_to_del,1)
       }
     }
   }))
