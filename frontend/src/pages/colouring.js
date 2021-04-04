@@ -214,8 +214,9 @@ const Colouring = () => {
     let pieces = ""
     parseInt(num) > 1 ? pieces = "pieces" : pieces = "piece"
     return <div key={key} style={{display:'inline-block', width: '100%'}}>
-      <div style={{marginTop:5, marginBottom:5, borderRadius: 25, height: 30, width: 30, background: col, float:"left"}}></div>
-      <p style={{marginTop:9, marginBottom:0, marginLeft:10, float:"left"}}>{num} {pieces}, {sheets} {sheetsString}</p>
+      
+      <p style={{marginTop:10, marginBottom:0, marginLeft:20, float:"right"}}>{num} {pieces}, {sheets} {sheetsString}</p>
+      <div style={{marginTop:5, marginBottom:5, borderRadius: 25, height: 35, width: 35, background: col, float:"right"}}></div>
     </div>
   }
 
