@@ -207,9 +207,32 @@ const Colouring = () => {
     caption = "swan wings + body"
   }
 
+  function colorEntry(col, num){
+    let sheets = Math.ceil(parseInt(num)/coloringFormStore.size)
+    let sheetsString = ""
+    sheets > 1 ? sheetsString = "sheets" : sheetsString = "sheet"
+    let pieces = ""
+    parseInt(num) > 1 ? pieces = "pieces" : pieces = "piece"
+    return <div style={{display:'inline-block', width: '100%'}}>
+      <div style={{marginTop:5, marginBottom:5, borderRadius: 25, height: 30, width: 30, background: col, float:"left"}}></div>
+      <p style={{marginTop:9, marginBottom:0, marginLeft:10, float:"left"}}>{num} {pieces}, {sheets} {sheetsString}</p>
+    </div>
+  }
+
+  //"#FFE7E5"
   const stats = 
   <div>
     <p id="text">— project statistics + instructions —</p>
+    <div style={{width: '100%', display:'inline-block'}}>
+      <div id="text" style={{marginTop:0, marginBottom:0, marginRight: 0, width: '500px', background: "#FFE7E5", float:"left"}}>placeholder</div>
+      <div id="text" style={{marginTop:0, marginBottom:0, marginLeft: 0, width: '500px', background: "#FFE7E5", float:"right"}}>
+        <div>
+          {coloringFormStore.counter.map(col => (
+          colorEntry(col[0], col[1])
+          ))}
+        </div>
+      </div>
+    </div>
   </div>
 
   const canvas = absolute? 
@@ -237,7 +260,6 @@ const Colouring = () => {
         caption={`${caption}`}
         dimensions={myDimensions}  
         formObject={coloringFormStore}
-        counter={counter}
       />
     </div>
     <div ref = {appendagesRef}>
@@ -250,7 +272,7 @@ const Colouring = () => {
   </div>
 
   return (
-    <div style={{background: "#FFE7E5"}}>
+    <div className="bg">
       <Sticky innerZ={3}>
         <div className = "toolbar">
           {backButton}

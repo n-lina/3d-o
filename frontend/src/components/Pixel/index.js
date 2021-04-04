@@ -20,12 +20,12 @@ const Pixel = (props) => {
   }, [])
 
   useEffect(()=>{
-    if(PxModel.pixelColor == formObject.oldDefault) {
-      formObject.updateCounter(PxModel.pixelColor,formObject.defaultColor)
+    if (formObject.clear){
+      formObject.updateCounter("","", true)
       PxModel.setPixelColor(formObject.defaultColor)
     }
-    else if (formObject.clear){
-      formObject.updateCounter("","", true)
+    else if(PxModel.pixelColor == formObject.oldDefault) {
+      formObject.updateCounter(PxModel.pixelColor,formObject.defaultColor)
       PxModel.setPixelColor(formObject.defaultColor)
     }
   }, [formObject.defaultColor])

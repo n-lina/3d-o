@@ -61,6 +61,7 @@ const ColoringForm = types
     clear: false,
     mode: false,
     maxWidth: 53,
+    size: 32,
     canvasPic: "",
     appendPic: "",
     model: "vase", // vase, swan, fig, basket
