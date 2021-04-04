@@ -16,16 +16,16 @@ const Pixel = (props) => {
 
   useEffect(()=>{
     formObject.addPc()
-    formObject.updateCounter("","",true)
+    formObject.updateCounterDefault(true)
   }, [])
 
   useEffect(()=>{
     if (formObject.clear){
-      formObject.updateCounter("","", true)
+      formObject.updateCounterDefault(true)
       PxModel.setPixelColor(formObject.defaultColor)
     }
     else if(PxModel.pixelColor == formObject.oldDefault) {
-      formObject.updateCounter(PxModel.pixelColor,formObject.defaultColor)
+      formObject.updateCounterDefault()
       PxModel.setPixelColor(formObject.defaultColor)
     }
   }, [formObject.defaultColor])

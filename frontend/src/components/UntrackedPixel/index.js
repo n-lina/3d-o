@@ -20,16 +20,16 @@ const UntrackedPixel = (props) => {
 
   useEffect(()=>{
     formObject.addPc()
-    formObject.updateCounter("","", true)
+    formObject.updateCounterDefault(true)
   }, [])
   
   useEffect(()=>{
     if (formObject.clear){
-      formObject.updateCounter(pixelColor,formObject.defaultColor, true)
+      formObject.updateCounterDefault(true, true)
       setPixelColor(formObject.defaultColor)
     }
     else if(pixelColor == formObject.oldDefault) {
-      formObject.updateCounter(pixelColor,formObject.defaultColor)
+      formObject.updateCounterDefault()
       setPixelColor(formObject.defaultColor)
     }
   }, [formObject.defaultColor])

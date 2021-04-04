@@ -207,13 +207,13 @@ const Colouring = () => {
     caption = "swan wings + body"
   }
 
-  function colorEntry(col, num){
+  function colorEntry(key, col, num){
     let sheets = Math.ceil(parseInt(num)/coloringFormStore.size)
     let sheetsString = ""
     sheets > 1 ? sheetsString = "sheets" : sheetsString = "sheet"
     let pieces = ""
     parseInt(num) > 1 ? pieces = "pieces" : pieces = "piece"
-    return <div style={{display:'inline-block', width: '100%'}}>
+    return <div key={key} style={{display:'inline-block', width: '100%'}}>
       <div style={{marginTop:5, marginBottom:5, borderRadius: 25, height: 30, width: 30, background: col, float:"left"}}></div>
       <p style={{marginTop:9, marginBottom:0, marginLeft:10, float:"left"}}>{num} {pieces}, {sheets} {sheetsString}</p>
     </div>
@@ -227,8 +227,8 @@ const Colouring = () => {
       <div id="text" style={{marginTop:0, marginBottom:0, marginRight: 0, width: '500px', background: "#FFE7E5", float:"left"}}>placeholder</div>
       <div id="text" style={{marginTop:0, marginBottom:0, marginLeft: 0, width: '500px', background: "#FFE7E5", float:"right"}}>
         <div>
-          {coloringFormStore.counter.map(col => (
-          colorEntry(col[0], col[1])
+          {coloringFormStore.counter.map((col, i) => (
+          colorEntry(i, col[0], col[1])
           ))}
         </div>
       </div>

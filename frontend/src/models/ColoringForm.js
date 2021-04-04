@@ -69,7 +69,8 @@ const ColoringForm = types
     swan_two_wings: false,
     coloringFormData: types.optional(types.array(DrawingSectionModel), []), 
     counter: types.optional(types.array(types.array(types.string)), []),
-    totPcs: 0
+    totPcs: 0, 
+    doneDefualt: false,
   })
   .actions(self => ({
     storePic(picData){
@@ -97,11 +98,13 @@ const ColoringForm = types
       self.oldDefault = col
     },
     setDefaultColor(col){
+      self.doneDefualt = false
       self.clear = false
       self.oldDefault = self.defaultColor
       self.defaultColor = col
     },
     clearAll(){
+      self.doneDefualt = false
       if (self.defaultColor == "#FFFFFF"){
         self.oldDefault = "#FFFFFE" 
         self.defaultColor = "#FFFFFE"
@@ -151,11 +154,7 @@ const ColoringForm = types
     addPc(){
       self.totPcs += 1 
     },
-    updateCounter(oldCol, newCol, init=false){
-      if (init) {
-        self.counter =[[self.defaultColor, String(self.totPcs)]]
-        return
-      }
+    updateCounter(oldCol, newCol){
       let done = false
       for (let i = 0; i < self.counter.length; i++){
         const curr_val = parseInt(self.counter[i][1])
@@ -176,7 +175,39 @@ const ColoringForm = types
       if (!done) {
         self.counter.push([newCol, "1"])
       }
+    }, 
+    updateCounterDefault(init=false, clear=false){
+      if (self.doneDefualt) return
+      if (init) {
+        self.counter =[[self.defaultColor, String(self.totPcs)]]
+        if (clear) self.doneDefualt = true
+        return
+      }
+      let done = false
+      for (let i = 0; i < self.counter.length; i++){
+        if (self.counter[i][0] == self.oldDefault){
+          self.counter[i][0] = self.defaultColor
+          done = true
+        }
+      }
+      self.doneDefualt = true
+      if (!done) return
+      let count = 0 
+      let idx = 0
+      for (let i = 0; i < self.counter.length; i++){
+        if (self.counter[i][0] == self.defaultColor){
+          count += 1 
+          if (count == 1){
+            idx = i 
+          }
+          else if (count == 2){ // merging by adding both to 1st encounter and deleting 2nd one
+            self.counter[idx][1] = String(parseInt(self.counter[idx][1]) + parseInt(self.counter[i][1]))
+            self.counter.splice(i,1)
+          }
+        }
+      }
     }
+    
   }))
   .views(self => ({
   }));
