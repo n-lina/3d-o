@@ -1,5 +1,5 @@
   
-import React, { useRef, useEffect } from "react";
+import React, { useRef} from "react";
 import "./drawingSection.css";
 import Row from "../Row";
 import SpecialRow from "../SpecialRow";
@@ -16,7 +16,7 @@ const DrawingSection = (props) => {
   let rows = []; 
   let swanUpper = [];
 
-  if (formObject.model == "swan"){
+  if (formObject.model === "swan"){
     if (formObject.swan_two_wings){
       const wing_width = 2 * Math.round(0.195 * DrawingSectionModel.width)
       const remainder = DrawingSectionModel.width - (2 * wing_width)
@@ -40,7 +40,7 @@ const DrawingSection = (props) => {
 
   if (formObject.model != "swan") rows.push(<SpecialRow key={-1} offset={0} width={DrawingSectionModel.width} specialTop={specialTop} />)
   
-  if(DrawingSectionModel.drawingSectionData.length == 0){
+  if(DrawingSectionModel.drawingSectionData.length === 0){
     for (let i = 0; i < DrawingSectionModel.height; i++){
       DrawingSectionModel.addRow()
     }
@@ -48,7 +48,7 @@ const DrawingSection = (props) => {
   for (let i = 0; i < DrawingSectionModel.height; i++) {
     DrawingSectionModel.drawingSectionData[i].setWidth(DrawingSectionModel.width)
     DrawingSectionModel.drawingSectionData[i].setDisplayRowNum(DrawingSectionModel.height-i)
-    if (i%2 == 1){
+    if (i%2 === 1){
       DrawingSectionModel.drawingSectionData[i].setOffset()
       rows.push(<Row key={i} formObject={formObject} RowModel={DrawingSectionModel.drawingSectionData[i]}/>);
     }
@@ -58,14 +58,14 @@ const DrawingSection = (props) => {
   }
   
   if(DrawingSectionModel.increasing){
-    if (DrawingSectionModel.height%2 == 1){
+    if (DrawingSectionModel.height%2 === 1){
       rows.push(<SpecialRow key={DrawingSectionModel.height} offset={10.5} width={DrawingSectionModel.width} specialBottom={specialBottom} />)
     } else {
       rows.push(<SpecialRow key={DrawingSectionModel.height} offset={10.5*2} width={DrawingSectionModel.width} specialBottom={specialBottom} />)
     }
   }
   else{
-    if (DrawingSectionModel.height%2 == 1){
+    if (DrawingSectionModel.height%2 === 1){
       rows.push(<SpecialRow key={DrawingSectionModel.height} offset={0} width={DrawingSectionModel.width} specialBottom={specialBottom} />)
     } else {
       rows.push(<SpecialRow key={DrawingSectionModel.height} offset={10.5} width={DrawingSectionModel.width} specialBottom={specialBottom} />)
@@ -75,7 +75,7 @@ const DrawingSection = (props) => {
   return (
     <div id="drawingSection" >
       <div id="pixels" ref={panelRef} style={{marginBottom: 10, marginLeft: 40, marginRight: 40}}>
-        {formObject.model == "swan" && <div style={{display:"flex", alignItems:"flex-end", marginLeft: 10.5, marginBottom: 3, justifyContent:"flex-start"}}>
+        {formObject.model === "swan" && <div style={{display:"flex", alignItems:"flex-end", marginLeft: 10.5, marginBottom: 3, justifyContent:"flex-start"}}>
           {swanUpper}
         </div>}
         {caption && <p id="text">{caption}</p>}

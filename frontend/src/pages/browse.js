@@ -4,10 +4,10 @@ import {useStores} from "../models/RootStoreContext"
 
 
 const Browse = () => {
-  const {coloringFormStore, vaseStore, swanStore, figStore, basketStore} = useStores();
+  const {coloringFormStore, swanStore} = useStores();
 
   function loadColoringPage(model){
-    if (model == "swan"){
+    if (model === "swan"){
       coloringFormStore.setPreload()
       coloringFormStore.preloadDefaultColor("#000000")
       coloringFormStore.setModel("swan", swanStore.wings)

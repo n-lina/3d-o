@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
@@ -41,10 +41,10 @@ const Colouring = () => {
   const appendagesRef = useRef();
   const {coloringFormStore, vaseStore, swanStore, figStore, basketStore} = useStores();
   let modelStore;
-  if (coloringFormStore.model == "vase") modelStore = vaseStore
-  if (coloringFormStore.model == "swan") modelStore = swanStore
-  else if (coloringFormStore.model == "fig") modelStore = figStore
-  else if (coloringFormStore.model == "basket") modelStore = basketStore
+  if (coloringFormStore.model === "vase") modelStore = vaseStore
+  if (coloringFormStore.model === "swan") modelStore = swanStore
+  else if (coloringFormStore.model === "fig") modelStore = figStore
+  else if (coloringFormStore.model === "basket") modelStore = basketStore
 
   function changeColor(color) {
     const search = (color.hex).toString().toUpperCase()
@@ -84,23 +84,23 @@ const Colouring = () => {
     myHeight += (y * (px_y + px_border)) + (1.5*myYMargin) + (2*marker_y)
   }
 
-  if (coloringFormStore.model == "swan"){
+  if (coloringFormStore.model === "swan"){
     myHeight += (swanStore.modelDimensions[0][0] * 0.75 * (px_y + px_border) * 1.2)
     myHeight += 600
   }
 
-  else if (coloringFormStore.model == "fig"){
+  else if (coloringFormStore.model === "fig"){
     myHeight *= 2
   }
 
-  if (modelStore.flat_bottom || coloringFormStore.model == "basket"){
+  if (modelStore.flat_bottom || coloringFormStore.model === "basket"){
     myHeight *= 2
     if(modelStore.lid){
       myHeight *= 2
     }
   }
 
-  if (modelStore.top_rim || modelStore.bottom_rim && ! coloringFormStore.model == "swan"){
+  if ((modelStore.top_rim || modelStore.bottom_rim) && ! coloringFormStore.model === "swan"){
     myHeight += 600
   }
 
@@ -200,10 +200,10 @@ const Colouring = () => {
   </div>
 
   let caption = `${coloringFormStore.model}`
-  if (coloringFormStore.model == "fig"){
+  if (coloringFormStore.model === "fig"){
     caption = "figurine head"
   }
-  else if (coloringFormStore.model == "swan"){
+  else if (coloringFormStore.model === "swan"){
     caption = "swan wings + body"
   }
 

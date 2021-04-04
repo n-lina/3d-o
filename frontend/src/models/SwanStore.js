@@ -1,4 +1,4 @@
-import { tryReference, types } from "mobx-state-tree";
+import { types } from "mobx-state-tree";
 import * as THREE from "three";
 import React from "react"
 
@@ -87,9 +87,6 @@ const SwanStore = types
     update_diameter(d){
         self.diameter = d
     }, 
-    setDefaultColor(color){
-        self.default_color = color
-    },
     storePic(picData){
         self.texture = picData
     },

@@ -50,8 +50,6 @@ const exportComponentBak = (node, {
   });
 };
 
-const exportComponentAsPNG = (node, parameters = {}) => exportComponentBak(node, {...DEFAULT_PNG, ...parameters});
-
 const ColoringForm = types
   .model("ColoringForm", {
     selectedColor: "#FF0000",
@@ -89,7 +87,7 @@ const ColoringForm = types
     },
     setModel(model, swan_one_wing){
       self.model = model
-      if (model == "swan"){
+      if (model === "swan"){
         self.swan_two_wings = swan_one_wing
       }
     },
@@ -105,7 +103,7 @@ const ColoringForm = types
     },
     clearAll(){
       self.doneDefualt = false
-      if (self.defaultColor == "#FFFFFF"){
+      if (self.defaultColor === "#FFFFFF"){
         self.oldDefault = "#FFFFFE" 
         self.defaultColor = "#FFFFFE"
       }
@@ -158,7 +156,7 @@ const ColoringForm = types
       let done = false
       for (let i = 0; i < self.counter.length; i++){
         const curr_val = parseInt(self.counter[i][1])
-        if (self.counter[i][0] == oldCol){
+        if (self.counter[i][0] === oldCol){
           if (curr_val <= 1){
             self.counter.splice(i,1)
           }
@@ -167,7 +165,7 @@ const ColoringForm = types
       }
       for (let i = 0; i < self.counter.length; i++){
         const curr_val = parseInt(self.counter[i][1])
-        if (self.counter[i][0] == newCol){
+        if (self.counter[i][0] === newCol){
           done = true
           self.counter[i][1] = String(curr_val + 1)
         }
@@ -185,7 +183,7 @@ const ColoringForm = types
       }
       let done = false
       for (let i = 0; i < self.counter.length; i++){
-        if (self.counter[i][0] == self.oldDefault){
+        if (self.counter[i][0] === self.oldDefault){
           self.counter[i][0] = self.defaultColor
           done = true
         }
@@ -195,12 +193,12 @@ const ColoringForm = types
       let count = 0 
       let idx = 0
       for (let i = 0; i < self.counter.length; i++){
-        if (self.counter[i][0] == self.defaultColor){
+        if (self.counter[i][0] === self.defaultColor){
           count += 1 
-          if (count == 1){
+          if (count === 1){
             idx = i 
           }
-          else if (count == 2){ // merging by adding both to 1st encounter and deleting 2nd one
+          else if (count === 2){ // merging by adding both to 1st encounter and deleting 2nd one
             self.counter[idx][1] = String(parseInt(self.counter[idx][1]) + parseInt(self.counter[i][1]))
             self.counter.splice(i,1)
           }

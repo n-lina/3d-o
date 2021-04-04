@@ -10,18 +10,17 @@ import './create-vase.css'
 import upperbanner from "../assets/upper-banner.png"
 import lowerbanner from "../assets/lower-banner.png"
 import { FiDownload } from "react-icons/fi";
-import { exportComponentAsPNG } from "react-component-export-image";
+// import { exportComponentAsPNG } from "react-component-export-image";
 
 const Result = () => {
   const {coloringFormStore, vaseStore, swanStore, basketStore, figStore} = useStores()
-  const model = coloringFormStore.model; 
   
   const canvasRef = useRef()
   let modelStore; 
-  if (coloringFormStore.model == "vase") modelStore = vaseStore
-  if (coloringFormStore.model == "swan") modelStore = swanStore
-  else if (coloringFormStore.model == "fig") modelStore = figStore
-  else if (coloringFormStore.model == "basket") modelStore = basketStore
+  if (coloringFormStore.model === "vase") modelStore = vaseStore
+  if (coloringFormStore.model === "swan") modelStore = swanStore
+  else if (coloringFormStore.model === "fig") modelStore = figStore
+  else if (coloringFormStore.model === "basket") modelStore = basketStore
   modelStore.setDefaultColor(coloringFormStore.defaultColor)
   console.log(modelStore.default_color)
   
@@ -51,7 +50,7 @@ const Result = () => {
           context.fillRect(0, px_size * r, half_px_width, px_size)
         }
         for (let c = 0; c < sec_width; c++){
-          if (coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor == defaultCol) continue
+          if (coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor === defaultCol) continue
           context.fillStyle = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor
           context.fillRect((px_size * c) + offset, px_size * r, px_size, px_size)
         }
@@ -73,10 +72,10 @@ const Result = () => {
             <spotLight position={[-150, -150, 110]} intensity = {0.3} />
             <spotLight position={[150, -150, 110]} intensity={0.1} />
             <spotLight position={[-10, 0, 25]} intensity={0.1} />
-            {coloringFormStore.model == "vase" && <ResultVase vaseStore={vaseStore} />}
-            {coloringFormStore.model == "swan" && <Swan swanStore={swanStore} result={true}/>}
-            {coloringFormStore.model == "fig" && <ResultFigurine figStore={figStore}/>}
-            {coloringFormStore.model == "basket" && <ResultBasket basketStore={basketStore} />}
+            {coloringFormStore.model === "vase" && <ResultVase vaseStore={vaseStore} />}
+            {coloringFormStore.model === "swan" && <Swan swanStore={swanStore} result={true}/>}
+            {coloringFormStore.model === "fig" && <ResultFigurine figStore={figStore}/>}
+            {coloringFormStore.model === "basket" && <ResultBasket basketStore={basketStore} />}
           </Canvas>
         <div className="containerCaption">
             <div style={{height: 10}}></div>

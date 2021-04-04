@@ -11,7 +11,7 @@ const OrigamiObject = (props) => {
     let specialTop = []
     let specialBottom = []
 
-    if (formObject.model == "swan"){
+    if (formObject.model === "swan"){
       specialTop = Array(dimensions.length).fill({})
       specialBottom = Array(dimensions.length).fill({})
     }
@@ -29,7 +29,7 @@ const OrigamiObject = (props) => {
         let distribute = 0 
         let remainder = 0
         let spacing = 0
-        if (diff == 0){
+        if (diff === 0){
           specialTop = Array(dimensions.length).fill({})
           specialBottom = Array(dimensions.length).fill({})
         }
@@ -101,7 +101,7 @@ const OrigamiObject = (props) => {
           increasing.unshift(false)
         }
       }
-      if (formObject.model == "fig"){
+      if (formObject.model === "fig"){
         specialTop[specialTop.length-1] = {}
         specialBottom[specialBottom.length-1] = {}
       } 
@@ -112,7 +112,7 @@ const OrigamiObject = (props) => {
 
     let sections = [];
   
-    if (formObject.coloringFormData.length == 0){
+    if (formObject.coloringFormData.length === 0){
       for (let i = 0; i < dimensions.length; i++) {
         formObject.addDrawingSection()
       }
@@ -121,7 +121,7 @@ const OrigamiObject = (props) => {
       formObject.coloringFormData[i].setWidthHeight(dimensions[i][0], dimensions[i][1])
       formObject.coloringFormData[i].setIncreasing(increasing[i])
       let caption = false
-      if (formObject.model == "fig" && i == dimensions.length-1) caption = "figurine body"
+      if (formObject.model === "fig" && i === dimensions.length-1) caption = "figurine body"
       sections.push(<DrawingSection key={i} caption={caption} specialTop = {specialTop[i]} specialBottom = {specialBottom[i]} formObject={formObject} DrawingSectionModel={formObject.coloringFormData[i]} />);
     }
     return (

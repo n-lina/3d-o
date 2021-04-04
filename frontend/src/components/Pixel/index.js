@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef} from "react";
+import React, { useEffect} from "react";
 import "./pixel.css";
 import { observer } from "mobx-react";
 
@@ -24,7 +24,7 @@ const Pixel = (props) => {
       formObject.updateCounterDefault(true)
       PxModel.setPixelColor(formObject.defaultColor)
     }
-    else if(PxModel.pixelColor == formObject.oldDefault) {
+    else if(PxModel.pixelColor === formObject.oldDefault) {
       formObject.updateCounterDefault()
       PxModel.setPixelColor(formObject.defaultColor)
     }
@@ -33,7 +33,7 @@ const Pixel = (props) => {
   function applyColor() {
     formObject.unsetClear();
     PxModel.setPixelColor(formObject.selectedColor);
-    if (PxModel.pixelColor != PxModel.oldColor){
+    if (PxModel.pixelColor !== PxModel.oldColor){
       formObject.updateCounter(PxModel.oldColor, PxModel.pixelColor)
       PxModel.setOldColor(PxModel.pixelColor)
     } 

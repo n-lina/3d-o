@@ -87,7 +87,7 @@ const Appendages = (props) => {
       rims.push(<Rim key={key} full={true} caption={"bottom rim"} circ={circ}/>) // static picture
       key += 1
     }
-    if (formObject.model == "swan"){
+    if (formObject.model === "swan"){
       const circ = modelStore.getDimensions()[0][0]
       rims.push(<Rim key={key} swan={true} caption={"neck"} circ={circ}/>) // static picture
       key += 1

@@ -1,4 +1,4 @@
-import { tryReference, types } from "mobx-state-tree";
+import {types } from "mobx-state-tree";
 import * as THREE from "three";
 import React from "react"
 
@@ -88,9 +88,6 @@ const FigurineStore = types
     storePic(picData, sectionNum){
         self.textures[sectionNum] = picData
         // console.log(picData)
-    },
-    setDefaultColor(color){
-        self.default_color = color
     },
     getDimensions() {
         self.maxWidth = 53

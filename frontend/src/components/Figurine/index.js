@@ -1,8 +1,7 @@
-import React, { useRef, useState, useMemo, useEffect} from "react";
+import React, {useState, useMemo} from "react";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import grid from "../../assets/paper.PNG";
-import Wing from "../Wing"
 
 const Figurine = (props) => {
     const {figStore} = props
@@ -56,7 +55,7 @@ const Figurine = (props) => {
         }
     }
 
-    if(figStore.ears == "bear"){
+    if(figStore.ears === "bear"){
         const tube_scale = head_rad/3
         const path = new CustomCircleCurve(tube_scale)
         const segs = 40
@@ -78,7 +77,7 @@ const Figurine = (props) => {
         </group>
     }
 
-    if(figStore.ears == "cat"){
+    if(figStore.ears === "cat"){
         const shape = new THREE.Shape();
         const y_pos = (figStore.diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
         const half_side_len = (head_rad/1.5)/2
@@ -107,7 +106,7 @@ const Figurine = (props) => {
 
     }
 
-    if(figStore.ears == "bunny"){
+    if(figStore.ears === "bunny"){
         const bshape = new THREE.Shape();
         const y_pos = (figStore.diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
         const half_side_len = (head_rad/2)/2
@@ -136,7 +135,7 @@ const Figurine = (props) => {
         </group>
     }
 
-    if(figStore.ears == "sphere"){
+    if(figStore.ears === "sphere"){
         const ear_rad = head_rad/3.5
         const y_pos = (figStore.diameter * figStore.body_height) + offset + ear_rad + (head_rad * Math.cos(Math.PI/4))
         sphere_ears = 
@@ -210,6 +209,7 @@ const Figurine = (props) => {
                     changeYrot(y_rot)
                     changeZrot(z_rot)
                     changeDist(dist)
+                    break;
             default: 
                     break;
         }
@@ -236,10 +236,10 @@ const Figurine = (props) => {
             </mesh>
             {head}
             {diameter_marker}
-            {figStore.ears == "bear" && bear_ears}
-            {figStore.ears == "bunny" && bunny_ears}
-            {figStore.ears == "cat" && cat_ears}
-            {figStore.ears == "sphere" && sphere_ears}
+            {figStore.ears === "bear" && bear_ears}
+            {figStore.ears === "bunny" && bunny_ears}
+            {figStore.ears === "cat" && cat_ears}
+            {figStore.ears === "sphere" && sphere_ears}
             {figStore.arms && arms}
         </group>
     )
