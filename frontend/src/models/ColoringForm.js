@@ -66,7 +66,8 @@ const ColoringForm = types
     model: "vase", // vase, swan, fig, basket
     inverted: false,
     swan_two_wings: false,
-    coloringFormData: types.optional(types.array(DrawingSectionModel), [])
+    coloringFormData: types.optional(types.array(DrawingSectionModel), []), 
+    counter: types.optional(types.array(types.array(types.string)), [])
   })
   .actions(self => ({
     storePic(picData){
@@ -144,6 +145,21 @@ const ColoringForm = types
     },
     addDrawingSection(){
       self.coloringFormData.push(DrawingSectionModel.create({preColor: self.defaultColor}))
+    }, 
+    updateCounter(oldCol, newCol, init=false){
+      let done = false
+      for (let i = 0; i < self.counter.length; i++){
+        if (self.counter[i][0] == oldCol && !init){
+          if (self.counter[i][1] == "1") self.counter.splice(i,1)
+          else self.counter[i][1] = String(parseInt(self.counter[i][1]) - 1)
+        }
+        else if (self.counter[i][0] == newCol){
+          done = true
+          self.counter[i][1] = String(parseInt(self.counter[i][1]) + 1)
+        }
+      }
+      if (!done) self.counter.push([newCol, "1"])
+      console.log(self.counter)
     }
   }))
   .views(self => ({
