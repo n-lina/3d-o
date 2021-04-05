@@ -379,7 +379,7 @@ const CreateVase = () => {
           </div>
           <div style={{width: 80, marginBottom:35, display:'inline-block', marginTop: 30}}>
             <NavBtn>
-              <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
+              <NavBtnLink style={{background: "#D14240"}} onClick={() => coloringFormStore.setMsg()} to='/colouring'>
                 <p className = "buttonText">done</p>
               </NavBtnLink>
             </NavBtn>

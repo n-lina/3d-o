@@ -29,27 +29,6 @@ const saveAs = (uri, filename) => {
   }
 };
 
-const exportComponentBak = (node, {
-  fileName, 
-  type, 
-  html2CanvasOptions, 
-  pdfOptions
-}) => {
-  if(!node.current) {
-      throw new Error("'node' must be a RefObject")
-  }
-
-  const element = ReactDOM.findDOMNode(node.current);
-  return html2canvas(element, {
-      scrollY: -window.scrollY,
-      useCORS: true,
-      ...html2CanvasOptions
-  }).then(canvas => {
-      console.log(canvas.toDataURL(type, 1.0))
-      // saveAs(canvas.toDataURL(type, 1.0), fileName);
-  });
-};
-
 const ColoringForm = types
   .model("ColoringForm", {
     selectedColor: "#FF0000",
@@ -69,6 +48,8 @@ const ColoringForm = types
     counter: types.optional(types.array(types.array(types.string)), []),
     totPcs: 0, 
     doneDefualt: false,
+    msg: "error", 
+    resultMsg: "error"
   })
   .actions(self => ({
     storePic(picData){
@@ -90,6 +71,10 @@ const ColoringForm = types
       if (model === "swan"){
         self.swan_two_wings = swan_one_wing
       }
+    },
+    setMsg(result=false, msg="valid"){
+      if (!result) self.msg = msg
+      else self.resultMsg = msg
     },
     preloadDefaultColor(col){
       self.defaultColor = col
@@ -145,6 +130,7 @@ const ColoringForm = types
     saveDiagram () {
       saveAs(self.canvasPic, "3do-diagram")
       saveAs(self.appendPic, "3do-diagram-appendages")
+      self.resultMsg = "error"
     },
     addDrawingSection(){
       self.coloringFormData.push(DrawingSectionModel.create({preColor: self.defaultColor}))

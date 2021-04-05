@@ -191,7 +191,7 @@ const wings_switch = <div className="switch"  style={{width: 100, height: 50}}>
           </div>
           <div className="done-basket" style={{width: 80, marginBottom:35}}>
             <NavBtn>
-              <NavBtnLink style={{background: "#D14240"}} to='/colouring'>
+              <NavBtnLink style={{background: "#D14240"}} onClick={() => coloringFormStore.setMsg()} to='/colouring'>
                 <p className = "buttonText">done</p>
               </NavBtnLink>
             </NavBtn>

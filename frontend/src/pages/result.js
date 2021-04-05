@@ -14,6 +14,8 @@ import { FiDownload } from "react-icons/fi";
 
 const Result = () => {
   const {coloringFormStore, vaseStore, swanStore, basketStore, figStore} = useStores()
+
+  coloringFormStore.setMsg("error")
   
   const canvasRef = useRef()
   let modelStore; 
@@ -22,7 +24,6 @@ const Result = () => {
   else if (coloringFormStore.model === "fig") modelStore = figStore
   else if (coloringFormStore.model === "basket") modelStore = basketStore
   modelStore.setDefaultColor(coloringFormStore.defaultColor)
-  console.log(modelStore.default_color)
   
   useEffect(() => {
     const canvas = canvasRef.current

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 import '../App.css'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import Home from '../pages';
 import Colouring from '../pages/colouring'
 // import makeInspectable from "mobx-devtools-mst";
@@ -21,7 +21,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route path='/colouring'>
-                <Colouring />
+                {rootStore.coloringFormStore.msg === "error" ? <Redirect to="/create"/> : <Colouring />}
               </Route>
               <Route path='/'>
                 <Home/>

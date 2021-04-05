@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
@@ -26,15 +26,16 @@ const Colouring = () => {
   const [dColorPalette, setDColorPalette] = useState(['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', '#EB144C', '#F78DA7', '#9900EF'])
   
   // useEffect(() => {
-  //   // coloringFormData = drawing sections
-  //   // drawingSectionData = rows
-  //   // rowData = pixels
-  //   if (coloringFormStore.preload){
-  //     for (let i = 0; i < premade["swan1"][0].length; i++){
-  //       const curr_px = premade["swan1"][0][i]
-  //       coloringFormStore.coloringFormData[curr_px[0]].drawingSectionData[curr_px[1]].rowData[curr_px[2]].setPixelColor(curr_px[3])
-  //     }
-  //   }
+  //   // // coloringFormData = drawing sections
+  //   // // drawingSectionData = rows
+  //   // // rowData = pixels
+  //   // if (coloringFormStore.preload){
+  //   //   for (let i = 0; i < premade["swan1"][0].length; i++){
+  //   //     const curr_px = premade["swan1"][0][i]
+  //   //     coloringFormStore.coloringFormData[curr_px[0]].drawingSectionData[curr_px[1]].rowData[curr_px[2]].setPixelColor(curr_px[3])
+  //   //   }
+  //   // }
+  //   coloringFormStore.setMsg("error")
   // }, [])
 
   const diagramRef = useRef();
@@ -177,6 +178,7 @@ const Colouring = () => {
   </div>
 
   function nextPage(){
+    coloringFormStore.setMsg(true)
     coloringFormStore.exportComponent(diagramRef)
     coloringFormStore.exportComponent(appendagesRef, true)
   }

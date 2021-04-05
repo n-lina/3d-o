@@ -13,10 +13,13 @@ import CreateVase from "./create-vase"
 import CreateBasket from "./create-basket"
 import CreateFigurine from "./create-figurine"
 import Result from "./result"
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { useStores } from "../models/RootStoreContext"
 
 const Home = () => {
+
+  const {coloringFormStore} = useStores();
+
   return (
   <div className="Background">
     <div className="InnerApp"> 
@@ -32,7 +35,10 @@ const Home = () => {
         <Route path='/create-vase' component={CreateVase} />
         <Route path='/create-basket' component={CreateBasket} />
         <Route path='/create-figurine' component={CreateFigurine} />
-        <Route path='/Result' component={Result} />
+        {/* <Route path='/result' component={Result} /> */}
+        <Route path='/result'>
+          {coloringFormStore.resultMsg === "error" ? <Redirect to="/create"/> : <Result />}
+        </Route>
         <Route path='/' component={Landing}/>
       </Switch>
     </div>
