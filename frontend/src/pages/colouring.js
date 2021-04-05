@@ -105,7 +105,7 @@ const Colouring = () => {
     myHeight += 600
   }
 
-  myHeight = Math.max(window.innerHeight, myHeight)
+  myHeight += coloringFormStore.counter.length * 55
 
   const colorPicker = <div className = "color-picker-object">
       <p className = "label-big">pixel color</p>
