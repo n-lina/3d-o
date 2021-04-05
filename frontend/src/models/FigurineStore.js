@@ -85,10 +85,6 @@ const FigurineStore = types
     update_diameter(d){
         self.diameter = d
     }, 
-    storePic(picData, sectionNum){
-        self.textures[sectionNum] = picData
-        // console.log(picData)
-    },
     getDimensions() {
         self.maxWidth = 53
         return self.modelDimensions

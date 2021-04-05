@@ -71,7 +71,7 @@ const BasketStore = types
     subsections: types.optional(types.array(types.array(types.number)),[[4,3],[2,1,0]]), 
     // basket has 2 sections, each may be made of 1+ drawing sections // bottom to top
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
-    textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
+    textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom 
     modelDimensions: types.optional(types.array(types.array(types.number)), [[53,10],[40,10],[28,9],[16,10],[13,5]]),
     // unused, only for consistency: 
     arms: false, 
@@ -110,10 +110,6 @@ const BasketStore = types
     }, 
     update_flat_bottom(val) {
         self.flat_bottom = val
-    },
-    storePic(picData, sectionNum){
-        self.textures[sectionNum] = picData
-        // console.log(picData)
     },
     setDefaultColor(color){
         self.default_color = color

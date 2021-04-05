@@ -142,13 +142,20 @@ const ColoringForm = types
       self.coloringFormData = []
       self.counter = []
       self.totPcs = 0
-      self.selectedColor= "#FF0000"
-      self.defaultColor= "#FFFFFF"
-      self.oldDefault= "#FFFFFE"
-      self.mode= false
-      self.doneDefualt= false
-      self.canvasPic= ""
-      self.appendPic= ""
+      self.selectedColor = "#FF0000"
+      self.defaultColor = "#FFFFFF"
+      self.oldDefault = "#FFFFFE"
+      self.mode = false
+      self.doneDefualt = false
+      self.canvasPic = ""
+      self.appendPic = ""
+      self.inverted = false
+      self.swan_two_wings = false
+      self.preload = false
+      // self.maxWidth = ??
+      // self.size = ??
+      // self.model = ??
+      // error messages dealt with seperately
     },
     updateCounter(oldCol, newCol){
       let done = false
