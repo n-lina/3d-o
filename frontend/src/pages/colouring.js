@@ -225,7 +225,7 @@ const Colouring = () => {
   //"#FFE7E5"
   const stats = 
   <div>
-    <p id="text">— project statistics + instructions —</p>
+    <p id="text">instructions + overview</p>
     <div style={{width: '100%', display:'inline-block'}}>
       <div id="text" style={{marginTop:0, marginBottom:0, marginRight: 0, width: '500px', background: "#FFE7E5", float:"left"}}>placeholder</div>
       <div id="text" style={{marginTop:0, marginBottom:0, marginLeft: 0, width: '500px', background: "#FFE7E5", float:"right"}}>

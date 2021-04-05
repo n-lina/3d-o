@@ -20,14 +20,14 @@ const Contact = () => {
         <p className = "app-name">3d-o<br/>engineering x art</p>
         <p className = "name">— lina nguyen —</p>
         <div className="left">
-          <a href="/" target="_blank" className="link">linkedin</a>
+          <a href="https://www.linkedin.com/in/nlina/" target="_blank" className="link">linkedin</a>
           <br/>
-          <a href="/" target="_blank" className="link">resume</a>
+          <a href="https://github.com/n-lina/n-lina/raw/main/Lina%20Nguyen%20Resume.pdf" target="_blank" className="link">resume</a>
         </div>
         <div className="right">
-          <a href="/" target="_blank" className="link">github</a>
+          <a href="https://github.com/n-lina" target="_blank" className="link">github</a>
           <br/>
-          <a href="/" target="_blank" className="link">email</a>
+          <a href="mailto:linanguyen@alumni.ubc.ca" target="_blank" className="link">email</a>
         </div>
       </div>
     </div>

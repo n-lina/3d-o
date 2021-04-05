@@ -58,7 +58,6 @@ const Result = () => {
       modelStore.storePic(texture)
     }
     coloringFormStore.setMsg("error")
-    coloringFormStore.clearColoringForm()
   }, [])
 
   // const modelRef = useRef()  
