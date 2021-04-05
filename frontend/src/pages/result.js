@@ -86,7 +86,7 @@ const Result = () => {
       </div>
       <div className="containerRight" style={{width: '48%', height: "100%", overflow: 'visible', float:'right', alignItems:"center", justifyContent:"center", position: "relative"}}>
         <canvas style={{display:"none"}} ref={canvasRef}/>
-        <img src={upperbanner} className="banner" style={{marginTop: 2}}/>
+        <img alt={""} src={upperbanner} className="banner" style={{marginTop: 2}}/>
         <div className = "done-button"
           onClick={() => coloringFormStore.saveDiagram()}> 
           <p className = "download-label"><span><FiDownload size={20}/></span> download 3d-o diagram <span><FiDownload size={20}/></span></p>
@@ -95,7 +95,7 @@ const Result = () => {
           onClick={() => coloringFormStore.saveDiagram()}> 
           <p className = "download-label"><span><FiDownload size={20}/></span> download 3d model <span><FiDownload size={20}/></span></p>
         </div> */}
-        <img src={lowerbanner} className="banner-b"  />
+        <img alt={""} src={lowerbanner} className="banner-b"  />
       </div>
     </div>
   );

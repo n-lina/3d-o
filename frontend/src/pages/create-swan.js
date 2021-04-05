@@ -7,7 +7,7 @@ import {
 import { Canvas} from "react-three-fiber";
 import Swan from "../components/Swan"
 import './create-vase.css'
-import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
+import { Slider, Rail, Handles} from "react-compound-slider";
 import SwitchSelector from "react-switch-selector";
 import { observer } from "mobx-react";
 import { useStores } from "../models/RootStoreContext"

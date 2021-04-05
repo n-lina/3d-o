@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-
 import Landing from './landing';
 import About from './about';
 import Learn from './learn';
