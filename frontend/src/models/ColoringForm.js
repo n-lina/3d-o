@@ -41,7 +41,7 @@ const ColoringForm = types
     size: 32,
     canvasPic: "",
     appendPic: "",
-    model: "vase", // vase, swan, fig, basket
+    model: "swan", // vase, swan, fig, basket
     inverted: false,
     swan_two_wings: false,
     coloringFormData: types.optional(types.array(DrawingSectionModel), []), 
@@ -137,6 +137,18 @@ const ColoringForm = types
     }, 
     addPc(){
       self.totPcs += 1 
+    },
+    clearColoringForm(){
+      self.coloringFormData = []
+      self.counter = []
+      self.totPcs = 0
+      self.selectedColor= "#FF0000"
+      self.defaultColor= "#FFFFFF"
+      self.oldDefault= "#FFFFFE"
+      self.mode= false
+      self.doneDefualt= false
+      self.canvasPic= ""
+      self.appendPic= ""
     },
     updateCounter(oldCol, newCol){
       let done = false

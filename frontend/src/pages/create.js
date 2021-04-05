@@ -15,6 +15,7 @@ const Create = () => {
 
   useEffect(() => {
     coloringFormStore.setMsg(true, "error")
+    coloringFormStore.clearColoringForm()
   }, [])
 
   const {coloringFormStore} = useStores()
@@ -50,10 +51,6 @@ const Create = () => {
             <p className="create-text">• swan •</p>
           </PlainLink>
         </div>
-        {/* <a style={{background: '#bfb', fontSize: '30px', margin: '30px'}} href="/create-swan"> Swan </a>
-        <a style={{background: '#bcb', fontSize: '30px', margin: '30px'}} href="/create-vase"> Vase </a>
-        <a style={{background: '#bdb', fontSize: '30px', margin: '30px'}} href="/create-basket"> Basket </a>
-        <a style={{background: '#beb', fontSize: '30px', margin: '30px'}} href="/create-figurine"> Figurine </a> */}
       </div>
     </div>
   );

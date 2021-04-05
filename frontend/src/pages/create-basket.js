@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, {useEffect} from "react";
 import {
   NavBtn,
   NavBtnLink
@@ -15,7 +14,12 @@ import { useStores } from "../models/RootStoreContext"
 const CreateBasket = () => {
 
   const { basketStore, coloringFormStore} = useStores();
-  coloringFormStore.setModel("basket")
+
+  useEffect(() => {
+    coloringFormStore.setMsg(true, "error")
+    coloringFormStore.clearColoringForm()
+    coloringFormStore.setModel("basket")
+  }, [])
 
   const options = [
     {

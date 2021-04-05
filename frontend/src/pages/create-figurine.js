@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, {useEffect} from "react";
 import {
   NavBtn,
   NavBtnLink
@@ -16,7 +15,12 @@ import { useStores } from "../models/RootStoreContext"
 const CreateFigurine = () => {
 
   const { figStore, coloringFormStore} = useStores();
-  coloringFormStore.setModel("fig")
+
+  useEffect(() => {
+    coloringFormStore.setMsg(true, "error")
+    coloringFormStore.clearColoringForm()
+    coloringFormStore.setModel("fig")
+  }, [])
 
   const options = [
     {

@@ -112,7 +112,7 @@ const OrigamiObject = (props) => {
 
     let sections = [];
   
-    if (formObject.coloringFormData.length === 0){
+    if (formObject.coloringFormData.length == 0){
       for (let i = 0; i < dimensions.length; i++) {
         formObject.addDrawingSection()
       }

@@ -14,8 +14,6 @@ import { FiDownload } from "react-icons/fi";
 
 const Result = () => {
   const {coloringFormStore, vaseStore, swanStore, basketStore, figStore} = useStores()
-
-  coloringFormStore.setMsg("error")
   
   const canvasRef = useRef()
   let modelStore; 
@@ -59,6 +57,8 @@ const Result = () => {
       var texture = canvas.toDataURL("image/png", 1.0)
       modelStore.storePic(texture)
     }
+    coloringFormStore.setMsg("error")
+    coloringFormStore.clearColoringForm()
   }, [])
 
   // const modelRef = useRef()  

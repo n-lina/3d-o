@@ -181,7 +181,7 @@ const Colouring = () => {
     coloringFormStore.setMsg(true)
     coloringFormStore.exportComponent(diagramRef)
     coloringFormStore.exportComponent(appendagesRef, true)
-  }
+    }
 
   const clear = <div className = "logo-object">
     <p className = "label">clear</p>

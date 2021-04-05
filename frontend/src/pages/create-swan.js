@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-
 import {
   NavBtn,
   NavBtnLink
@@ -18,6 +17,8 @@ const CreateSwan = () => {
   const { swanStore, coloringFormStore } = useStores();
 
   useEffect(() => {
+    coloringFormStore.setMsg(true, "error")
+    coloringFormStore.clearColoringForm()
     coloringFormStore.setModel("swan", swanStore.wings)
   }, [swanStore.wings])
 
