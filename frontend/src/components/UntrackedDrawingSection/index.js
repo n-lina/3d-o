@@ -12,6 +12,14 @@ const UntrackedDrawingSection = (props) => {
   let inverted = false
 
   if (!bunny) rows.push(<SpecialRow key={-1} offset={0} width={dimensions[0]} specialTop={specialTop} />)
+  else{
+    const end_width = Math.floor(dimensions[0]*(0.5))
+    const num_rows = dimensions[0] - end_width
+    for (let i = 0; i < num_rows; i++){
+      rows.push(<UntrackedRow key={dimensions[1]+1+i} numPx={end_width+i} offset={10.5*(num_rows-i)} formObject={formObject} display={dimensions[1]+num_rows-i} inverted={inverted}/>)
+    }
+
+  }
   
   for (let i = 0; i < dimensions[1]; i++) {
     arm && i == dimensions[1]-1 ? inverted = true : inverted = false
