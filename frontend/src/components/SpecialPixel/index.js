@@ -32,7 +32,7 @@ export default function SpecialPixel(props) {
         <div
           className="rowMarkerPixel"
         >
-          <p style={{fontSize:9, marginLeft: 5, marginTop:0, position:'absolute'}}>{displayRowNum}</p>
+          <p style={{fontSize:9, marginLeft: 5, marginTop:-0.5, position:'absolute'}}>{displayRowNum}</p>
           </div>
       );
     }
