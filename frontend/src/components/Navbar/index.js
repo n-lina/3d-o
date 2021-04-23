@@ -38,6 +38,9 @@ const Navbar = () => {
           <NavLink to='/contact'>
             <p style ={{letterSpacing: 2}}>contact</p>
           </NavLink>
+          <NavLink to='/login'>
+            <p style ={{letterSpacing: 2}}>login</p>
+          </NavLink>
           {/* Second Nav */}
           {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
         </NavMenu>

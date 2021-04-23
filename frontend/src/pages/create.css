@@ -62,3 +62,16 @@
     left: 39%; 
     top: 20px;
   }
+
+  .coming-soon-text{
+    color: red;
+    font-size: 18px;
+    letter-spacing:3px;
+    text-align: center;
+    margin-top: 0px;
+  }
+
+  .transparent-logo{
+    width: 75px;
+    /* margin-top:30vh; */
+  }

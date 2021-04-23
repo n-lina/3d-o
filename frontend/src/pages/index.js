@@ -7,6 +7,7 @@ import Contact from './contact';
 import Create from './create';
 import Gallery from './gallery';
 import Browse from './browse';
+import Login from './login';
 import CreateSwan from "./create-swan"
 import CreateVase from "./create-vase"
 import CreateBasket from "./create-basket"
@@ -30,6 +31,7 @@ const Home = () => {
         <Route path='/contact' component={Contact} />
         <Route path='/gallery' component={Gallery} />
         <Route path='/browse' component={Browse} />
+        <Route path='/login' component={Login} />
         <Route path='/create-swan' component={CreateSwan} />
         <Route path='/create-vase' component={CreateVase} />
         <Route path='/create-basket' component={CreateBasket} />
