@@ -18,7 +18,7 @@ const DrawingSection = (props) => {
 
   if (formObject.model === "swan"){
     if (formObject.swan_two_wings){
-      const wing_width = 2 * Math.round(0.195 * DrawingSectionModel.width)
+      const wing_width = Math.round(0.4 * DrawingSectionModel.width)
       const remainder = DrawingSectionModel.width - (2 * wing_width)
       const chest_width = Math.ceil(remainder/2)
       const back_width = Math.floor(remainder/2)
