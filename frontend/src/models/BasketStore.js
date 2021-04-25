@@ -121,6 +121,9 @@ const BasketStore = types
     storePic(picData){
         self.textures.push(picData)
     },
+    clearTextures(){
+        self.textures = []
+    },
     setDefaultColor(color){
         self.default_color = color
     },

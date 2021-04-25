@@ -197,6 +197,9 @@ const VaseStore = types
         self.textures.push(picData)
         // console.log(picData)
     },
+    clearTextures(){
+        self.textures = []
+    },
     setDefaultColor(color){
         self.default_color = color
     },

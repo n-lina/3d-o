@@ -22,6 +22,7 @@ const Result = () => {
   else if (coloringFormStore.model === "fig") modelStore = figStore
   else if (coloringFormStore.model === "basket") modelStore = basketStore
   modelStore.setDefaultColor(coloringFormStore.defaultColor)
+  modelStore.clearTextures()
   
   useEffect(() => {
     const canvas = canvasRef.current

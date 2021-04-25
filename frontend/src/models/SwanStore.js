@@ -90,6 +90,9 @@ const SwanStore = types
     storePic(picData){
         self.texture = picData
     },
+    clearTextures(){
+        self.texture = ""
+    },
     setDefaultColor(color){
         self.default_color = color
     },
