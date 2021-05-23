@@ -71,7 +71,20 @@
     margin-top: 0px;
   }
 
+  .landing-text{
+    color: red;
+    font-size: 16px;
+    letter-spacing:2px;
+    text-align: center;
+    margin-top: 0px;
+    line-height: 30px;
+  }
+
   .transparent-logo{
     width: 75px;
     /* margin-top:30vh; */
+  }
+
+  .landing {
+    width: 70%
   }
