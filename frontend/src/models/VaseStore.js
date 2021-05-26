@@ -128,11 +128,11 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 const VaseStore = types
   .model("Vase", {
     cm: false,
-    dtop: 20,
-    d3: 10, 
-    d2: 10, 
-    d1: 35,
-    dbottom: 20, 
+    dtop: 10, //20
+    d3: 15, //10
+    d2: 25, //10
+    d1: 40, //35
+    dbottom: 60, //20 
     dtop_h: 100, 
     d3_h: 90, 
     d2_h: 70, 
@@ -204,8 +204,8 @@ const VaseStore = types
         self.default_color = color
     },
     cmToPcs(cm, height=false){
-        const height_factor = 0.55
-        const width_factor = 0.8
+        const height_factor = 0.55 // 0.5 cm height per row
+        const width_factor = 0.8 // 0.8 cm width per pc
         if (height){
             return Math.round(((cm/100) * self.height)/height_factor)
         }
@@ -226,7 +226,7 @@ const VaseStore = types
         // height: 50,
 
         // OUTPUTS
-        // tot_rows_per_section: types.optional(types.array(types.number), [15,9,10,10,10]), // bottom to top 
+        // tot_rows_per_section: types.optional(types.array(types.number), [15,19,10,10]), // bottom to top 
         // subsections: types.optional(types.array(types.array(types.number)),[[5,4],[3,2],[1],[0]]), // bottom to top
         // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]), // top to bottom
 
@@ -235,11 +235,14 @@ const VaseStore = types
         // min 3 rows per section
 
         let modelDimensions = []
-        let subsections = [[0],[0],[0],[0]]
+        let subsections = [[],[],[],[]]
+        let tot_rows_per_section = [0,0,0,0]
+        const dbottom_h = self.cmToPcs(self.dbottom_h, true)
         const d1_h = self.cmToPcs(self.d1_h, true) // units = pieces
         const d2_h = self.cmToPcs(self.d2_h, true)
         const d3_h = self.cmToPcs(self.d3_h, true)
-        const heights = [0, d1_h, d2_h, d3_h, 100]
+        const dtop_h = self.cmToPcs(self.dtop_h, true)
+        const heights = [dbottom_h, d1_h, d2_h, d3_h, dtop_h]
 
         const dtop = self.cmToPcs(self.dtop) // units = pieces
         const d3 = self.cmToPcs(self.d3)
@@ -248,39 +251,52 @@ const VaseStore = types
         const dbottom = self.cmToPcs(self.dbottom)
         const widths = [dbottom, d1, d2, d3, dtop]
 
+        let max_width = widths[0]
+
         // getting from dbottom to d1 in d1_h pieces 
 
         for (let i = 0; i < widths.length-1; i++){
             let diff = widths[i+1]-widths[i]
+            let height_diff = heights[i+1] - heights[i]
+            tot_rows_per_section[i] = height_diff
             // decreasing, try making it more spaced out by height?
             if (diff < 0){
                 diff = diff * -1
                 let temp_dbottom = widths[i]
-                let min_height_needed = 0
+                let min_height_needed = 2
                 let curr_section = [[temp_dbottom,2]]
-                while (diff > 0){
+                while (diff > 0) {
                     const sub_from_this_row = Math.floor(temp_dbottom/5)
-                    diff -= Math.min(diff, sub_from_this_row)
-                    temp_dbottom -= Math.min(diff, sub_from_this_row)
+                    const actual_sub = Math.min(diff, sub_from_this_row)
+                    diff -= actual_sub
+                    temp_dbottom -= actual_sub
+                    max_width = Math.max(max_width, temp_dbottom)
+                    if (diff == 0 && i < widths.length-2) break
                     min_height_needed += 2
                     curr_section.unshift([temp_dbottom,2])
                 }
-                let excess_height = d1_h-min_height_needed
+                let excess_height = height_diff-min_height_needed
                 while (excess_height>0){
                     curr_section[excess_height%curr_section.length][1] += 1
                     excess_height -= 1
                 }
-                subsections[i][0] += curr_section.length
-                modelDimensions.unshift(curr_section)
-                
+                modelDimensions.unshift(curr_section)                
             }
         }
-        console.log(modelDimensions)
         var modelDimensions_merged = [].concat.apply([], modelDimensions);
-        console.log(modelDimensions_merged)
+        let curr_section = modelDimensions_merged.length-1
+        for (let j = 0; j < subsections.length; j++){
+            for (let k = 0; k < modelDimensions[j].length; k++){
+                subsections[j].push(curr_section-k)
+            }
+            curr_section -= modelDimensions[j].length
+        }
 
-        self.maxWidth = 53 // un hard code
-        return self.modelDimensions
+        self.maxWidth = max_width // un hard code
+        self.modelDimensions = modelDimensions_merged
+        self.subsections = subsections
+        self.tot_rows_per_section = tot_rows_per_section
+        return modelDimensions_merged
     },
     updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2

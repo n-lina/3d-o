@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useMemo} from 'react';
 import { TwitterPicker } from "react-color";
 import OrigamiObject from "../components/OrigamiObject";
 import "./colouringPage.css";
@@ -71,7 +71,7 @@ const Colouring = () => {
     }
   }
 
-  const myDimensions = modelStore.getDimensions();
+  const myDimensions = useMemo(() => modelStore.getDimensions(), []);
   const absolute = coloringFormStore.maxWidth > 52 ? true : false 
 
   let myHeight = 0 
@@ -106,7 +106,7 @@ const Colouring = () => {
   }
 
   myHeight += coloringFormStore.counter.length * 55
-  myHeight *= 1.5
+  myHeight *= 2
 
   const colorPicker = <div className = "color-picker-object">
       <p className = "label-big">pixel color</p>
