@@ -67,7 +67,7 @@ const Result = () => {
     // <canvas ref={canvasRef}/> // to test texture generation
     <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '600px'}}>
       <div className="containerLeft" style={{background: '#FFE7E5', width: '52%', height: 'auto',float:'left'}}>
-          <Canvas camera={{position:[0, 0, 95], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: "80%", borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
+          <Canvas camera={{position:[0, 0, 120], fov:30, aspect: 800/600, near: 0.1,far: 1000}} style={{background: "pink", height: "80%", borderRadius:30, marginTop:'1%', marginLeft:'1%',width:'99%'}}>
             <spotLight position={[-275, 150, 90]} intensity = {0.8}/>
             <spotLight position={[100, 25, 90]} intensity = {0.8}/>
             <spotLight position={[-150, -150, 110]} intensity = {0.3} />

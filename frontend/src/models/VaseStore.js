@@ -128,11 +128,11 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 const VaseStore = types
   .model("Vase", {
     cm: false,
-    dtop: 10, //20
-    d3: 15, //10
-    d2: 25, //10
-    d1: 40, //35
-    dbottom: 60, //20 
+    dtop: 100, //20
+    d3: 50, //10
+    d2: 20, //10
+    d1: 5, //35
+    dbottom: 2, //20 
     dtop_h: 100, 
     d3_h: 90, 
     d2_h: 70, 
@@ -256,15 +256,29 @@ const VaseStore = types
         // getting from dbottom to d1 in d1_h pieces 
 
         for (let i = 0; i < widths.length-1; i++){
+            const min_height = 3
+            let min_height_needed = min_height
             let diff = widths[i+1]-widths[i]
             let height_diff = heights[i+1] - heights[i]
-            tot_rows_per_section[i] = height_diff
+
+            let temp_dbottom = widths[i]
+            let curr_section = [[temp_dbottom,min_height]]
+            
             // decreasing, try making it more spaced out by height?
-            if (diff < 0){
+            if (diff > 0){
+                while (diff > 0){
+                    const add_to_this_row = Math.floor(temp_dbottom/min_height)
+                    const actual_add = Math.min(diff, add_to_this_row)
+                    diff -= actual_add 
+                    temp_dbottom += actual_add
+                    max_width = Math.max(max_width, temp_dbottom)
+                    if (diff == 0 && i < widths.length-2) break
+                    min_height_needed += min_height
+                    curr_section.unshift([temp_dbottom, min_height])
+                }
+            }
+            else if (diff < 0){
                 diff = diff * -1
-                let temp_dbottom = widths[i]
-                let min_height_needed = 2
-                let curr_section = [[temp_dbottom,2]]
                 while (diff > 0) {
                     const sub_from_this_row = Math.floor(temp_dbottom/5)
                     const actual_sub = Math.min(diff, sub_from_this_row)
@@ -272,30 +286,32 @@ const VaseStore = types
                     temp_dbottom -= actual_sub
                     max_width = Math.max(max_width, temp_dbottom)
                     if (diff == 0 && i < widths.length-2) break
-                    min_height_needed += 2
-                    curr_section.unshift([temp_dbottom,2])
-                }
-                let excess_height = height_diff-min_height_needed
-                while (excess_height>0){
-                    curr_section[excess_height%curr_section.length][1] += 1
-                    excess_height -= 1
-                }
-                modelDimensions.unshift(curr_section)                
+                    min_height_needed += min_height
+                    curr_section.unshift([temp_dbottom,min_height])
+                }            
             }
+            let excess_height = height_diff-min_height_needed
+            while (excess_height>0){
+                curr_section[excess_height%curr_section.length][1] += 1
+                excess_height -= 1
+            }
+            tot_rows_per_section[i] = Math.max(height_diff, min_height_needed)
+            modelDimensions.unshift(curr_section)    
         }
         var modelDimensions_merged = [].concat.apply([], modelDimensions);
         let curr_section = modelDimensions_merged.length-1
         for (let j = 0; j < subsections.length; j++){
-            for (let k = 0; k < modelDimensions[j].length; k++){
+            for (let k = 0; k < modelDimensions[modelDimensions.length - j - 1].length; k++){
                 subsections[j].push(curr_section-k)
             }
-            curr_section -= modelDimensions[j].length
+            curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
         self.maxWidth = max_width // un hard code
         self.modelDimensions = modelDimensions_merged
         self.subsections = subsections
         self.tot_rows_per_section = tot_rows_per_section
+        console.log(tot_rows_per_section)
         return modelDimensions_merged
     },
     updateCurvedPts(broken=false){

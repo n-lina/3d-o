@@ -108,7 +108,7 @@ const CreateFigurine = () => {
     )
   }
     
-  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[1, 50]} step={1} mode={2} values={[figStore.diameter]} onUpdate={(val) => figStore.update_diameter(val[0])} >
+  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[2, 50]} step={1} mode={2} values={[figStore.diameter]} onUpdate={(val) => figStore.update_diameter(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
