@@ -128,11 +128,11 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 const VaseStore = types
   .model("Vase", {
     cm: false,
-    dtop: 100, //20
-    d3: 50, //10
-    d2: 20, //10
-    d1: 5, //35
-    dbottom: 2, //20 
+    dtop: 10, //20
+    d3: 10, //10
+    d2: 10, //10
+    d1: 10, //35
+    dbottom: 20, //20 
     dtop_h: 100, 
     d3_h: 90, 
     d2_h: 70, 
@@ -144,12 +144,12 @@ const VaseStore = types
     flat_bottom: true, 
     scale_h: 36,
     default_color: "#FFFFFF",
-    tot_rows_per_section: types.optional(types.array(types.number), [15,19,10,10]), // bottom to top 
-    subsections: types.optional(types.array(types.array(types.number)),[[5,4],[3,2],[1],[0]]), 
+    tot_rows_per_section: types.optional(types.array(types.number), []), // bottom to top ex. [15,19,10,10]
+    subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]]
     // vase has 4 sections, each may be made of 1+ drawing sections // bottom to top
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
-    modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]), // top to bottom
+    modelDimensions: types.optional(types.array(types.array(types.number)), []), // top to bottom ex. [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
     // unused, only for consistency: 
     arms: false, 
     ears: "", 
@@ -234,6 +234,7 @@ const VaseStore = types
         // max increase rate: +1 per 1 pc 
         // min 3 rows per section
 
+        let zero_diff = [];
         let modelDimensions = []
         let subsections = [[],[],[],[]]
         let tot_rows_per_section = [0,0,0,0]
@@ -262,10 +263,11 @@ const VaseStore = types
             let height_diff = heights[i+1] - heights[i]
 
             let temp_dbottom = widths[i]
-            let curr_section = [[temp_dbottom,min_height]]
+            let curr_section = []
             
             // decreasing, try making it more spaced out by height?
             if (diff > 0){
+                curr_section.push([temp_dbottom,min_height])
                 while (diff > 0){
                     const add_to_this_row = Math.floor(temp_dbottom/min_height)
                     const actual_add = Math.min(diff, add_to_this_row)
@@ -277,8 +279,10 @@ const VaseStore = types
                     curr_section.unshift([temp_dbottom, min_height])
                 }
             }
+            // increasing
             else if (diff < 0){
                 diff = diff * -1
+                curr_section.push([temp_dbottom,min_height])
                 while (diff > 0) {
                     const sub_from_this_row = Math.floor(temp_dbottom/5)
                     const actual_sub = Math.min(diff, sub_from_this_row)
@@ -290,6 +294,12 @@ const VaseStore = types
                     curr_section.unshift([temp_dbottom,min_height])
                 }            
             }
+            // straight
+            else if (diff == 0){
+                min_height_needed = height_diff
+                curr_section.push([temp_dbottom, height_diff])
+                zero_diff.push(widths.length-1-1-i)
+            }
             let excess_height = height_diff-min_height_needed
             while (excess_height>0){
                 curr_section[excess_height%curr_section.length][1] += 1
@@ -298,7 +308,32 @@ const VaseStore = types
             tot_rows_per_section[i] = Math.max(height_diff, min_height_needed)
             modelDimensions.unshift(curr_section)    
         }
+        for(let i = 0; i < zero_diff.length; i++){ // zero_diff is sorted in ascending order
+            // merge right into left so that the idx's in zero_diff are still accurate
+            const idx = zero_diff[i] // idx of modelDimensions
+            const conj_idx = tot_rows_per_section.length-1-idx // idx of tot_rows_per_section
+            if (zero_diff[i] > 0){
+                if(modelDimensions[idx-1].length > 1) { // partial merge, no section deletion
+                    const next_sec_last_arr = modelDimensions[idx-1].pop()
+                    const next_sec_rows = next_sec_last_arr[1]
+                    modelDimensions[idx][0][1] += next_sec_rows // the diff for this section is 0 so it only has one arr in it
+                    tot_rows_per_section[conj_idx] += next_sec_rows
+                    tot_rows_per_section[conj_idx+1] -= next_sec_rows
+                }
+                else { // full merge, section deletion
+                    const curr_sec_last_arr = modelDimensions[idx].pop()
+                    const curr_sec_rows = curr_sec_last_arr[1]
+                    modelDimensions[idx-1][0][1] += curr_sec_rows
+                    modelDimensions.splice(idx,1) // deleting the whole section, the right section
+                    tot_rows_per_section[conj_idx] -= curr_sec_rows // should i keep it as 0 (empty)?
+                    tot_rows_per_section[conj_idx+1] += curr_sec_rows
+                    tot_rows_per_section.splice(conj_idx, 1)
+                    subsections.pop()
+                }
+            }
+        }
         var modelDimensions_merged = [].concat.apply([], modelDimensions);
+
         let curr_section = modelDimensions_merged.length-1
         for (let j = 0; j < subsections.length; j++){
             for (let k = 0; k < modelDimensions[modelDimensions.length - j - 1].length; k++){
@@ -311,7 +346,10 @@ const VaseStore = types
         self.modelDimensions = modelDimensions_merged
         self.subsections = subsections
         self.tot_rows_per_section = tot_rows_per_section
-        console.log(tot_rows_per_section)
+        console.log("tot_rows_per_section", tot_rows_per_section)
+        console.log("subsections", subsections)
+        console.log("modelDimensions", modelDimensions)
+        // console.log("modelDimensions_merged", modelDimensions_merged)
         return modelDimensions_merged
     },
     updateCurvedPts(broken=false){
