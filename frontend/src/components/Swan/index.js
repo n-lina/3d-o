@@ -20,6 +20,11 @@ const Swan = (props) => {
 
     const swan_pts = swanStore.swanBodyPts()
 
+    let display_diameter = swanStore.diameter
+    if (!swanStore.cm){
+        display_diameter = Math.round(display_diameter * 2.54)
+    }
+
     const swan_body = 
     <group>
         <mesh >
@@ -32,9 +37,9 @@ const Swan = (props) => {
         </mesh>
     </group>
 
-    const bottom = swanStore.diameter * swanStore.height_scale * 0.8 * -1
+    const bottom = display_diameter * swanStore.height_scale * 0.8 * -1
     const rim_mesh = <mesh position = {[0,bottom-0.1,0]} rotation = {[1.57,0,0]}> 
-    <torusGeometry args={[(swanStore.diameter * swanStore.bottom_scale/2)+0.1, swanStore.diameter/70, 10, 50]}/>
+    <torusGeometry args={[(display_diameter * swanStore.bottom_scale/2)+0.1, display_diameter/70, 10, 50]}/>
     <meshPhongMaterial color={result? swanStore.default_color : "#FF7E98"} />
     </mesh>
 
@@ -46,10 +51,10 @@ const Swan = (props) => {
         return radius * Math.sin(angle)
     }
 
-    const bottomRad = swanStore.diameter * swanStore.top_scale * 0.5
-    const midRad = swanStore.diameter * swanStore.top_scale * 0.5 * 0.73
-    const midHeight = swanStore.diameter * swanStore.height_scale * 1.7 * 0.5
-    const topHeight = swanStore.diameter * swanStore.height_scale * 1.9
+    const bottomRad = display_diameter * swanStore.top_scale * 0.5
+    const midRad = display_diameter * swanStore.top_scale * 0.5 * 0.73
+    const midHeight = display_diameter * swanStore.height_scale * 1.7 * 0.5
+    const topHeight = display_diameter * swanStore.height_scale * 1.9
 
     const vertices =
     [
@@ -126,7 +131,7 @@ const Swan = (props) => {
     }
     B_vertices.push([0, topHeight/4, -bottomRad * 1.1])
 
-    const y_pos_wing = swanStore.diameter * swanStore.height_scale
+    const y_pos_wing = display_diameter * swanStore.height_scale
     const wings = 
     <group>
         <mesh position={[0,y_pos_wing,0]}>
@@ -182,8 +187,8 @@ const Swan = (props) => {
         </mesh>
     </group>
 
-    const shape = useMemo( () => new THREE.Shape(), [swanStore.diameter]);
-    const param = swanStore.diameter * 0.3
+    const shape = useMemo( () => new THREE.Shape(), [display_diameter]);
+    const param = display_diameter * 0.3
     const t = param * 0.4
     shape.moveTo(0, -param*1.3);
     shape.lineTo(param*0.9, 0)
@@ -202,14 +207,14 @@ const Swan = (props) => {
       };
       
 
-    const offset = swanStore.diameter * swanStore.height_scale + (param*1.3) + ((topHeight/3) * 0)
+    const offset = display_diameter * swanStore.height_scale + (param*1.3) + ((topHeight/3) * 0)
     const neck_mesh = <mesh position={[-depth/2,offset,(bottomRad/1)]} rotation={[0, Math.PI/2, 0]}>
         <extrudeGeometry args={[shape, extrudeSettings]}/>
         <meshPhongMaterial color={result? swanStore.default_color: "#FFFFFF"} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
     </mesh>
 
 
-    const diameter_marker = getInputMarker((swanStore.diameter/2) + 0.1, 0)
+    const diameter_marker = getInputMarker((display_diameter/2) + 0.1, 0)
 
     let [x_rot,changeXrot] = useState(0);
     let [y_rot,changeYrot] = useState(0);

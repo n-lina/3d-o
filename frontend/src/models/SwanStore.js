@@ -121,13 +121,17 @@ const SwanStore = types
         return self.modelDimensions
     },
     swanBodyPts(){
-        const s_dtop_h = self.diameter * self.height_scale
+        let display_diameter = self.diameter
+        if (!self.cm){
+            display_diameter = Math.round(display_diameter * 2.54)
+        }
+        const s_dtop_h = display_diameter * self.height_scale
         const s_dbottom_h = -1 * s_dtop_h * 0.8
 
-        const s_bottom = self.diameter * self.bottom_scale
-        const s_top = self.diameter * self.top_scale
+        const s_bottom = display_diameter * self.bottom_scale
+        const s_top = display_diameter * self.top_scale
 
-        const s_diameter = self.diameter 
+        const s_diameter = display_diameter
         const s_diameter_h = 0
 
         var myPoints = [s_dbottom_h,s_bottom/2, s_diameter_h,s_diameter/2, s_dtop_h,s_top/2]; 

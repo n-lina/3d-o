@@ -131,12 +131,16 @@ const FigurineStore = types
         return divisions
     },
     updateCurvedPts(){
-        const s_dtop_h = self.diameter * self.body_height
+        let display_diameter = self.diameter
+        if (!self.cm){
+            display_diameter = Math.round(display_diameter * 2.54)
+        }
+        const s_dtop_h = display_diameter * self.body_height
         const s_dbottom_h = -1 * s_dtop_h
 
-        const s_dtop_bottom = self.diameter * self.body_scale
+        const s_dtop_bottom = display_diameter * self.body_scale
 
-        const s_diameter = self.diameter 
+        const s_diameter = display_diameter
         const s_diameter_h = 0
 
         var myPoints = [s_dbottom_h,s_dtop_bottom/2, s_diameter_h,s_diameter/2, s_dtop_h,s_dtop_bottom/2]; 
