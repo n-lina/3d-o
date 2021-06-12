@@ -108,7 +108,18 @@ const CreateFigurine = () => {
     )
   }
     
-  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[2, 50]} step={1} mode={2} values={[figStore.diameter]} onUpdate={(val) => figStore.update_diameter(val[0])} >
+  // cm
+  let min_d = 5
+  let max_d = 50
+
+  // in
+  if (!figStore.cm){
+    const ratio = 2.54
+    min_d = Math.round(min_d/ratio)
+    max_d = Math.round(max_d/ratio)
+  }
+  
+  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[figStore.diameter]} onUpdate={(val) => figStore.update_diameter(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -158,7 +169,7 @@ const ears_switch = <div className="switch"  style={{width: 360, height: 50}}>
       <SwitchSelector
           onChange={(val) => figStore.update_units(val)}
           options={unitOptions}
-          initialSelectedIndex={figStore.units ? 0 : 1}
+          initialSelectedIndex={figStore.cm ? 0 : 1}
           backgroundColor={"#FFE7E5"}
           fontColor={"#D75A58"}
           optionBorderRadius={30}

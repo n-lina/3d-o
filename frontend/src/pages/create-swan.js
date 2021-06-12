@@ -97,8 +97,19 @@ const CreateSwan = () => {
       </div>
     )
   }
+
+  // cm
+  let min_d = 5
+  let max_d = 50
+
+  // in
+  if (!swanStore.cm){
+    const ratio = 2.54
+    min_d = Math.round(min_d/ratio)
+    max_d = Math.round(max_d/ratio)
+  }
     
-  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[2, 50]} step={1} mode={2} values={[swanStore.diameter]} onUpdate={(val) => swanStore.update_diameter(val[0])} >
+  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[swanStore.diameter]} onUpdate={(val) => swanStore.update_diameter(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -145,7 +156,7 @@ const wings_switch = <div className="switch"  style={{width: 100, height: 50}}>
       <SwitchSelector
           onChange={(val) => swanStore.update_units(val)}
           options={unitOptions}
-          initialSelectedIndex={swanStore.units ? 0 : 1}
+          initialSelectedIndex={swanStore.cm ? 0 : 1}
           backgroundColor={"#FFE7E5"}
           fontColor={"#D75A58"}
           optionBorderRadius={30}

@@ -54,7 +54,7 @@ function getCurvePointsBasket(_pts, tension, numOfSegments) {
 
 const BasketStore = types
   .model("Basket", {
-    cm: false,
+    cm: true,
     height: 20, 
     diameter: 34, 
     dtop: 20, 
@@ -93,7 +93,32 @@ const BasketStore = types
     update_lid(lid){
         self.lid = lid 
     },
+    in_to_cm(){
+        const conv = 2.54
+        self.dtop = Math.round(self.dtop * conv)
+        self.diameter = Math.round(self.diameter * conv)
+        self.dbottom = Math.round(self.dbottom * conv)
+        self.height = Math.round(self.height * conv)
+        self.cm = true
+    },
+    cm_to_in(){
+        const conv = 2.54
+        self.dtop = Math.round(self.dtop / conv)
+        self.diameter = Math.round(self.diameter / conv)
+        self.dbottom = Math.round(self.dbottom / conv)
+        self.height = Math.round(self.height / conv)
+        self.cm = false
+    },
     update_units(units){
+        if (self.cm == units) return 
+        // changing from in to cm
+        if (self.cm == false && units == true){
+            self.in_to_cm()
+        }
+        // changing from cm to in
+        else{
+            self.cm_to_in()
+        }
         self.cm = units
     },
     update_height(height){

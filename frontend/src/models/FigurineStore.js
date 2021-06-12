@@ -54,7 +54,7 @@ function getCurvePointsFigurine(_pts, tension, numOfSegments) {
 
 const FigurineStore = types
   .model("Figurine", {
-    cm: false,
+    cm: true,
     diameter: 13,
     arms: true, 
     ears: "bear", // bear, bunny, cat, sphere
@@ -79,9 +79,28 @@ const FigurineStore = types
     update_arms(val){
         self.arms = val
     },
+    in_to_cm(){
+        const conv = 2.54
+        self.diameter = Math.round(self.diameter * conv)
+        self.cm = true
+    },
+    cm_to_in(){
+        const conv = 2.54
+        self.diameter = Math.round(self.diameter / conv)
+        self.cm = false
+    },
     update_units(units){
+        if (self.cm == units) return 
+        // changing from in to cm
+        if (self.cm == false && units == true){
+            self.in_to_cm()
+        }
+        // changing from cm to in
+        else{
+            self.cm_to_in()
+        }
         self.cm = units
-    }, 
+    },
     update_diameter(d){
         self.diameter = d
     }, 

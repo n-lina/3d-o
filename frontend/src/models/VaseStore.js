@@ -127,11 +127,11 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 
 const VaseStore = types
   .model("Vase", {
-    cm: false,
-    dtop: 10, //20
+    cm: true,
+    dtop: 20, //20
     d3: 10, //10
     d2: 10, //10
-    d1: 10, //35
+    d1: 35, //35
     dbottom: 20, //20 
     dtop_h: 100, 
     d3_h: 90, 
@@ -148,6 +148,7 @@ const VaseStore = types
     subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]]
     // vase has 4 sections, each may be made of 1+ drawing sections // bottom to top
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
+    merged_sections: types.optional(types.array(types.array(types.number)), []), // ex. [[0,1,2],[3]] means sections 0, 1, 2 were merged into one section; bottom to top ie. section including bottom diameter = section 0
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
     modelDimensions: types.optional(types.array(types.array(types.number)), []), // top to bottom ex. [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
     // unused, only for consistency: 
@@ -167,7 +168,36 @@ const VaseStore = types
     update_flat_bottom(flat_bottom){
         self.flat_bottom = flat_bottom
     },
+    in_to_cm(){
+        const conv = 2.54
+        self.dtop = Math.round(self.dtop * conv)
+        self.d3 = Math.round(self.d3 * conv)
+        self.d2 = Math.round(self.d2 * conv)
+        self.d1 = Math.round(self.d1 * conv)
+        self.dbottom = Math.round(self.dbottom * conv)
+        self.height = Math.round(self.height * conv)
+        self.cm = true
+    },
+    cm_to_in(){
+        const conv = 2.54
+        self.dtop = Math.round(self.dtop / conv)
+        self.d3 = Math.round(self.d3 / conv)
+        self.d2 = Math.round(self.d2 / conv)
+        self.d1 = Math.round(self.d1 / conv)
+        self.dbottom = Math.round(self.dbottom / conv)
+        self.height = Math.round(self.height / conv)
+        self.cm = false
+    },
     update_units(units){
+        if (self.cm == units) return 
+        // changing from in to cm
+        if (self.cm == false && units == true){
+            self.in_to_cm()
+        }
+        // changing from cm to in
+        else{
+            self.cm_to_in()
+        }
         self.cm = units
     },
     update_height(height){
@@ -238,6 +268,11 @@ const VaseStore = types
         let modelDimensions = []
         let subsections = [[],[],[],[]]
         let tot_rows_per_section = [0,0,0,0]
+        let merged_sections = [[0],[1],[2],[3]] // bottom to top
+
+        // convert from in to cm first 
+        if (!self.cm) self.in_to_cm()
+
         const dbottom_h = self.cmToPcs(self.dbottom_h, true)
         const d1_h = self.cmToPcs(self.d1_h, true) // units = pieces
         const d2_h = self.cmToPcs(self.d2_h, true)
@@ -395,7 +430,8 @@ const VaseStore = types
                 hi += 2
             }
             section_pts.push(new_pts.slice(lo,new_pts.length))
-            for (let i=0; i<4; i+=1){ //section_pts.length = 4
+            console.log(section_pts)
+            for (let i=0; i<section_pts.length; i+=1){ //section_pts.length = 4
                 let curr_idx = 0
                 for (let j=0; j<self.subsections[i].length; j+=1){
                     if (self.subsections[i].length > 1){

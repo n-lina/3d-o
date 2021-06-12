@@ -104,8 +104,44 @@ const CreateVase = () => {
       )
     }
   }
+
+  // cm
+  let min_d = 5
+  let max_d = 100
+  let min_h = 10 
+  let max_h = 100
+
+  // in
+  if (!vaseStore.cm){
+    const ratio = 2.54
+    min_d = Math.round(min_d/ratio)
+    max_d = Math.round(max_d/ratio)
+    max_h = Math.round(max_h/ratio)
+    min_h = Math.round(min_h/ratio)
+  }
   
-  const sliderHeight = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[vaseStore.height]} onUpdate={(val) => vaseStore.update_height(val[0])} >
+  const sliderHeight = <Slider rootStyle={sliderStyle} domain={[min_h, max_h]} step={1} mode={2} values={[vaseStore.height]} onUpdate={(val) => vaseStore.update_height(val[0])} >
+    <Rail>
+      {({ getRailProps }) => (
+        <div style={railStyle} {...getRailProps()} />
+      )}
+    </Rail>
+    <Handles>
+      {({ handles, getHandleProps }) => (
+        <div className="slider-handles">
+          {handles.map(handle => (
+            <Handle
+              key={handle.id}
+              handle={handle}
+              getHandleProps={getHandleProps}
+            />
+          ))}
+        </div>
+      )}
+    </Handles>
+  </Slider>
+
+  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[vaseStore.dtop]} onUpdate={(val) => vaseStore.update_dtop(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -126,28 +162,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[vaseStore.dtop]} onUpdate={(val) => vaseStore.update_dtop(val[0])} >
-    <Rail>
-      {({ getRailProps }) => (
-        <div style={railStyle} {...getRailProps()} />
-      )}
-    </Rail>
-    <Handles>
-      {({ handles, getHandleProps }) => (
-        <div className="slider-handles">
-          {handles.map(handle => (
-            <Handle
-              key={handle.id}
-              handle={handle}
-              getHandleProps={getHandleProps}
-            />
-          ))}
-        </div>
-      )}
-    </Handles>
-  </Slider>
-  
-  const slider_d3 = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[vaseStore.d3]} onUpdate={(val) => vaseStore.update_d3(val[0])} >
+  const slider_d3 = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[vaseStore.d3]} onUpdate={(val) => vaseStore.update_d3(val[0])} >
     <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
@@ -168,7 +183,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_d2 = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[vaseStore.d2]} onUpdate={(val) => vaseStore.update_d2(val[0])} >
+  const slider_d2 = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[vaseStore.d2]} onUpdate={(val) => vaseStore.update_d2(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -189,7 +204,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_d1 = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[vaseStore.d1]} onUpdate={(val) => vaseStore.update_d1(val[0])} >
+  const slider_d1 = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[vaseStore.d1]} onUpdate={(val) => vaseStore.update_d1(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -210,7 +225,7 @@ const CreateVase = () => {
     </Handles>
   </Slider>
   
-  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[vaseStore.dbottom]} onUpdate={(val) => vaseStore.update_dbottom(val[0])} >
+  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[vaseStore.dbottom]} onUpdate={(val) => vaseStore.update_dbottom(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -316,7 +331,7 @@ const CreateVase = () => {
       <SwitchSelector
           onChange={(val) => vaseStore.update_units(val)}
           options={unitOptions}
-          initialSelectedIndex={vaseStore.units ? 0 : 1}
+          initialSelectedIndex={vaseStore.cm ? 0 : 1}
           backgroundColor={"#FFE7E5"}
           fontColor={"#D75A58"}
           optionBorderRadius={30}

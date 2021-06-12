@@ -84,8 +84,23 @@ const CreateBasket = () => {
       </div>
     )
   }
+
+  // cm
+  let min_d = 5
+  let max_d = 100
+  let min_h = 10 
+  let max_h = 100
+
+  // in
+  if (!basketStore.cm){
+    const ratio = 2.54
+    min_d = Math.round(min_d/ratio)
+    max_d = Math.round(max_d/ratio)
+    max_h = Math.round(max_h/ratio)
+    min_h = Math.round(min_h/ratio)
+  }
   
-  const sliderHeight = <Slider rootStyle={sliderStyle} domain={[10, 100]} step={1} mode={2} values={[basketStore.height]} onUpdate={(val) => basketStore.update_height(val[0])} >
+  const sliderHeight = <Slider rootStyle={sliderStyle} domain={[min_h, max_h]} step={1} mode={2} values={[basketStore.height]} onUpdate={(val) => basketStore.update_height(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -106,7 +121,7 @@ const CreateBasket = () => {
     </Handles>
   </Slider>
   
-  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[basketStore.diameter]} onUpdate={(val) => basketStore.update_diameter(val[0])} >
+  const slider_diameter = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[basketStore.diameter]} onUpdate={(val) => basketStore.update_diameter(val[0])} >
     <Rail>
       {({ getRailProps }) => (
         <div style={railStyle} {...getRailProps()} />
@@ -127,7 +142,7 @@ const CreateBasket = () => {
     </Handles>
   </Slider>
 
-  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[basketStore.dbottom]} onUpdate={(val) => basketStore.update_dbottom(val[0])} >
+  const slider_dbottom = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[basketStore.dbottom]} onUpdate={(val) => basketStore.update_dbottom(val[0])} >
   <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
@@ -148,7 +163,7 @@ const CreateBasket = () => {
   </Handles>
   </Slider>
 
-  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[2, 100]} step={1} mode={2} values={[basketStore.dtop]} onUpdate={(val) => basketStore.update_dtop(val[0])} >
+  const slider_dtop = <Slider rootStyle={sliderStyle} domain={[min_d, max_d]} step={1} mode={2} values={[basketStore.dtop]} onUpdate={(val) => basketStore.update_dtop(val[0])} >
   <Rail>
     {({ getRailProps }) => (
       <div style={railStyle} {...getRailProps()} />
@@ -239,7 +254,7 @@ const CreateBasket = () => {
       <SwitchSelector
           onChange={(val) => basketStore.update_units(val)}
           options={unitOptions}
-          initialSelectedIndex={basketStore.units ? 0 : 1}
+          initialSelectedIndex={basketStore.cm ? 0 : 1}
           backgroundColor={"#FFE7E5"}
           fontColor={"#D75A58"}
           optionBorderRadius={30}

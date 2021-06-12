@@ -54,7 +54,7 @@ function getCurvePointsSwan(_pts, tension, numOfSegments) {
 
 const SwanStore = types
   .model("Swan", {
-    cm: false,
+    cm: true,
     diameter: 16,
     body_height: 0.35,
     top_scale: 1,
@@ -75,9 +75,28 @@ const SwanStore = types
     side_handles: false, 
   })
   .actions(self => ({
+    in_to_cm(){
+        const conv = 2.54
+        self.diameter = Math.round(self.diameter * conv)
+        self.cm = true
+    },
+    cm_to_in(){
+        const conv = 2.54
+        self.diameter = Math.round(self.diameter / conv)
+        self.cm = false
+    },
     update_units(units){
+        if (self.cm == units) return 
+        // changing from in to cm
+        if (self.cm == false && units == true){
+            self.in_to_cm()
+        }
+        // changing from cm to in
+        else{
+            self.cm_to_in()
+        }
         self.cm = units
-    }, 
+    },
     update_wings(val){
         self.wings = val
     },
