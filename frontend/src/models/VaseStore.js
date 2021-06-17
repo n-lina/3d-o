@@ -128,10 +128,10 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 const VaseStore = types
   .model("Vase", {
     cm: true,
-    dtop: 20, //20
+    dtop: 10, //20
     d3: 10, //10
     d2: 10, //10
-    d1: 35, //35
+    d1: 10, //35
     dbottom: 20, //20 
     dtop_h: 100, 
     d3_h: 90, 
@@ -148,7 +148,8 @@ const VaseStore = types
     subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]]
     // vase has 4 sections, each may be made of 1+ drawing sections // bottom to top
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
-    merged_sections: types.optional(types.array(types.array(types.number)), []), // ex. [[0,1,2],[3]] means sections 0, 1, 2 were merged into one section; bottom to top ie. section including bottom diameter = section 0
+    // sections can only be merged up, ie. vals >= indeces
+    merged_sections: types.optional(types.array(types.number), [0,1,2,3]), // ex. [2,2,2,3] means sections 0, 1, 2 were merged into one section; bottom to top ie. section including bottom diameter = index 0
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
     modelDimensions: types.optional(types.array(types.array(types.number)), []), // top to bottom ex. [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
     // unused, only for consistency: 
@@ -241,6 +242,17 @@ const VaseStore = types
         }
         return Math.round(cm/width_factor)
     },
+    union(upper_section_idx, lower_section_idx){
+    // note that self.merged_sections is bottom to top so upper indexes will have a higher value 
+        const upper_section_root = self.find(upper_section_idx)
+        const lower_section_root = self.find(lower_section_idx)
+        if (upper_section_root == lower_section_root) return 
+        self.merged_sections[lower_section_root] = upper_section_root
+    },
+    find(idx){
+        if (self.merged_sections[idx] == idx) return idx
+        return self.find(self.merged_sections[idx])
+    },
     getDimensions() {
         // INPUTS 
         // dtop: 20,
@@ -268,7 +280,6 @@ const VaseStore = types
         let modelDimensions = []
         let subsections = [[],[],[],[]]
         let tot_rows_per_section = [0,0,0,0]
-        let merged_sections = [[0],[1],[2],[3]] // bottom to top
 
         // convert from in to cm first 
         if (!self.cm) self.in_to_cm()
@@ -344,9 +355,11 @@ const VaseStore = types
             modelDimensions.unshift(curr_section)    
         }
         for(let i = 0; i < zero_diff.length; i++){ // zero_diff is sorted in ascending order
-            // merge right into left so that the idx's in zero_diff are still accurate
+            // merge right(lower) into left(upper) so that the idx's in zero_diff are still accurate
+            // modelDimensions is top to bottom ro right = lower and left = upper
             const idx = zero_diff[i] // idx of modelDimensions
             const conj_idx = tot_rows_per_section.length-1-idx // idx of tot_rows_per_section
+            const conj_idx_orig = 4 - 1 - idx// 4 = self.merged_sections.length
             if (zero_diff[i] > 0){
                 if(modelDimensions[idx-1].length > 1) { // partial merge, no section deletion
                     const next_sec_last_arr = modelDimensions[idx-1].pop()
@@ -355,12 +368,14 @@ const VaseStore = types
                     tot_rows_per_section[conj_idx] += next_sec_rows
                     tot_rows_per_section[conj_idx+1] -= next_sec_rows
                 }
-                else { // full merge, section deletion
+                else { // full merge, section deletion, this occurs when 2 sections have the exact same start and end diameters.
+                    // only in full merge do we have to merge sections in self.merged_sections
+                    self.union(conj_idx_orig+1, conj_idx_orig) // merges conj_idx into conj_idx+1 -> head will be conj_idx+1
                     const curr_sec_last_arr = modelDimensions[idx].pop()
                     const curr_sec_rows = curr_sec_last_arr[1]
                     modelDimensions[idx-1][0][1] += curr_sec_rows
-                    modelDimensions.splice(idx,1) // deleting the whole section, the right section
-                    tot_rows_per_section[conj_idx] -= curr_sec_rows // should i keep it as 0 (empty)?
+                    modelDimensions.splice(idx,1) // deleting the whole section, the right(lower) section
+                    tot_rows_per_section[conj_idx] -= curr_sec_rows 
                     tot_rows_per_section[conj_idx+1] += curr_sec_rows
                     tot_rows_per_section.splice(conj_idx, 1)
                     subsections.pop()
@@ -377,13 +392,14 @@ const VaseStore = types
             curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
-        self.maxWidth = max_width // un hard code
+        self.maxWidth = max_width
         self.modelDimensions = modelDimensions_merged
         self.subsections = subsections
         self.tot_rows_per_section = tot_rows_per_section
         console.log("tot_rows_per_section", tot_rows_per_section)
         console.log("subsections", subsections)
         console.log("modelDimensions", modelDimensions)
+        console.log("merged_sections", self.merged_sections)
         // console.log("modelDimensions_merged", modelDimensions_merged)
         return modelDimensions_merged
     },
@@ -414,13 +430,17 @@ const VaseStore = types
             const r = new_pts[i+1]
             points.push( new THREE.Vector2(r, h));
         }
-        if (!broken) return points
+        if (!broken) return points 
+        // broken points is for the result vase - to display the pattern
         else{
             let section_pts = []
             let broken_pts = []
             let broken_pts_three = []
             let lo = 0 
             let hi = 2
+            // dividing the points array into the sections of the vase (number of sections starts off as 4 but some may be merged.)
+            // new_pts goes from bottom to top, ie. first section = bottom section
+            // sections can only be merged up
             while (hi+3 < new_pts.length){
                 if (new_pts[hi] === new_pts[hi+2] && new_pts[hi+1] === new_pts[hi+3]){
                     const temp = new_pts.slice(lo,hi+2)
@@ -431,6 +451,7 @@ const VaseStore = types
             }
             section_pts.push(new_pts.slice(lo,new_pts.length))
             console.log(section_pts)
+            // for each section, divide the section's points into the corresponding number of drawingSections in that section based, set by the algorithm.
             for (let i=0; i<section_pts.length; i+=1){ //section_pts.length = 4
                 let curr_idx = 0
                 for (let j=0; j<self.subsections[i].length; j+=1){
@@ -447,6 +468,7 @@ const VaseStore = types
                     }
                 }
             }
+            // converting to three.js vectors
             for(let j=0; j<broken_pts.length; j+= 1){
                 let temp = []
                 for(let k = 0; k < broken_pts[j].length; k += 2){
