@@ -8,19 +8,15 @@ const ResultVase = (props) => {
     const insideRef = useRef([]);
 
     useEffect(() => {
-        itemsRef.current = itemsRef.current.slice(0, vaseStore.modelDimensions.length);
-        insideRef.current = insideRef.current.slice(0, vaseStore.modelDimensions.length)
-     }, []);
-
-    useEffect(() => {
         const len = vaseStore.modelDimensions.length
+        itemsRef.current = itemsRef.current.slice(0, len)
+        insideRef.current = insideRef.current.slice(0, len)
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
             insideRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
             // console.log(vaseStore.textures[len-i-1])
         }
-    }, [])
-
+     }, []);
 
     const s_dtop_h = vaseStore.scale_h/2
     const s_dbottom_h = -1 * s_dtop_h

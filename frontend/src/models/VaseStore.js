@@ -2,7 +2,7 @@ import { types } from "mobx-state-tree";
 import * as THREE from "three";
 import React from "react"
 
-function getCurvePointsNew(_pts, tension, numOfSegments) {
+function getCurvePointsNew(_pts, tension, numOfSegmentsArr) {
 
     var res = [],    // clone array
         x, y,           // our x,y coords
@@ -19,8 +19,8 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
     _pts.unshift(first_x)
     _pts.push(last_x)
     _pts.push(last_y)
-
     for (i=2; i < (_pts.length - 4); i+=2) {
+        let numOfSegments = numOfSegmentsArr[(i/2)-1]
         for (t=0; t <= numOfSegments; t++) {
 
             // calc tension vectors
@@ -128,26 +128,27 @@ function getCurvePointsNew(_pts, tension, numOfSegments) {
 const VaseStore = types
   .model("Vase", {
     cm: true,
-    dtop: 10, //20
-    d3: 10, //10
-    d2: 10, //10
-    d1: 10, //35
-    dbottom: 20, //20 
+    dtop: 100, //20
+    d3: 5, //10
+    d2: 5, //10
+    d1: 5, //35
+    dbottom: 100, //20 
     dtop_h: 100, 
-    d3_h: 90, 
-    d2_h: 70, 
-    d1_h: 50, 
+    d3_h: 75, //90
+    d2_h: 50, //70
+    d1_h: 25, //50
     dbottom_h: 0, 
     height: 50,
     top_rim: false, 
-    bottom_rim: true, 
-    flat_bottom: true, 
+    bottom_rim: false, //true
+    flat_bottom: false, //true
     scale_h: 36,
     default_color: "#FFFFFF",
     tot_rows_per_section: types.optional(types.array(types.number), []), // bottom to top ex. [15,19,10,10]
-    subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]]
-    // vase has 4 sections, each may be made of 1+ drawing sections // bottom to top
+    subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]] // subsections are drawingSections
+    // vase has up to 4 sections, each may be made of 1+ drawing sections // bottom to top
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
+    max_subsections: 1,
     // sections can only be merged up, ie. vals >= indeces
     merged_sections: types.optional(types.array(types.number), [0,1,2,3]), // ex. [2,2,2,3] means sections 0, 1, 2 were merged into one section; bottom to top ie. section including bottom diameter = index 0
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
@@ -389,6 +390,7 @@ const VaseStore = types
             for (let k = 0; k < modelDimensions[modelDimensions.length - j - 1].length; k++){
                 subsections[j].push(curr_section-k)
             }
+            self.max_subsections = Math.max(self.max_subsections, subsections[j].length)
             curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
@@ -400,6 +402,7 @@ const VaseStore = types
         console.log("subsections", subsections)
         console.log("modelDimensions", modelDimensions)
         console.log("merged_sections", self.merged_sections)
+        console.log("max_subsections", self.max_subsections)
         // console.log("modelDimensions_merged", modelDimensions_merged)
         return modelDimensions_merged
     },
@@ -422,9 +425,14 @@ const VaseStore = types
 
         var myPoints = [s_dbottom_h,s_dbottom/2, s_d1_h,s_d1/2,s_d2_h,s_d2/2, s_d3_h,s_d3/2, s_dtop_h,s_dtop/2]; 
         var tension = 0.4
-        var numOfSegments = 6
+        // increase numOfSegments for more granularity - need to ensure that Math.floor(num of points in broken_pts/num_drawing_sections) >= 2 for no "Faceless geometry" error
+        // number of data pts per section = numOfSegments*2 + 2 --> calculated that numOfSegments >= 2d-1 where d = maximum num of drawing sections in a section.
+        // numOfSegments has to be an integer
+        // var numOfSegments = !broken? 6: Math.max(6,4*self.max_subsections)
+        console.log("hi")
+        const numOfSegmentsArr = !broken? [6,6,6,6]: [self.subsections[self.find(0)].length, self.subsections[self.find(1)].length, self.subsections[self.find(2)].length, self.subsections[self.find(3)].length]
         let points = [];
-        const new_pts = getCurvePointsNew(myPoints, tension, numOfSegments)
+        const new_pts = getCurvePointsNew(myPoints, tension, numOfSegmentsArr)
         for (let i=0; i<new_pts.length; i+=2){
             const h = new_pts[i]
             const r = new_pts[i+1]
@@ -438,36 +446,46 @@ const VaseStore = types
             let broken_pts_three = []
             let lo = 0 
             let hi = 2
+            let section_num = 0
             // dividing the points array into the sections of the vase (number of sections starts off as 4 but some may be merged.)
             // new_pts goes from bottom to top, ie. first section = bottom section
             // sections can only be merged up
             while (hi+3 < new_pts.length){
+                // only make a slice if the section is unmerged 
                 if (new_pts[hi] === new_pts[hi+2] && new_pts[hi+1] === new_pts[hi+3]){
-                    const temp = new_pts.slice(lo,hi+2)
-                    section_pts.push(temp)
-                    lo = hi + 2
+                    if (self.merged_sections[section_num] == section_num){
+                        const temp = new_pts.slice(lo,hi+2)
+                        section_pts.push(temp)
+                        lo = hi + 2
+                    }
+                    section_num += 1
                 }
                 hi += 2
             }
             section_pts.push(new_pts.slice(lo,new_pts.length))
-            console.log(section_pts)
-            // for each section, divide the section's points into the corresponding number of drawingSections in that section based, set by the algorithm.
+            console.log("section_pts", section_pts)
+            // for each section, divide the section's points into the corresponding number of drawingSections in that section, set by the algorithm.
             for (let i=0; i<section_pts.length; i+=1){ //section_pts.length = 4
+                if (self.subsections[i].length == 1){
+                    broken_pts.push(section_pts[i])
+                    continue
+                }
+                // else
                 let curr_idx = 0
                 for (let j=0; j<self.subsections[i].length; j+=1){
-                    if (self.subsections[i].length > 1){
-                        // console.log(self.modelDimensions[self.subsections[i][j]][1])
-                        let slice_size = Math.round((self.modelDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
-                        slice_size = slice_size * 2
-                        const slice = section_pts[i].slice(curr_idx,curr_idx + slice_size+2)
-                        curr_idx += slice_size
-                        broken_pts.push(slice)
-                    } 
-                    else {
-                        broken_pts.push(section_pts[i])
-                    }
+                    // console.log(self.modelDimensions[self.subsections[i][j]][1])
+                    // self.subsections[i][j][1] = corresponding num of rows section num in modelDimensions
+                    // self.tot_rows_per_section[i] = num rows in this ^ section of modelDimensions 
+                    // section_pts[i]/2 - number of data pts we have; /2 because its (y,x) pairs lined up 
+                    let slice_size = Math.round((self.modelDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
+                    console.log("slice_size", i, slice_size)
+                    slice_size = slice_size * 2
+                    const slice = section_pts[i].slice(curr_idx,curr_idx + slice_size+2)
+                    curr_idx += slice_size
+                    broken_pts.push(slice)
                 }
             }
+            console.log("broken_pts", broken_pts)
             // converting to three.js vectors
             for(let j=0; j<broken_pts.length; j+= 1){
                 let temp = []
