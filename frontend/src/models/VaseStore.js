@@ -128,7 +128,7 @@ function getCurvePointsNew(_pts, tension, numOfSegmentsArr) {
 const VaseStore = types
   .model("Vase", {
     cm: true,
-    dtop: 100, //20
+    dtop: 5, //20
     d3: 5, //10
     d2: 5, //10
     d1: 5, //35
@@ -148,7 +148,6 @@ const VaseStore = types
     subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]] // subsections are drawingSections
     // vase has up to 4 sections, each may be made of 1+ drawing sections // bottom to top
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
-    max_subsections: 1,
     // sections can only be merged up, ie. vals >= indeces
     merged_sections: types.optional(types.array(types.number), [0,1,2,3]), // ex. [2,2,2,3] means sections 0, 1, 2 were merged into one section; bottom to top ie. section including bottom diameter = index 0
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
@@ -390,7 +389,6 @@ const VaseStore = types
             for (let k = 0; k < modelDimensions[modelDimensions.length - j - 1].length; k++){
                 subsections[j].push(curr_section-k)
             }
-            self.max_subsections = Math.max(self.max_subsections, subsections[j].length)
             curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
@@ -402,7 +400,6 @@ const VaseStore = types
         console.log("subsections", subsections)
         console.log("modelDimensions", modelDimensions)
         console.log("merged_sections", self.merged_sections)
-        console.log("max_subsections", self.max_subsections)
         // console.log("modelDimensions_merged", modelDimensions_merged)
         return modelDimensions_merged
     },
@@ -425,12 +422,21 @@ const VaseStore = types
 
         var myPoints = [s_dbottom_h,s_dbottom/2, s_d1_h,s_d1/2,s_d2_h,s_d2/2, s_d3_h,s_d3/2, s_dtop_h,s_dtop/2]; 
         var tension = 0.4
-        // increase numOfSegments for more granularity - need to ensure that Math.floor(num of points in broken_pts/num_drawing_sections) >= 2 for no "Faceless geometry" error
-        // number of data pts per section = numOfSegments*2 + 2 --> calculated that numOfSegments >= 2d-1 where d = maximum num of drawing sections in a section.
-        // numOfSegments has to be an integer
-        // var numOfSegments = !broken? 6: Math.max(6,4*self.max_subsections)
-        console.log("hi")
-        const numOfSegmentsArr = !broken? [6,6,6,6]: [self.subsections[self.find(0)].length, self.subsections[self.find(1)].length, self.subsections[self.find(2)].length, self.subsections[self.find(3)].length]
+
+        let numOfSegmentsArr = [6,6,6,6]
+    
+        if (broken){
+            let subsections_idx = self.subsections.length-1
+            for (let i = self.merged_sections.length-1; i >= 0; i--){
+                if (self.merged_sections[i] == i){ // unmerged section
+                    numOfSegmentsArr[i] = Math.max(6, self.subsections[subsections_idx].length)
+                    subsections_idx -= 1
+                } 
+            }
+        }
+
+        console.log("numOfSegmentsArr", numOfSegmentsArr)
+
         let points = [];
         const new_pts = getCurvePointsNew(myPoints, tension, numOfSegmentsArr)
         for (let i=0; i<new_pts.length; i+=2){
