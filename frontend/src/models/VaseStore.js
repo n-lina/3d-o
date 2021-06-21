@@ -130,9 +130,9 @@ const VaseStore = types
     cm: true,
     dtop: 5, //20
     d3: 5, //10
-    d2: 5, //10
+    d2: 12, //10
     d1: 5, //35
-    dbottom: 100, //20 
+    dbottom: 32, //20 
     dtop_h: 100, 
     d3_h: 75, //90
     d2_h: 50, //70
@@ -429,7 +429,8 @@ const VaseStore = types
             let subsections_idx = self.subsections.length-1
             for (let i = self.merged_sections.length-1; i >= 0; i--){
                 if (self.merged_sections[i] == i){ // unmerged section
-                    numOfSegmentsArr[i] = Math.max(6, self.subsections[subsections_idx].length)
+                    const num_subsections = self.subsections[subsections_idx].length
+                    numOfSegmentsArr[i] = num_subsections < 6 ? Math.max(6, 2* num_subsections) : num_subsections
                     subsections_idx -= 1
                 } 
             }
