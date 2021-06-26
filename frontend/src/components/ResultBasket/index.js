@@ -8,18 +8,15 @@ const ResultBasket = (props) => {
     const insideRef = useRef([]);
 
     useEffect(() => {
+        const len = basketStore.modelDimensions.length
         itemsRef.current = itemsRef.current.slice(0, basketStore.modelDimensions.length);
         insideRef.current = insideRef.current.slice(0, basketStore.modelDimensions.length);
-     }, []);
-
-    useEffect(() => {
-        const len = basketStore.modelDimensions.length
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(basketStore.textures[len-i-1])
             insideRef.current[i].map = new THREE.TextureLoader().load(basketStore.textures[len-i-1])
             // console.log(basketStore.textures[len-i-1])
         }
-    }, [])
+     }, []);
 
     const s_dtop_h = basketStore.scale_h/2
     const s_dbottom_h = -1 * s_dtop_h

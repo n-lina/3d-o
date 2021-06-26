@@ -226,7 +226,6 @@ const VaseStore = types
     },
     storePic(picData){
         self.textures.push(picData)
-        // console.log(picData)
     },
     clearTextures(){
         self.textures = []
@@ -284,7 +283,7 @@ const VaseStore = types
         // convert from in to cm first 
         if (!self.cm) self.in_to_cm()
 
-        const dbottom_h = self.cmToPcs(self.dbottom_h, true)
+        const dbottom_h = 0
         const d1_h = self.cmToPcs(self.d1_h, true) // units = pieces
         const d2_h = self.cmToPcs(self.d2_h, true)
         const d3_h = self.cmToPcs(self.d3_h, true)
@@ -300,7 +299,7 @@ const VaseStore = types
 
         let max_width = widths[0]
 
-        // getting from dbottom to d1 in d1_h pieces 
+        // getting from diameter to diameter in 'height' pieces 
 
         for (let i = 0; i < widths.length-1; i++){
             const min_height = 3
@@ -356,7 +355,7 @@ const VaseStore = types
         }
         for(let i = 0; i < zero_diff.length; i++){ // zero_diff is sorted in ascending order
             // merge right(lower) into left(upper) so that the idx's in zero_diff are still accurate
-            // modelDimensions is top to bottom ro right = lower and left = upper
+            // modelDimensions is top to bottom so right = lower and left = upper
             const idx = zero_diff[i] // idx of modelDimensions
             const conj_idx = tot_rows_per_section.length-1-idx // idx of tot_rows_per_section
             const conj_idx_orig = 4 - 1 - idx// 4 = self.merged_sections.length
@@ -392,15 +391,10 @@ const VaseStore = types
             curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
-        self.maxWidth = max_width
+        self.maxWidth = max_width //TODO: check where maxWidth is used cus this field DNE
         self.modelDimensions = modelDimensions_merged
         self.subsections = subsections
         self.tot_rows_per_section = tot_rows_per_section
-        console.log("tot_rows_per_section", tot_rows_per_section)
-        console.log("subsections", subsections)
-        console.log("modelDimensions", modelDimensions)
-        console.log("merged_sections", self.merged_sections)
-        // console.log("modelDimensions_merged", modelDimensions_merged)
         return modelDimensions_merged
     },
     updateCurvedPts(broken=false){
@@ -436,9 +430,7 @@ const VaseStore = types
             }
         }
 
-        console.log("numOfSegmentsArr", numOfSegmentsArr)
-
-        let points = [];
+        let points = []
         const new_pts = getCurvePointsNew(myPoints, tension, numOfSegmentsArr)
         for (let i=0; i<new_pts.length; i+=2){
             const h = new_pts[i]
@@ -470,7 +462,6 @@ const VaseStore = types
                 hi += 2
             }
             section_pts.push(new_pts.slice(lo,new_pts.length))
-            console.log("section_pts", section_pts)
             // for each section, divide the section's points into the corresponding number of drawingSections in that section, set by the algorithm.
             for (let i=0; i<section_pts.length; i+=1){ //section_pts.length = 4
                 if (self.subsections[i].length == 1){
@@ -480,19 +471,16 @@ const VaseStore = types
                 // else
                 let curr_idx = 0
                 for (let j=0; j<self.subsections[i].length; j+=1){
-                    // console.log(self.modelDimensions[self.subsections[i][j]][1])
                     // self.subsections[i][j][1] = corresponding num of rows section num in modelDimensions
                     // self.tot_rows_per_section[i] = num rows in this ^ section of modelDimensions 
                     // section_pts[i]/2 - number of data pts we have; /2 because its (y,x) pairs lined up 
                     let slice_size = Math.round((self.modelDimensions[self.subsections[i][j]][1] / self.tot_rows_per_section[i]) * (section_pts[i].length/2))
-                    console.log("slice_size", i, slice_size)
                     slice_size = slice_size * 2
                     const slice = section_pts[i].slice(curr_idx,curr_idx + slice_size+2)
                     curr_idx += slice_size
                     broken_pts.push(slice)
                 }
             }
-            console.log("broken_pts", broken_pts)
             // converting to three.js vectors
             for(let j=0; j<broken_pts.length; j+= 1){
                 let temp = []
