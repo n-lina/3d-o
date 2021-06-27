@@ -37,7 +37,6 @@ const ColoringForm = types
     preload: false,
     clear: false,
     mode: false,
-    maxWidth: 53,
     size: 32,
     canvasPic: "",
     appendPic: "",

@@ -128,10 +128,10 @@ function getCurvePointsNew(_pts, tension, numOfSegmentsArr) {
 const VaseStore = types
   .model("Vase", {
     cm: true,
-    dtop: 5, //20
-    d3: 5, //10
-    d2: 12, //10
-    d1: 5, //35
+    dtop: 20, //20
+    d3: 20, //10
+    d2: 20, //10
+    d1: 20, //35
     dbottom: 32, //20 
     dtop_h: 100, 
     d3_h: 75, //90
@@ -152,6 +152,7 @@ const VaseStore = types
     merged_sections: types.optional(types.array(types.number), [0,1,2,3]), // ex. [2,2,2,3] means sections 0, 1, 2 were merged into one section; bottom to top ie. section including bottom diameter = index 0
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
     modelDimensions: types.optional(types.array(types.array(types.number)), []), // top to bottom ex. [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]
+    maxWidth: 0,
     // unused, only for consistency: 
     arms: false, 
     ears: "", 
@@ -234,7 +235,7 @@ const VaseStore = types
         self.default_color = color
     },
     cmToPcs(cm, height=false){
-        const height_factor = 0.55 // 0.5 cm height per row
+        const height_factor = 0.55 // 0.55 cm height per row
         const width_factor = 0.8 // 0.8 cm width per pc
         if (height){
             return Math.round(((cm/100) * self.height)/height_factor)
@@ -391,11 +392,18 @@ const VaseStore = types
             curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
-        self.maxWidth = max_width //TODO: check where maxWidth is used cus this field DNE
+        self.maxWidth = max_width 
         self.modelDimensions = modelDimensions_merged
         self.subsections = subsections
         self.tot_rows_per_section = tot_rows_per_section
         return modelDimensions_merged
+    },
+    removeDuplicatePairs(arr){
+        for (let i = arr.length-1; i-3 >= 0; i-=1){
+            if (arr[i] == arr[i-2] && arr[i-1] == arr[i-3]){
+                arr.splice(i-1,2)
+            }
+        }
     },
     updateCurvedPts(broken=false){
         const s_dtop_h = self.scale_h/2
@@ -450,8 +458,8 @@ const VaseStore = types
             // new_pts goes from bottom to top, ie. first section = bottom section
             // sections can only be merged up
             while (hi+3 < new_pts.length){
-                // only make a slice if the section is unmerged 
                 if (new_pts[hi] === new_pts[hi+2] && new_pts[hi+1] === new_pts[hi+3]){
+                    // only make a slice if the section is unmerged 
                     if (self.merged_sections[section_num] == section_num){
                         const temp = new_pts.slice(lo,hi+2)
                         section_pts.push(temp)
@@ -462,6 +470,7 @@ const VaseStore = types
                 hi += 2
             }
             section_pts.push(new_pts.slice(lo,new_pts.length))
+
             // for each section, divide the section's points into the corresponding number of drawingSections in that section, set by the algorithm.
             for (let i=0; i<section_pts.length; i+=1){ //section_pts.length = 4
                 if (self.subsections[i].length == 1){
@@ -481,6 +490,10 @@ const VaseStore = types
                     broken_pts.push(slice)
                 }
             }
+            // removing duplicate pairs in the unmerged sections 
+            for (let i=0; i < broken_pts.length; i++){
+                self.removeDuplicatePairs(broken_pts[i])
+            }
             // converting to three.js vectors
             for(let j=0; j<broken_pts.length; j+= 1){
                 let temp = []
@@ -491,7 +504,7 @@ const VaseStore = types
                 }
                 broken_pts_three.push(temp)
             }
-            
+            console.log("broken_pts", broken_pts)
             return broken_pts_three
         }
     }

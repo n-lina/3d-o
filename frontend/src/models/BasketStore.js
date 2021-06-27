@@ -74,6 +74,7 @@ const BasketStore = types
     // it's numbered like that so you can refer to the corresponding section in modelDimensions
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom 
     modelDimensions: types.optional(types.array(types.array(types.number)), []),
+    maxWidth: 0,
     // unused, only for consistency: 
     arms: false, 
     ears: "" 
@@ -277,7 +278,7 @@ const BasketStore = types
             curr_section -= modelDimensions[modelDimensions.length - j - 1].length
         }
 
-        self.maxWidth = max_width //TODO: check where maxWidth is used cus this field DNE
+        self.maxWidth = max_width
         self.modelDimensions = modelDimensions_merged
         self.subsections = subsections
         self.tot_rows_per_section = tot_rows_per_section

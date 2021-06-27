@@ -15,7 +15,6 @@ import {useStores} from "../models/RootStoreContext"
 import DelayLink from 'react-delay-link';
 import Appendages from "../components/Appendages";
 
-
 const Colouring = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
@@ -72,7 +71,7 @@ const Colouring = () => {
   }
 
   const myDimensions = useMemo(() => modelStore.getDimensions(), []);
-  const absolute = coloringFormStore.maxWidth > 52 ? true : false 
+  const absolute = modelStore.maxWidth > 52 ? true : false 
 
   let myHeight = 10000
   // const myYMargin = 20

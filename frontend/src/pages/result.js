@@ -30,15 +30,17 @@ const Result = () => {
     // console.log(coloringFormStore.coloringFormData)
     // console.log(coloringFormStore.coloringFormData[0].drawingSectionData[0].rowData[0].pixelColor)
     // console.log("Num sections", coloringFormStore.coloringFormData.length)
-    const px_size = 20
-    const half_px_width = px_size/2
+    // const px_size = 20
+    const px_width = 16*2
+    const px_height = 11*2
+    const half_px_width = px_width/2
     const defaultCol = coloringFormStore.defaultColor;
 
     for (let i = 0; i < coloringFormStore.coloringFormData.length; i++){
       const sec_width = modelStore.modelDimensions[i][0]
       const sec_height = modelStore.modelDimensions[i][1] 
-      canvas.width = sec_width * px_size
-      canvas.height = sec_height * px_size
+      canvas.width = sec_width * px_width
+      canvas.height = sec_height * px_height
       context.fillStyle = defaultCol
       context.fillRect(0, 0, canvas.width, canvas.height);
       for (let r = 0; r < sec_height; r++){
@@ -47,15 +49,16 @@ const Result = () => {
           offset = half_px_width
           const last_idx = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData.length
           context.fillStyle = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[last_idx-1].pixelColor
-          context.fillRect(0, px_size * r, half_px_width, px_size)
+          context.fillRect(0, px_height * r, half_px_width, px_height)
         }
         for (let c = 0; c < sec_width; c++){
           if (coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor === defaultCol) continue
           context.fillStyle = coloringFormStore.coloringFormData[i].drawingSectionData[r].rowData[c].pixelColor
-          context.fillRect((px_size * c) + offset, px_size * r, px_size, px_size)
+          context.fillRect((px_width * c) + offset, px_height * r, px_width, px_height)
         }
       }
       var texture = canvas.toDataURL("image/png", 1.0)
+      console.log(texture)
       modelStore.storePic(texture)
     }
     coloringFormStore.setMsg("error")
