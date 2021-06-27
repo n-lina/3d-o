@@ -311,7 +311,7 @@ const BasketStore = types
             if (self.subsections.length == 2){ // unmerged
                 const num_subsections_top = self.subsections[1].length
                 const num_subsections_bot = self.subsections[0].length
-                numOfSegmentsArr = [num_subsections_bot, num_subsections_top]
+                numOfSegmentsArr = [num_subsections_bot*3, num_subsections_top*3]
             } else {
                 numOfSegmentsArr = [1,1]
             }
@@ -343,6 +343,7 @@ const BasketStore = types
                 }
                 section_pts.push(new_pts.slice(lo,new_pts.length))
             } else {
+                new_pts.splice(new_pts.length/2, 2)
                 section_pts.push(new_pts)
             }
 
@@ -371,6 +372,8 @@ const BasketStore = types
                 }
                 broken_pts_three.push(temp)
             }
+            console.log("section_pts", section_pts)
+            console.log("broken_pts", broken_pts)
             return broken_pts_three
         }
     }
