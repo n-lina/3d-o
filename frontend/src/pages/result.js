@@ -27,10 +27,6 @@ const Result = () => {
   useEffect(() => {
     const canvas = canvasRef.current
     const context = canvas.getContext("2d")
-    // console.log(coloringFormStore.coloringFormData)
-    // console.log(coloringFormStore.coloringFormData[0].drawingSectionData[0].rowData[0].pixelColor)
-    // console.log("Num sections", coloringFormStore.coloringFormData.length)
-    // const px_size = 20
     const px_width = 16*2
     const px_height = 11*2
     const half_px_width = px_width/2
@@ -58,7 +54,6 @@ const Result = () => {
         }
       }
       var texture = canvas.toDataURL("image/png", 1.0)
-      console.log(texture)
       modelStore.storePic(texture)
     }
     coloringFormStore.setMsg("error")

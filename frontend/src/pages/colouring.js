@@ -15,6 +15,29 @@ import {useStores} from "../models/RootStoreContext"
 import DelayLink from 'react-delay-link';
 import Appendages from "../components/Appendages";
 
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
 const Colouring = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
@@ -71,7 +94,8 @@ const Colouring = () => {
   }
 
   const myDimensions = useMemo(() => modelStore.getDimensions(), []);
-  const absolute = modelStore.maxWidth > 52 ? true : false 
+  const { width } = useWindowDimensions();
+  const absolute = modelStore.maxWidth > (width-200)/21 ? true : false 
 
   let myHeight = 10000
   // const myYMargin = 20

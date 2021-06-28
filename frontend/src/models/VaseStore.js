@@ -129,8 +129,8 @@ const VaseStore = types
   .model("Vase", {
     cm: true,
     dtop: 20, //20
-    d3: 20, //10
-    d2: 20, //10
+    d3: 5, //10
+    d2: 31, //10
     d1: 20, //35
     dbottom: 32, //20 
     dtop_h: 100, 
