@@ -22,7 +22,7 @@ const Contact = () => {
         <div className="left">
           <a href="https://www.linkedin.com/in/nlina/" target="_blank" className="link">linkedin</a>
           <br/>
-          <a href="https://github.com/n-lina/n-lina/raw/main/Lina%20Nguyen%20Resume.pdf" target="_blank" className="link">resume</a>
+          <a href="https://github.com/n-lina/n-lina/raw/main/Lina%20Nguyen%20Grad2022%20Resume.pdf" target="_blank" className="link">resume</a>
         </div>
         <div className="right">
           <a href="https://github.com/n-lina" target="_blank" className="link">github</a>
