@@ -14,7 +14,6 @@ const ResultVase = (props) => {
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
             insideRef.current[i].map = new THREE.TextureLoader().load(vaseStore.textures[len-i-1])
-            // console.log(vaseStore.textures[len-i-1])
         }
      }, []);
 

@@ -141,15 +141,13 @@ const BasketStore = types
     setDefaultColor(color){
         self.default_color = color
     },
-    // getDimensions() {
-    //     self.maxWidth = 53
-    //     return self.modelDimensions
-    // },
     cmToPcs(cm, height=false){
         const height_factor = 0.55 // 0.5 cm height per row
         const width_factor = 0.8 // 0.8 cm width per pc
         if (height){
-            return Math.round(((cm/100) * self.height)/height_factor)
+            let height_used = self.height
+            if (!self.cm) height_used = self.height * 2.54
+            return Math.round(((cm/100) * height_used)/height_factor)
         }
         return Math.round(cm/width_factor)
     },
@@ -174,17 +172,27 @@ const BasketStore = types
         let subsections = [[],[]]
         let tot_rows_per_section = [0,0]
 
+        let dtop_used = self.dtop
+        let diameter_used = self.diameter
+        let dbottom_used = self.dbottom
+        let height_used = self.height
+
         // convert from in to cm first 
-        if (!self.cm) self.in_to_cm()
+        if (!self.cm){
+            const conv = 2.54
+            dtop_used = Math.round(self.dtop * conv)
+            diameter_used = Math.round(self.diameter * conv)
+            dbottom_used = Math.round(self.dbottom * conv)
+        } 
 
         const dbottom_h = 0
         const diameter_h = self.cmToPcs(50, true) // units = pieces
         const dtop_h = self.cmToPcs(100, true)
         const heights = [dbottom_h, diameter_h, dtop_h]
 
-        const dtop = self.cmToPcs(self.dtop) // units = pieces
-        const diameter = self.cmToPcs(self.diameter)
-        const dbottom = self.cmToPcs(self.dbottom)
+        const dtop = self.cmToPcs(dtop_used) // units = pieces
+        const diameter = self.cmToPcs(diameter_used)
+        const dbottom = self.cmToPcs(dbottom_used)
         const widths = [dbottom, diameter, dtop]
 
         let max_width = widths[0]
@@ -373,8 +381,7 @@ const BasketStore = types
                 }
                 broken_pts_three.push(temp)
             }
-            console.log("section_pts", section_pts)
-            console.log("broken_pts", broken_pts)
+
             return broken_pts_three
         }
     }

@@ -504,7 +504,6 @@ const VaseStore = types
                 }
                 broken_pts_three.push(temp)
             }
-            console.log("broken_pts", broken_pts)
             return broken_pts_three
         }
     }

@@ -64,7 +64,7 @@ const SwanStore = types
     wings: true, // true = two wings
     bottom_rim: true,
     texture: "", 
-    modelDimensions: types.optional(types.array(types.array(types.number)), [[8, 2]]), // top to bottom
+    modelDimensions: types.optional(types.array(types.array(types.number)), [[8, 2]]), // top to bottom, only one element
     // unused, only for consistency: 
     flat_bottom: false,
     top_rim: false, 
@@ -115,10 +115,38 @@ const SwanStore = types
     setDefaultColor(color){
         self.default_color = color
     },
+    cmToPcs(cm, height=false){
+        const height_factor = 0.55 // 0.5 cm height per row
+        const width_factor = 0.8 // 0.8 cm width per pc
+        if (height){
+            return Math.round(cm/height_factor)
+        }
+        return Math.round(cm/width_factor)
+    },
     getDimensions() {
-        self.maxWidth = 53 // un hard code
-        // calculations
-        return self.modelDimensions
+        // INPUTS 
+        // diameter: 30,
+
+        // OUTPUTS
+        // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]
+
+        // convert from in to cm first 
+        let diameter = self.diameter
+
+        if (!self.cm) {
+            const conv = 2.54
+            diameter = Math.round(self.diameter * conv)
+        }
+
+        const height_input = 1.8 * diameter * self.height_scale
+
+        const diameter_pcs = self.cmToPcs(diameter)
+        const height = self.cmToPcs(height_input, true)
+        const modelDimensions = [[diameter_pcs, height]]
+        
+        self.maxWidth = diameter_pcs
+        self.modelDimensions = modelDimensions
+        return modelDimensions
     },
     swanBodyPts(){
         let display_diameter = self.diameter

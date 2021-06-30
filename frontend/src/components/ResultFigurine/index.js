@@ -17,7 +17,6 @@ const Figurine = (props) => {
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(figStore.textures[i])
             insideRef.current[i].map = new THREE.TextureLoader().load(figStore.textures[i])
-            // console.log(figStore.textures[len-i-1])
         }
     }, [])
 
