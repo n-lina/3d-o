@@ -190,10 +190,10 @@ const BasketStore = types
         const dtop_h = self.cmToPcs(100, true)
         const heights = [dbottom_h, diameter_h, dtop_h]
 
-        const dtop = self.cmToPcs(dtop_used) // units = pieces
-        const diameter = self.cmToPcs(diameter_used)
-        const dbottom = self.cmToPcs(dbottom_used)
-        const widths = [dbottom, diameter, dtop]
+        const ctop = self.cmToPcs(Math.PI * dtop_used) // units = pieces
+        const circ = self.cmToPcs(Math.PI * diameter_used)
+        const cbottom = self.cmToPcs(Math.PI * dbottom_used)
+        const widths = [cbottom, circ, ctop]
 
         let max_width = widths[0]
 

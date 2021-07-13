@@ -54,6 +54,7 @@ function getCurvePointsFigurine(_pts, tension, numOfSegments) {
 
 const FigurineStore = types
   .model("Figurine", {
+    maxWidth: 0,
     cm: true,
     diameter: 13,
     arms: true, 
@@ -104,9 +105,124 @@ const FigurineStore = types
     update_diameter(d){
         self.diameter = d
     }, 
+    cmToPcs(cm, height=false){
+        const height_factor = 0.55 // 0.5 cm height per row
+        const width_factor = 0.8 // 0.8 cm width per pc
+        if (height){
+            return Math.round(cm/height_factor)
+        }
+        return Math.round(cm/width_factor)
+    },
     getDimensions() {
-        self.maxWidth = 53
-        return self.modelDimensions
+        // INPUTS 
+        // diameter: 30,
+
+        // OUTPUTS
+        // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]
+
+        // convert from in to cm first 
+        let diameter = self.diameter
+
+        if (!self.cm) {
+            const conv = 2.54
+            diameter = Math.round(self.diameter * conv)
+        }
+
+        // body 
+        const height_input = self.body_height * diameter * 2 // 2 because diameter is in the middle of the section
+        const diameter_pcs = self.cmToPcs(diameter)
+        const height = self.cmToPcs(height_input, true)
+        const body_dimensions = [diameter_pcs, height]
+        console.log(body_dimensions)
+
+        // head
+        const theta_len = 0.8
+        const head_start_theta_len = 0.85
+        const goal_rad = (diameter * self.body_scale)/2 // all in cm
+        const head_rad = goal_rad/Math.sin((1-theta_len) * Math.PI)
+        console.log(2*head_rad, diameter)
+        const head_circ = self.cmToPcs(Math.PI * head_rad * 2)
+        const head_start_rad = head_rad * Math.sin((1-head_start_theta_len) * Math.PI)
+        const head_start_circ = self.cmToPcs(Math.PI * head_start_rad * 2)
+        const head_start_height = self.cmToPcs(head_rad * Math.sin((1-head_start_theta_len) * Math.PI), true)
+
+        const widths = [head_start_circ, head_circ, Math.min(head_start_circ, 3)]
+        const heights = [0,  head_start_height, head_start_height+self.cmToPcs(head_rad)]
+        // let temp = self.getDimensionsHead(widths, heights) // call function here using this as input
+        console.log("w", widths)
+        console.log("h", heights)
+        // console.log("temp", temp)
+        let modelDimensions = [[diameter_pcs, height]]
+
+        // together 
+        self.maxWidth = self.cmToPcs(head_rad)
+        modelDimensions.push(body_dimensions)
+        self.modelDimensions = modelDimensions
+        return modelDimensions
+    },
+    getDimensionsHead(widths, heights) {
+        // INPUTS (cm)
+        // dhead_start
+        // dhead
+        // dhead_end
+
+        // OUTPUTS
+        // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10], [53, 10],[40,10],[28,9], [16,10], [24,5]]), // top to bottom
+
+        // max allowed decrease rate: -1 per 5 pcs
+        // max increase rate: +1 per 1 pc 
+        // min 3 rows per section
+
+        let modelDimensions = []
+        // getting from diameter to diameter in 'height' pieces
+
+        for (let i = 0; i < widths.length-1; i++){
+            const min_height = 3
+            let min_height_needed = min_height
+            let diff = widths[i+1]-widths[i]
+            let height_diff = heights[i+1] - heights[i]
+
+            let temp_dbottom = widths[i]
+            let curr_section = []
+            
+            // decreasing 
+            if (diff > 0){
+                curr_section.push([temp_dbottom,min_height])
+                while (diff > 0){
+                    const add_to_this_row = Math.floor(temp_dbottom/min_height)
+                    const actual_add = Math.min(diff, add_to_this_row)
+                    diff -= actual_add 
+                    temp_dbottom += actual_add
+                    if (diff == 0 && i < widths.length-2) break
+                    min_height_needed += min_height
+                    curr_section.unshift([temp_dbottom, min_height])
+                }
+            }
+            // increasing
+            else if (diff < 0){
+                diff = diff * -1
+                curr_section.push([temp_dbottom,min_height])
+                while (diff > 0) {
+                    const sub_from_this_row = Math.floor(temp_dbottom/5)
+                    const actual_sub = Math.min(diff, sub_from_this_row)
+                    diff -= actual_sub
+                    temp_dbottom -= actual_sub
+                    if (diff == 0 && i < widths.length-2) break
+                    min_height_needed += min_height
+                    curr_section.unshift([temp_dbottom,min_height])
+                }            
+            }
+            let excess_height = height_diff-min_height_needed
+            while (excess_height>0){
+                curr_section[excess_height%curr_section.length][1] += 1
+                excess_height -= 1
+            }
+            modelDimensions.unshift(curr_section)    
+        }
+
+        var modelDimensions_merged = [].concat.apply([], modelDimensions);
+
+        return modelDimensions_merged
     },
     storePic(picData){
         self.textures.push(picData)

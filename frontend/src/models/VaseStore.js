@@ -291,12 +291,12 @@ const VaseStore = types
         const dtop_h = self.cmToPcs(self.dtop_h, true)
         const heights = [dbottom_h, d1_h, d2_h, d3_h, dtop_h]
 
-        const dtop = self.cmToPcs(self.dtop) // units = pieces
-        const d3 = self.cmToPcs(self.d3)
-        const d2 = self.cmToPcs(self.d2)
-        const d1 = self.cmToPcs(self.d1)
-        const dbottom = self.cmToPcs(self.dbottom)
-        const widths = [dbottom, d1, d2, d3, dtop]
+        const ctop = self.cmToPcs(Math.PI * self.dtop) // units = pieces
+        const c3 = self.cmToPcs(Math.PI * self.d3)
+        const c2 = self.cmToPcs(Math.PI * self.d2)
+        const c1 = self.cmToPcs(Math.PI * self.d1)
+        const cbottom = self.cmToPcs(Math.PI * self.dbottom)
+        const widths = [cbottom, c1, c2, c3, ctop]
 
         let max_width = widths[0]
 

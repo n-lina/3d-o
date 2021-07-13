@@ -107,7 +107,7 @@ const CreateVase = () => {
 
   // cm
   let min_d = 5
-  let max_d = 100
+  let max_d = 50
   let min_h = 10 
   let max_h = 100
 

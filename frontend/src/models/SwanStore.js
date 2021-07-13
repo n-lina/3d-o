@@ -54,6 +54,7 @@ function getCurvePointsSwan(_pts, tension, numOfSegments) {
 
 const SwanStore = types
   .model("Swan", {
+    maxWidth: 0,
     cm: true,
     diameter: 16,
     body_height: 0.35,
@@ -138,13 +139,13 @@ const SwanStore = types
             diameter = Math.round(self.diameter * conv)
         }
 
-        const height_input = 1.8 * diameter * self.height_scale
+        const height_input = 1.8 * diameter * self.height_scale // 1.8 is from the height of the swan model in swanBodyPts()
 
-        const diameter_pcs = self.cmToPcs(diameter)
+        const circ_pcs = self.cmToPcs(Math.PI * diameter)
         const height = self.cmToPcs(height_input, true)
-        const modelDimensions = [[diameter_pcs, height]]
+        const modelDimensions = [[circ_pcs, height]]
         
-        self.maxWidth = diameter_pcs
+        self.maxWidth = circ_pcs
         self.modelDimensions = modelDimensions
         return modelDimensions
     },
