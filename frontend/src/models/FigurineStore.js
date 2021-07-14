@@ -63,7 +63,7 @@ const FigurineStore = types
     body_height: 0.35,
     default_color: "#FFFFFF",
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
-    tot_rows_head: 33,
+    tot_rows_head: 0,
     modelDimensions: types.optional(types.array(types.array(types.number)), [[30,12],[40,11],[53,10],[40,10]]), // last = body
     // unused, only for consistency: 
     flat_bottom: false, 
@@ -121,43 +121,37 @@ const FigurineStore = types
         // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]
 
         // convert from in to cm first 
-        let diameter = self.diameter
+        let diameter = self.diameter * self.body_scale
 
         if (!self.cm) {
             const conv = 2.54
-            diameter = Math.round(self.diameter * conv)
+            diameter = Math.round(self.diameter * self.body_scale * conv)
         }
 
         // body 
         const height_input = self.body_height * diameter * 2 // 2 because diameter is in the middle of the section
-        const diameter_pcs = self.cmToPcs(diameter)
+        const circ_pcs = self.cmToPcs(Math.PI * diameter)
         const height = self.cmToPcs(height_input, true)
-        const body_dimensions = [diameter_pcs, height]
-        console.log(body_dimensions)
+        const body_dimensions = [circ_pcs, height]
 
         // head
         const theta_len = 0.8
         const head_start_theta_len = 0.85
-        const goal_rad = (diameter * self.body_scale)/2 // all in cm
+        const goal_rad = (diameter * self.body_scale)/2 // units: cm
         const head_rad = goal_rad/Math.sin((1-theta_len) * Math.PI)
-        console.log(2*head_rad, diameter)
         const head_circ = self.cmToPcs(Math.PI * head_rad * 2)
         const head_start_rad = head_rad * Math.sin((1-head_start_theta_len) * Math.PI)
         const head_start_circ = self.cmToPcs(Math.PI * head_start_rad * 2)
-        const head_start_height = self.cmToPcs(head_rad * Math.sin((1-head_start_theta_len) * Math.PI), true)
 
-        const widths = [head_start_circ, head_circ, Math.min(head_start_circ, 3)]
-        const heights = [0,  head_start_height, head_start_height+self.cmToPcs(head_rad)]
-        // let temp = self.getDimensionsHead(widths, heights) // call function here using this as input
-        console.log("w", widths)
-        console.log("h", heights)
-        // console.log("temp", temp)
-        let modelDimensions = [[diameter_pcs, height]]
+        const widths = [head_start_circ, head_circ, Math.min(head_start_circ, 4)] // units: pcs, 4 is the absolute min
+        const heights = [0, self.cmToPcs(head_rad), self.cmToPcs(2*head_rad, true)]
+        let modelDimensions = self.getDimensionsHead(widths, heights) // call function here using this as input
 
         // together 
         self.maxWidth = self.cmToPcs(head_rad)
         modelDimensions.push(body_dimensions)
         self.modelDimensions = modelDimensions
+        console.log(modelDimensions)
         return modelDimensions
     },
     getDimensionsHead(widths, heights) {
@@ -172,7 +166,7 @@ const FigurineStore = types
         // max allowed decrease rate: -1 per 5 pcs
         // max increase rate: +1 per 1 pc 
         // min 3 rows per section
-
+        self.tot_rows_head = 0
         let modelDimensions = []
         // getting from diameter to diameter in 'height' pieces
 
@@ -185,7 +179,7 @@ const FigurineStore = types
             let temp_dbottom = widths[i]
             let curr_section = []
             
-            // decreasing 
+            // increasing
             if (diff > 0){
                 curr_section.push([temp_dbottom,min_height])
                 while (diff > 0){
@@ -198,12 +192,12 @@ const FigurineStore = types
                     curr_section.unshift([temp_dbottom, min_height])
                 }
             }
-            // increasing
+            // decreasing
             else if (diff < 0){
                 diff = diff * -1
                 curr_section.push([temp_dbottom,min_height])
                 while (diff > 0) {
-                    const sub_from_this_row = Math.floor(temp_dbottom/5)
+                    const sub_from_this_row = Math.floor(temp_dbottom/4)
                     const actual_sub = Math.min(diff, sub_from_this_row)
                     diff -= actual_sub
                     temp_dbottom -= actual_sub
@@ -212,6 +206,8 @@ const FigurineStore = types
                     curr_section.unshift([temp_dbottom,min_height])
                 }            
             }
+            console.log(height_diff, min_height_needed)
+            self.tot_rows_head += Math.max(height_diff, min_height_needed)
             let excess_height = height_diff-min_height_needed
             while (excess_height>0){
                 curr_section[excess_height%curr_section.length][1] += 1
@@ -240,10 +236,13 @@ const FigurineStore = types
         for (let i = 0; i < self.modelDimensions.length-1; i++){
             const num_rows = self.modelDimensions[i][1]
             const ratio = num_rows/self.tot_rows_head
+            console.log(tot_theta_len)
+            console.log(self.tot_rows_head)
             theta_len = ratio * tot_theta_len
             divisions.push([theta_start, theta_len])
             theta_start += theta_len
         }
+        console.log(divisions)
         return divisions
     },
     updateCurvedPts(){

@@ -208,7 +208,7 @@ const BasketStore = types
             let temp_dbottom = widths[i]
             let curr_section = []
             
-            // decreasing, try making it more spaced out by height?
+            // increasing
             if (diff > 0){
                 curr_section.push([temp_dbottom,min_height])
                 while (diff > 0){
@@ -222,7 +222,7 @@ const BasketStore = types
                     curr_section.unshift([temp_dbottom, min_height])
                 }
             }
-            // increasing
+            //  decreasing
             else if (diff < 0){
                 diff = diff * -1
                 curr_section.push([temp_dbottom,min_height])

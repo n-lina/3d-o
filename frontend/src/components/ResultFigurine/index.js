@@ -8,22 +8,24 @@ const Figurine = (props) => {
     const insideRef = useRef([]);
 
     useEffect(() => {
-        itemsRef.current = itemsRef.current.slice(0, figStore.modelDimensions.length-1);
-        insideRef.current = insideRef.current.slice(0, figStore.modelDimensions.length-1);
-     }, []);
-
-    useEffect(() => {
         const len = figStore.modelDimensions.length-1
+        itemsRef.current = itemsRef.current.slice(0, len);
+        insideRef.current = insideRef.current.slice(0, len);
         for(let i = 0; i < len; i += 1){
             itemsRef.current[i].map = new THREE.TextureLoader().load(figStore.textures[i])
             insideRef.current[i].map = new THREE.TextureLoader().load(figStore.textures[i])
         }
-    }, [])
+     }, []);
 
     const texture_body = useMemo(() => new THREE.TextureLoader().load(figStore.textures[figStore.textures.length-1]), []) 
 
+    let display_diameter = figStore.diameter
+    if (!figStore.cm){
+        display_diameter = Math.round(display_diameter * 2.54)
+    }
+
     const theta_len = 0.8
-    const goal_rad = (figStore.diameter * figStore.body_scale)/2
+    const goal_rad = (display_diameter * figStore.body_scale)/2
     const head_rad = goal_rad/Math.sin((1-theta_len) * Math.PI)
     const offset = head_rad*Math.cos((1-theta_len) * Math.PI) - 0.2
 
@@ -32,13 +34,13 @@ const Figurine = (props) => {
     const broken_head = 
     <group>
         {divs.map((_, i) => (
-            <mesh key={i} position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
+            <mesh key={i} position={[0,(display_diameter * figStore.body_height) + offset,0]}>
                 <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, divs[i][0], divs[i][1]]}/>
                 <meshPhongMaterial ref={el => itemsRef.current[i] = el} side={THREE.FrontSide} specular="#121212" shininess = {26}/>
             </mesh>
         ))}
         {divs.map((_, i) => (
-            <mesh key={i} position={[0,(figStore.diameter * figStore.body_height) + offset,0]}>
+            <mesh key={i} position={[0,(display_diameter * figStore.body_height) + offset,0]}>
                 <sphereGeometry args={[head_rad, 20, 14, 0, 2 * Math.PI, divs[i][0], divs[i][1]]}/>
                 <meshPhongMaterial ref={el => insideRef.current[i] = el} side={THREE.BackSide}/>
             </mesh>
@@ -71,7 +73,7 @@ const Figurine = (props) => {
         const tube_rad = Math.min(0.5, tube_scale/7)
         const rad_segs = 7
         const closed = false
-        const y_pos = (figStore.diameter * figStore.body_height) + offset + tube_scale/4 + (head_rad * Math.cos(Math.PI/4))
+        const y_pos = (display_diameter * figStore.body_height) + offset + tube_scale/4 + (head_rad * Math.cos(Math.PI/4))
 
         bear_ears =  
         <group>
@@ -88,7 +90,7 @@ const Figurine = (props) => {
 
     if(figStore.ears === "cat"){
         const shape = new THREE.Shape();
-        const y_pos = (figStore.diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
+        const y_pos = (display_diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
         const half_side_len = (head_rad/1.5)/2
         shape.moveTo(-half_side_len,0);
         shape.quadraticCurveTo(-half_side_len/1.2, half_side_len * 1.3, 0,half_side_len * 1.8);
@@ -117,7 +119,7 @@ const Figurine = (props) => {
 
     if(figStore.ears === "bunny"){
         const bshape = new THREE.Shape();
-        const y_pos = (figStore.diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
+        const y_pos = (display_diameter * figStore.body_height) + offset + (head_rad * Math.cos(Math.PI/4))
         const half_side_len = (head_rad/2)/2
         bshape.moveTo(-half_side_len,0);
         bshape.lineTo(-half_side_len, half_side_len * 3)
@@ -146,7 +148,7 @@ const Figurine = (props) => {
 
     if(figStore.ears === "sphere"){
         const ear_rad = head_rad/3.5
-        const y_pos = (figStore.diameter * figStore.body_height) + offset + ear_rad + (head_rad * Math.cos(Math.PI/4))
+        const y_pos = (display_diameter * figStore.body_height) + offset + ear_rad + (head_rad * Math.cos(Math.PI/4))
         sphere_ears = 
         <group>
             <mesh position={[-(head_rad * Math.cos(Math.PI/4)),y_pos,0]} rotation={[0,0,Math.PI/4]}>
@@ -161,9 +163,9 @@ const Figurine = (props) => {
     }
 
     if (figStore.arms){
-        const arm_rad = figStore.diameter/7
-        const y_pos = (figStore.diameter * figStore.body_height)/2
-        const x_pos = (figStore.diameter * figStore.body_scale)/2 + arm_rad*1.3
+        const arm_rad = display_diameter/7
+        const y_pos = (display_diameter * figStore.body_height)/2
+        const x_pos = (display_diameter * figStore.body_scale)/2 + arm_rad*1.3
         arms = 
         <group>
             <mesh position={[-(x_pos),y_pos,0]} rotation={[0,0,Math.PI/2.65]}>

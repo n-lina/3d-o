@@ -132,11 +132,11 @@ const SwanStore = types
         // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]
 
         // convert from in to cm first 
-        let diameter = self.diameter
+        let diameter = self.diameter * self.bottom_scale
 
         if (!self.cm) {
             const conv = 2.54
-            diameter = Math.round(self.diameter * conv)
+            diameter = Math.round(self.diameter * self.bottom_scale * conv)
         }
 
         const height_input = 1.8 * diameter * self.height_scale // 1.8 is from the height of the swan model in swanBodyPts()
