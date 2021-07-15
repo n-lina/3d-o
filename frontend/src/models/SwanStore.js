@@ -65,6 +65,7 @@ const SwanStore = types
     wings: true, // true = two wings
     bottom_rim: true,
     texture: "", 
+    upsize: false,
     modelDimensions: types.optional(types.array(types.array(types.number)), [[8, 2]]), // top to bottom, only one element
     // unused, only for consistency: 
     flat_bottom: false,
@@ -123,6 +124,13 @@ const SwanStore = types
             return Math.round(cm/height_factor)
         }
         return Math.round(cm/width_factor)
+    },
+    setSize(){
+        const conv = 2.54
+        const diameter_cm = self.cm ? self.diameter : self.diameter * conv
+        if (diameter_cm > 25){
+            self.upsize = true
+        }
     },
     getDimensions() {
         // INPUTS 

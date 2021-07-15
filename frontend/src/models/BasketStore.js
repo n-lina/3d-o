@@ -57,7 +57,7 @@ const BasketStore = types
   .model("Basket", {
     cm: true,
     height: 20, 
-    diameter: 20, //34 
+    diameter: 34,
     dtop: 20, 
     dbottom: 20,
     top_rim: true, 
@@ -68,6 +68,7 @@ const BasketStore = types
     scale_h: 15,
     flat_bottom: false, 
     default_color: "#FFFFFF",
+    upsize: false,
     tot_rows_per_section: types.optional(types.array(types.number), []), // bottom to top 
     subsections: types.optional(types.array(types.array(types.number)),[]), 
     // basket has 1-2 sections, each may be made of 1+ drawing sections // bottom to top
@@ -110,6 +111,17 @@ const BasketStore = types
         self.dbottom = Math.round(self.dbottom / conv)
         self.height = Math.round(self.height / conv)
         self.cm = false
+    },
+    setSize(){
+        const conv = 2.54
+        const dbottom_cm = self.cm ? self.dbottom : self.dbottom * conv
+        const diameter_cm = self.cm ? self.diameter : self.diameter * conv
+        const dtop_cm = self.cm ? self.dtop : self.dtop * conv
+        const height_cm = self.cm ? self.height : self.height * conv
+        const average_diameter_cm = (dbottom_cm + diameter_cm + dtop_cm)/3
+        if (average_diameter_cm > 30 || height_cm > 70){
+            self.upsize = true
+        }
     },
     update_units(units){
         if (self.cm == units) return 

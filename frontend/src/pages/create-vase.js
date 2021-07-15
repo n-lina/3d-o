@@ -338,6 +338,11 @@ const CreateVase = () => {
       />
   </div>
 
+  function nextPage(){
+    coloringFormStore.setMsg()
+    vaseStore.setSize()
+  }
+
   return (
     <>
       <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: 'auto'}}>
@@ -398,7 +403,7 @@ const CreateVase = () => {
           </div>
           <div style={{width: 80, marginBottom:35, display:'inline-block', marginTop: 30}}>
             <NavBtn>
-              <NavBtnLink style={{background: "#D14240"}} onClick={() => coloringFormStore.setMsg()} to='/colouring'>
+              <NavBtnLink style={{background: "#D14240"}} onClick={nextPage} to='/colouring'>
                 <p className = "buttonText">done</p>
               </NavBtnLink>
             </NavBtn>

@@ -176,6 +176,11 @@ const ears_switch = <div className="switch"  style={{width: 360, height: 50}}>
       />
   </div>
 
+function nextPage(){
+  coloringFormStore.setMsg()
+  figStore.setSize()
+}
+
   return (
     <>
       <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: 'auto'}}>
@@ -211,7 +216,7 @@ const ears_switch = <div className="switch"  style={{width: 360, height: 50}}>
           {ears_switch}
           <div className="done-basket" style={{width: 80, marginBottom:35}}>
             <NavBtn>
-              <NavBtnLink style={{background: "#D14240"}} onClick={() => coloringFormStore.setMsg()} to='/colouring'>
+              <NavBtnLink style={{background: "#D14240"}} onClick={nextPage} to='/colouring'>
                 <p className = "buttonText">done</p>
               </NavBtnLink>
             </NavBtn>

@@ -64,6 +64,7 @@ const FigurineStore = types
     default_color: "#FFFFFF",
     textures: types.optional(types.array(types.string), []), // first idx = top, last idx = bottom of vase
     tot_rows_head: 0,
+    upsize: false, 
     modelDimensions: types.optional(types.array(types.array(types.number)), [[30,12],[40,11],[53,10],[40,10]]), // last = body
     // unused, only for consistency: 
     flat_bottom: false, 
@@ -112,6 +113,13 @@ const FigurineStore = types
             return Math.round(cm/height_factor)
         }
         return Math.round(cm/width_factor)
+    },
+    setSize(){
+        const conv = 2.54
+        const diameter_cm = self.cm ? self.diameter : self.diameter * conv
+        if (diameter_cm > 25){
+            self.upsize = true
+        }
     },
     getDimensions() {
         // INPUTS 

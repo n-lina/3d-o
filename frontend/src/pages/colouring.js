@@ -246,12 +246,14 @@ const Colouring = () => {
     </div>
   }
 
+  const pc_size = modelStore.upsize ? "1 / 16" : "1 / 32"
+
   //"#FFE7E5"
   const stats = 
   <div>
     <p id="text">instructions + overview</p>
     <div style={{width: '100%', display:'inline-block'}}>
-      <div id="text" style={{marginTop:0, marginBottom:0, marginRight: 0, width: '500px', background: "#FFE7E5", float:"left"}}>placeholder</div>
+      <div id="text" style={{marginTop:0, marginBottom:0, marginRight: 0, width: '500px', background: "#FFE7E5", float:"left"}}>Piece Size: <span style={{fontWeight: "bold"}}>{pc_size}</span></div>
       <div id="text" style={{marginTop:0, marginBottom:0, marginLeft: 0, width: '500px', background: "#FFE7E5", float:"right"}}>
         <div>
           {coloringFormStore.counter.map((col, i) => (

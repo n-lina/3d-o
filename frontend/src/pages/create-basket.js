@@ -261,6 +261,11 @@ const CreateBasket = () => {
       />
   </div>
 
+function nextPage(){
+  coloringFormStore.setMsg()
+  basketStore.setSize()
+}
+
   return (
     <>
       <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '690px'}}>
@@ -322,7 +327,7 @@ const CreateBasket = () => {
           </div>
           <div className="done-basket" style={{width: 80, marginBottom:35, display:'inline-block', marginTop: 30}}>
             <NavBtn>
-              <NavBtnLink style={{background: "#D14240"}} onClick={() => coloringFormStore.setMsg()} to='/colouring'>
+              <NavBtnLink style={{background: "#D14240"}} onClick={nextPage} to='/colouring'>
                 <p className = "buttonText">done</p>
               </NavBtnLink>
             </NavBtn>

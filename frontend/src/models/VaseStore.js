@@ -144,6 +144,7 @@ const VaseStore = types
     flat_bottom: false, //true
     scale_h: 36,
     default_color: "#FFFFFF",
+    upsize: false, 
     tot_rows_per_section: types.optional(types.array(types.number), []), // bottom to top ex. [15,19,10,10]
     subsections: types.optional(types.array(types.array(types.number)),[]), // ex.[[5,4],[3,2],[1],[0]] // subsections are drawingSections
     // vase has up to 4 sections, each may be made of 1+ drawing sections // bottom to top
@@ -233,6 +234,19 @@ const VaseStore = types
     },
     setDefaultColor(color){
         self.default_color = color
+    },
+    setSize(){
+        const conv = 2.54
+        const dbottom_cm = self.cm ? self.dbottom : self.dbottom * conv
+        const d1_cm = self.cm ? self.d1 : self.d1 * conv
+        const d2_cm = self.cm ? self.d1 : self.d2 * conv
+        const d3_cm = self.cm ? self.d1 : self.d3 * conv
+        const dtop_cm = self.cm ? self.dtop : self.dtop * conv
+        const height_cm = self.cm ? self.height : self.height * conv
+        const average_diameter_cm = (dbottom_cm + d1_cm + d2_cm + d3_cm + dtop_cm)/5
+        if (average_diameter_cm > 30 || height_cm > 70){
+            self.upsize = true
+        }
     },
     cmToPcs(cm, height=false){
         const height_factor = 0.55 // 0.55 cm height per row
