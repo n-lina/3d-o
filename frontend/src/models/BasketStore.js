@@ -154,8 +154,8 @@ const BasketStore = types
         self.default_color = color
     },
     cmToPcs(cm, height=false){
-        const height_factor = 0.55 // 0.5 cm height per row
-        const width_factor = 0.8 // 0.8 cm width per pc
+        const height_factor = self.upsize? 0.7: 0.55 // 0.5 cm height per row
+        const width_factor = self.upsize? 1.2 : 0.8 // 0.8 cm width per pc
         if (height){
             let height_used = self.height
             if (!self.cm) height_used = self.height * 2.54
