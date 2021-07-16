@@ -15,23 +15,19 @@ const Appendages = (props) => {
     let rims = []
     let key = 0
 
-    // top_rim, bottom_rim, flat_bottom, arms, ears, lid, top_handle, side_handles
-
     if (modelStore.flat_bottom){
-      const circ = modelStore.getDimensions()[modelStore.getDimensions().length-1][0]
-      bottoms.push(<Bottom key={key} caption={"flat bottom"} flat={true} circ={circ} lid={false} formObject={formObject}/>) // circ = circumfrence
+      bottoms.push(<Bottom key={key} caption={"flat bottom"} flat={true} diameter={modelStore.dbottom} lid={false} formObject={formObject} upsize={modelStore.upsize}/>)
       key += 1
     }
     else if (formObject.model === "basket"){
-      const circ = modelStore.getDimensions()[modelStore.getDimensions().length-1][0]
-      bottoms.push(<Bottom key={key} caption={"curved bottom"} flat={false} circ={circ} lid={false} formObject={formObject}/>)
+      bottoms.push(<Bottom key={key} caption={"curved bottom"} flat={false} diameter={modelStore.dbottom} lid={false} formObject={formObject} upsize={modelStore.upsize}/>)
       key += 1
     }
     if (modelStore.lid){
-      const circ = modelStore.getDimensions()[0][0]
-      bottoms.push(<Bottom key={key} caption={"lid"} flat={false} circ={circ} formObject={formObject}/>)
+      const handle_size = modelStore.dtop <= 15? "small": modelStore.dtop >= 35? "big":"med"
+      bottoms.push(<Bottom key={key} caption={"lid"} flat={false} diameter={modelStore.dtop} formObject={formObject} upsize={modelStore.upsize}/>)
       key += 1
-      sections.push(<Sphere key={key} caption={"lid handle"} size={circ} formObject={formObject}/>)
+      sections.push(<Sphere key={key} caption={"lid handle"} size={handle_size} formObject={formObject}/>)
       key += 1
     }
     if (modelStore.top_handle){
@@ -47,27 +43,28 @@ const Appendages = (props) => {
       key += 1
     }
     if (modelStore.ears !== ""){
-      const circ = modelStore.getDimensions()[modelStore.getDimensions().length-1][0] // make ears prop. to body circ
+      const ear_scale = 2
+      const ear_d = Math.ceil(modelStore.diameter/ear_scale)
       if (modelStore.ears === "bear"){
-        sections.push(<Rim key={key} full={false} caption={"bear ear"} circ={circ}/>)
+        sections.push(<Rim key={key} full={false} caption={"bear ear"} circ={ear_d}/>)
         key += 1
-        sections.push(<Rim key={key} full={false} caption={"bear ear"} circ={circ}/>)
+        sections.push(<Rim key={key} full={false} caption={"bear ear"} circ={ear_d}/>)
         key += 1 
       }
       else if (modelStore.ears === "bunny"){
-        sections.push(<BunnyOrHandle key={key} caption={"bunny ear"} size={10} formObject={formObject}/>)
+        sections.push(<BunnyOrHandle key={key} caption={"bunny ear"} size={ear_d} formObject={formObject}/>)
         key += 1
-        sections.push(<BunnyOrHandle key={key} caption={"bunny ear"} size={10} formObject={formObject}/>)
+        sections.push(<BunnyOrHandle key={key} caption={"bunny ear"} size={ear_d} formObject={formObject}/>)
       }
       else if (modelStore.ears === "sphere"){
-        sections.push(<Sphere key={key} caption={"round ear"} size={circ} formObject={formObject}/>)
+        sections.push(<Sphere key={key} caption={"round ear"} size={modelStore.diameter <= 15? "small": modelStore.diameter >= 35? "big":"med"} formObject={formObject}/>)
         key += 1
-        sections.push(<Sphere key={key} caption={"round ear"} size={circ} formObject={formObject}/>)
+        sections.push(<Sphere key={key} caption={"round ear"} size={modelStore.diameter <= 15? "small": modelStore.diameter  >= 35? "big":"med"} formObject={formObject}/>)
       }
       else if (modelStore.ears === "cat"){
-        sections.push(<TriangleSection key={key} caption={"cat ear"} width={10} formObject={formObject} elevation={0} firstRowDisplay={true} inverted={false} />)
+        sections.push(<TriangleSection key={key} caption={"cat ear"} width={ear_d} formObject={formObject} elevation={0} firstRowDisplay={true} inverted={false} />)
         key += 1
-        sections.push(<TriangleSection key={key} caption={"cat ear"} width={10} formObject={formObject} elevation={0} firstRowDisplay={true} inverted={false} />)
+        sections.push(<TriangleSection key={key} caption={"cat ear"} width={ear_d} formObject={formObject} elevation={0} firstRowDisplay={true} inverted={false} />)
       }
       key += 1
     }

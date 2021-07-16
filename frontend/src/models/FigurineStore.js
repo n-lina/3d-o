@@ -137,7 +137,7 @@ const FigurineStore = types
         }
 
         // body 
-        const height_input = self.body_height * diameter * 2 // 2 because diameter is in the middle of the section
+        const height_input = diameter
         const circ_pcs = self.cmToPcs(Math.PI * diameter)
         const height = self.cmToPcs(height_input, true)
         const body_dimensions = [circ_pcs, height]
@@ -214,7 +214,6 @@ const FigurineStore = types
                     curr_section.unshift([temp_dbottom,min_height])
                 }            
             }
-            console.log(height_diff, min_height_needed)
             self.tot_rows_head += Math.max(height_diff, min_height_needed)
             let excess_height = height_diff-min_height_needed
             while (excess_height>0){

@@ -5,14 +5,16 @@ import "../DrawingSection/drawingSection.css"
 const Sphere = (props) => {
     const {size, caption, formObject} = props 
     let object = <div></div>
-    let dimensions = []
-
-    function calc(){
-        return [[6,5],[8,5],[5,5]]
+    const spheres = {
+        small: [[4,2],[6,2],[8,5],[4,2]],
+        med: [[8,2],[10,2],[12,2],[16,4],[8,2],[4,2]],
+        big: [[16,2],[19,3],[23,2],[24,4],[16,3],[8,1],[4,2]]
     }
+    let dimensions = spheres.med
+    if (size == "small") dimensions = spheres.small
+    else if (size == "big") dimensions = spheres.big
+    else {console.log("med")}
 
-    // curved Sphere/lid for basket
-    dimensions = calc() // top to Sphere 
     object = <UntrackedOrigamiObject dimensions={dimensions} formObject={formObject} />
 
     return (

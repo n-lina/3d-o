@@ -128,11 +128,11 @@ function getCurvePointsNew(_pts, tension, numOfSegmentsArr) {
 const VaseStore = types
   .model("Vase", {
     cm: true,
-    dtop: 20, //20
+    dtop: 5, //20
     d3: 5, //10
-    d2: 31, //10
-    d1: 20, //35
-    dbottom: 32, //20 
+    d2: 5, //10
+    d1: 5, //35
+    dbottom: 50, //20 
     dtop_h: 100, 
     d3_h: 75, //90
     d2_h: 50, //70
@@ -141,7 +141,7 @@ const VaseStore = types
     height: 50,
     top_rim: false, 
     bottom_rim: false, //true
-    flat_bottom: false, //true
+    flat_bottom: true, //true
     scale_h: 36,
     default_color: "#FFFFFF",
     upsize: false, 

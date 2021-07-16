@@ -12,7 +12,7 @@ const BunnyOrHandle = (props) => {
 
     if (caption == "bunny ear"){
         // height has to be odd number to have the base bigger
-        object = <UntrackedDrawingSection bunny={true} open={true} specialTop={[]} specialBottom={[]} formObject={formObject} dimensions={[size,13]} />
+        object = <UntrackedDrawingSection bunny={true} open={true} specialTop={[]} specialBottom={[]} formObject={formObject} dimensions={[size,(2*size)+1]} />
     }
     else {
         sz = size*21

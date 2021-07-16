@@ -140,14 +140,14 @@ const SwanStore = types
         // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]
 
         // convert from in to cm first 
-        let diameter = self.diameter * self.bottom_scale
+        let diameter = self.diameter * 0.7 // to match figurine
 
         if (!self.cm) {
             const conv = 2.54
             diameter = Math.round(self.diameter * self.bottom_scale * conv)
         }
 
-        const height_input = 1.8 * diameter * self.height_scale // 1.8 is from the height of the swan model in swanBodyPts()
+        const height_input = diameter
 
         const circ_pcs = self.cmToPcs(Math.PI * diameter)
         const height = self.cmToPcs(height_input, true)
