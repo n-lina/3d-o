@@ -140,7 +140,7 @@ const SwanStore = types
         // modelDimensions: types.optional(types.array(types.array(types.number)), [[43, 10]]
 
         // convert from in to cm first 
-        let diameter = self.diameter * 0.7 // to match figurine
+        let diameter = self.diameter * self.bottom_scale 
 
         if (!self.cm) {
             const conv = 2.54

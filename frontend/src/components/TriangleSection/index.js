@@ -4,6 +4,7 @@ import "../DrawingSection/drawingSection.css";
 import UntrackedRow from "../UntrackedRow";
 import { observer } from "mobx-react";
 import "../DrawingSection/drawingSection.css"
+import SpecialRow from "../SpecialRow";
 
 // import { exportComponentAsPNG } from "react-component-export-image";
 
@@ -24,6 +25,9 @@ const TriangleSection = (props) => {
       else displayNum = false
     }
     rows.push(<UntrackedRow key={i} wing={wing} numPx={i+1} offset={var_offset} formObject={formObject} display={displayNum} inverted={inverted}/>);
+    if (!wing && i == width-1){
+      rows.push(<SpecialRow key={i+1} width={width} offset={var_offset} specialTop = {{}}/>)
+    }
   }
 
   return (

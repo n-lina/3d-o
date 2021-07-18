@@ -2,6 +2,8 @@ import React from "react";
 import "./specialRow.css";
 import SpecialPixel from "../SpecialPixel";
 
+// at least one of specialTop or specialBottom != null 
+
 export default function SpecialRow(props) {
   const { width, offset, specialTop, specialBottom } = props;
 
