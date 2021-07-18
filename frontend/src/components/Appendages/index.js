@@ -52,9 +52,9 @@ const Appendages = (props) => {
       const diameter = modelStore.cm? modelStore.diameter : modelStore.diameter * conv
       const ear_d = Math.ceil(diameter/ear_scale)
       if (modelStore.ears === "bear"){
-        sections.push(<Rim key={key} full={false} caption={"bear ear"} length={diameter/3} upsize={modelStore.upsize}/>)
+        sections.push(<Rim key={key} full={false} caption={"bear ear"} length={ear_d} upsize={modelStore.upsize}/>)
         key += 1
-        sections.push(<Rim key={key} full={false} caption={"bear ear"} length={diameter/3} upsize={modelStore.upsize}/>)
+        sections.push(<Rim key={key} full={false} caption={"bear ear"} length={ear_d} upsize={modelStore.upsize}/>)
         key += 1 
       }
       else if (modelStore.ears === "bunny"){
