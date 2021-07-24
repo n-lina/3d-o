@@ -99,39 +99,7 @@ const Colouring = () => {
   const absolute = modelStore.maxWidth > (width-200)/21 ? true : false 
 
   let myHeight = 10000
-  // const myYMargin = 20
-  // const px_y = 13
-  // const px_border = 1
-  // const marker_y = 20
-
-  // for (let i = 0; i < myDimensions.length; i++){
-  //   const y = myDimensions[i][1]
-  //   myHeight += (y * (px_y + px_border)) + (1.5*myYMargin) + (2*marker_y)
-  // }
-
-  // if (coloringFormStore.model === "swan"){
-  //   myHeight += (swanStore.modelDimensions[0][0] * 0.75 * (px_y + px_border) * 1.2)
-  //   myHeight += 600
-  // }
-
-  // else if (coloringFormStore.model === "fig"){
-  //   myHeight *= 2
-  // }
-
-  // if (modelStore.flat_bottom || coloringFormStore.model === "basket"){
-  //   myHeight *= 2
-  //   if(modelStore.lid){
-  //     myHeight *= 2
-  //   }
-  // }
-
-  // if ((modelStore.top_rim || modelStore.bottom_rim) && ! coloringFormStore.model === "swan"){
-  //   myHeight += 600
-  // }
-
-  // myHeight += coloringFormStore.counter.length * 55
-  // myHeight *= 2
-
+  
   const colorPicker = <div className = "color-picker-object">
       <p className = "label-big">pixel color</p>
       <div className = "color-picker-cover"

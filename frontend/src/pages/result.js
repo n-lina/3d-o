@@ -10,7 +10,6 @@ import './create-vase.css'
 import upperbanner from "../assets/upper-banner.png"
 import lowerbanner from "../assets/lower-banner.png"
 import { FiDownload } from "react-icons/fi";
-// import { exportComponentAsPNG } from "react-component-export-image";
 
 const Result = () => {
   const {coloringFormStore, vaseStore, swanStore, basketStore, figStore} = useStores()
@@ -59,8 +58,6 @@ const Result = () => {
     coloringFormStore.setMsg("error")
   }, [])
 
-  // const modelRef = useRef()  
-
   return (
     // <canvas ref={canvasRef}/> // to test texture generation
     <div className="container" style={{background: '#FFE7E5', display: 'flex', flexDirection:'row', width: 'auto', height: '600px'}}>
@@ -89,10 +86,6 @@ const Result = () => {
           onClick={() => coloringFormStore.saveDiagram()}> 
           <p className = "download-label"><span><FiDownload size={20}/></span> download 3d-o diagram <span><FiDownload size={20}/></span></p>
         </div>
-        {/* <div className = "done-button"
-          onClick={() => coloringFormStore.saveDiagram()}> 
-          <p className = "download-label"><span><FiDownload size={20}/></span> download 3d model <span><FiDownload size={20}/></span></p>
-        </div> */}
         <img alt={""} src={lowerbanner} className="banner-b"  />
       </div>
     </div>
