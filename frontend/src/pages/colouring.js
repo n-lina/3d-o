@@ -13,6 +13,7 @@ import { IoChevronForward, IoChevronBack } from "react-icons/io5";
 import { exportComponentAsPNG } from "react-component-export-image";
 import {useStores} from "../models/RootStoreContext"
 import DelayLink from 'react-delay-link';
+import {Link} from 'react-router-dom'
 import Appendages from "../components/Appendages";
 
 function getWindowDimensions() {
@@ -184,11 +185,29 @@ const Colouring = () => {
     exportComponentAsPNG(appendagesRef, {fileName: "3do-diagram-appendages"})
   }
 
+  let prevPageRoute = ""
+  switch(coloringFormStore.model){
+    case "vase": 
+      prevPageRoute = "/create-vase"
+      break;
+    case "swan": 
+      prevPageRoute = "/create-swan"
+      break;
+    case "fig":
+      prevPageRoute = "/create-fig"
+      break;
+    case "basket":
+      prevPageRoute = "/create-basket"
+      break;
+  }
+
   const backButton = 
   <div className = "back">
-    <div className = "nav" onClick={() => console.log("hi")}> 
-      <IoChevronBack size={25} style={{color: 'white'}}/>
-    </div>
+    <Link delay={0} to={prevPageRoute} replace={false}>
+      <div className = "nav"> 
+        <IoChevronBack size={25} style={{color: 'white'}}/>
+      </div>
+    </Link>
   </div>
 
 
