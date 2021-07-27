@@ -57,10 +57,12 @@ const Browse = () => {
       <div id="swan" className="holderTop">
         <p className="create-text">— swan —</p>
       </div>
+      <div style={{height: 160}}>
       <HashLink style={{color: "#D14240"}} to="/browse#top">
         <img src={straw} alt={""} className ="tabS"/>
         <p className="browse-tab" style={{width: 150, marginLeft: "calc(50% - 90px)"}}>• scroll to top •</p>
       </HashLink>
+      </div>
     </div>
   );
 };
