@@ -4,9 +4,7 @@ import basket from "../assets/basket.png"
 import swan from "../assets/swan.png"
 import fig from "../assets/fig.PNG"
 import straw from "../assets/strawberry-slider-big.png"
-import {
-  PlainLink
-} from '../components/Navbar/NavbarElements';
+import {PlainLink} from '../components/Navbar/NavbarElements';
 import "./create.css"
 import {useStores} from "../models/RootStoreContext"
 
@@ -23,9 +21,9 @@ const Create = () => {
   return (
     <div>
       <div className="holderTop">
-      <img src={straw} alt={""} className ="leftS"/>
-      <p className="create-text">select a model</p>
-      <img src={straw} alt={""} className ="rightS"/>
+        <img src={straw} alt={""} className ="leftS"/>
+        <p className="create-text">select a model</p>
+        <img src={straw} alt={""} className ="rightS"/>
       </div>
       <div 
         style={{
