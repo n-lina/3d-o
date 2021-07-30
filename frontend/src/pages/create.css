@@ -137,3 +137,44 @@
     transform: rotate(-45deg);
     margin-top: 10px;
   }
+
+  .browse-el-holder{
+    display: inline-block;
+    width: 95%;
+    border-radius: 70px;
+    background: pink;
+    height: auto; 
+    margin: 10px;
+  }
+
+ .browse_img {
+    width: 330px;
+    float: left;
+    height: 330px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 70px;
+  }
+
+  .browse_diag{
+    width: 400px;
+    height: 330px;
+    float: right; 
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 70px;
+  }
+
+  .browse_el_info{
+    width: calc(100% - 420px - 350px - 40px);
+    float: left;
+    justify-content: center;
+    align-items: center;
+    background: #D14240;
+    height: 330px;
+    margin: 20px;
+    border-radius: 50px;
+    color: white
+  }
