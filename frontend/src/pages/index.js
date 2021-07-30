@@ -42,7 +42,7 @@ const Home = () => {
         <Route path='/' component={Landing}/>
       </Switch>
     </div>
-    <p style={{marginBottom: 30, marginTop: 20, letterSpacing: 1.5, color: "#E33937", fontSize:13}}>lina nguyen 🍓 2021</p>
+    <p style={{marginBottom: 30, marginTop: 20, letterSpacing: 1.5, color: "#E33937", fontSize:13}}>Lina Nguyen 🍓 2021</p>
   </div>
   );
 };

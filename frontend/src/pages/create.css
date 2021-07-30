@@ -147,7 +147,7 @@
     margin: 10px;
   }
 
- .browse_img {
+ .browse-img {
     width: 330px;
     float: left;
     height: 330px;
@@ -157,7 +157,7 @@
     border-radius: 70px;
   }
 
-  .browse_diag{
+  .browse-diag{
     width: 400px;
     height: 330px;
     float: right; 
@@ -167,14 +167,105 @@
     border-radius: 70px;
   }
 
-  .browse_el_info{
+  .browse-el-info{
     width: calc(100% - 420px - 350px - 40px);
     float: left;
-    justify-content: center;
-    align-items: center;
     background: #D14240;
     height: 330px;
     margin: 20px;
     border-radius: 50px;
-    color: white
+    color: white;
+    position: relative;
   }
+
+  .browse-straw-num{
+    position: absolute;
+    left: 84px;
+    margin-top: -15px;
+    z-index: 3;
+    text-align: right;
+    width: 80px; 
+    height: 80px;
+    background: url('../assets/browse-straw-num.png');
+  }
+
+  .browse-straw-text{
+    font-size: 30px;
+    margin-top: 30px;
+    margin-left: 35px;
+    position: absolute;
+    z-index: 3;
+    color: white;
+    background: #D14240;
+    border-radius: 20px;
+  }
+
+  .browse-info{
+    width: 100%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin-top:-10px
+  }
+
+  .browse-el-text{
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: 20px;
+    margin-top: 35px;
+  }
+  
+  .browse-el-text span{
+    background: #FFD6D6;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 12px; 
+    padding-right: 12px;
+    color: red; 
+    border-radius: 30px;
+  }
+
+  .browse-done-button {
+    right: 175px;
+    width: 270px; 
+    height: 30px; 
+    border-radius: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-style:solid;
+    border-color:#D14240;
+    background: #D14240;  
+    margin-top: calc(185px - 15px);
+    position: absolute;
+  }
+
+  .browse-done-button:hover {
+    right: 173px;
+    width: 270px; 
+    height: 30px; 
+    border-radius: 40px;
+    padding-left: 14px;
+    padding-right: 14px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-style:solid;
+    border-color:#D14240;
+    background: #D14240;  
+    margin-top: calc(185px - 16px);
+    position: absolute;
+  }
+
+  .browse-download-label {
+    letter-spacing: 2px;
+    font-size: 15px;
+    color:white;
+    margin-top:4px;
+    /* margin-bottom:10px */
+  }
+
+

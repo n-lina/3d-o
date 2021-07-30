@@ -2,6 +2,7 @@ import React from 'react';
 import straw from "../assets/strawberry-slider-big.png"
 import "./create.css"
 import {HashLink} from 'react-router-hash-link';
+import { FiDownload } from "react-icons/fi";
 import b_hnd_med_12 from "../assets/browse/basket_hndl_med_12h.jpg"
 import b_lid_med_5 from "../assets/browse/basket_lid_med_5h.jpg"
 import b_lid_med_10 from "../assets/browse/basket_lid_med_10h.jpg"
@@ -61,16 +62,27 @@ const Browse = () => {
   const TODO_SZ = "1/32"
   const TODO_NUM = "1432"
 
-  function element(img, difficulty, hours){
-    return <div className="browse-el-holder">
-      <img className="browse_img" src={img} alt={""}/>
-      <div className="browse_el_info">
-        <p className="browse-el-text">difficulty: {difficulty}</p>
-        <p className="browse-el-text">time needed: {hours}</p>
-        <p className="browse-el-text">piece size: {TODO_SZ}</p>
-        <p className="browse-el-text">number of pieces: {TODO_NUM}</p>
+  function element(key, img, difficulty, hours){
+    return <div key={key} className="browse-el-holder">
+      <div className="browse-straw-num">
+        <div className="browse-straw-text">
+          {key+1}
+        </div>
       </div>
-      <img className="browse_diag" src={placeholder} alt={""}/>
+      <img className="browse-img" src={img} alt={""}/>
+      <div className="browse-el-info">
+        <div className="browse-info">
+          <p className="browse-el-text"> difficulty: <span>{difficulty}</span></p>
+          <p className="browse-el-text"> estimated time: <span>{hours} h</span></p>
+          <p className="browse-el-text"> piece size: <span>{TODO_SZ}</span></p>
+          <p className="browse-el-text"> # of pieces: <span>{TODO_NUM}</span></p>
+        </div>
+      </div>
+      <img className="browse-diag" src={placeholder} alt={""}/>
+      <div className = "browse-done-button"
+          onClick={() => console.log("hello")}> 
+          <p className = "browse-download-label"><span><FiDownload size={17}/></span> download 3d-o diagram <span><FiDownload size={17}/></span></p>
+      </div>
     </div>
   }
 
@@ -109,18 +121,27 @@ const Browse = () => {
       <div id="figurine" className="holderTop">
         <p className="create-text">— figurine —</p>
       </div>
+      {figs.map((entry, i) => (
+        element(i, entry[0], entry[1], entry[2])
+      ))}
       <div id="vase" className="holderTop">
         <p className="create-text">— vase —</p>
       </div>
+      {vases.map((entry, i) => (
+        element(i, entry[0], entry[1], entry[2])
+      ))}
       <div id="basket" className="holderTop">
         <p className="create-text">— basket —</p>
       </div>
       {baskets.map((entry, i) => (
-        element(entry[0], entry[1], entry[2])
+        element(i, entry[0], entry[1], entry[2])
       ))}
       <div id="swan" className="holderTop">
         <p className="create-text">— swan —</p>
       </div>
+      {swans.map((entry, i) => (
+        element(i, entry[0], entry[1], entry[2])
+      ))}
       <div style={{height: 160}}>
       <HashLink style={{color: "#D14240"}} to="/browse#top">
         <img src={straw} alt={""} className ="tabS"/>
