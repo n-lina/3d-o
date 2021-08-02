@@ -23,7 +23,6 @@
   text-align: center;
 }
 
-
 /* .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -39,11 +38,33 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bottom-name {
+  margin-bottom: 30px;
+  margin-top: 10px;
+  letter-spacing: 1.5px; 
+  color: #E33937;
+  font-size:13px
+}
+
+.generated-count{
+  margin-bottom: 10px;
+  margin-top: 20px;
+  letter-spacing: 1.5px; 
+  color: #E33937;
+  font-size:13px
+}
+
+.generated-count span{
+  margin-bottom: 10px;
+  margin-top: 20px;
+  letter-spacing: 1.5px; 
+  color: #E33937;
+  font-size:13px; 
+  background: pink;
+  padding-left: 5px; 
+  padding-right: 4px;
+  padding-top: 4px; 
+  padding-bottom: 4px;
+  margin-right: 2px;
+  border-radius: 30px; 
 }

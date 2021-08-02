@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Navbar from '../components/Navbar';
 import Landing from './landing';
 import About from './about';
@@ -15,10 +15,23 @@ import CreateFigurine from "./create-figurine"
 import Result from "./result"
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useStores } from "../models/RootStoreContext"
+import '../App.css'
+import { firestore } from '../firebase';
 
 const Home = () => {
 
   const {coloringFormStore} = useStores();
+  const [diagram_num, set_diagram_num] = useState("");
+
+  const docRef = firestore.collection("diagrams_count").doc("count")
+
+  docRef.get().then((doc) => {
+    // Document was found in the cache. If no cached document exists,
+    // an error will be returned to the 'catch' block below.
+    set_diagram_num(doc.data().count_value)
+  }).catch((error) => {
+    console.log("Error getting cached document:", error);
+  });
 
   return (
   <div className="Background">
@@ -42,7 +55,8 @@ const Home = () => {
         <Route path='/' component={Landing}/>
       </Switch>
     </div>
-    <p style={{marginBottom: 30, marginTop: 20, letterSpacing: 1.5, color: "#E33937", fontSize:13}}>Lina Nguyen 🍓 2021</p>
+    <p className="generated-count"><span>{diagram_num}</span> 3d-o diagram{diagram_num == 1?"":"s"} generated to date ...</p>
+    <p className="bottom-name">Lina Nguyen 🍓 2021</p>
   </div>
   );
 };

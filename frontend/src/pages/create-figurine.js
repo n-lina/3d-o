@@ -10,7 +10,8 @@ import { Slider, Rail, Handles} from "react-compound-slider";
 import SwitchSelector from "react-switch-selector";
 import { observer } from "mobx-react";
 import { useStores } from "../models/RootStoreContext"
-
+import firebase from 'firebase/app'
+import { firestore } from "../firebase"
 
 const CreateFigurine = () => {
 
@@ -179,6 +180,8 @@ const ears_switch = <div className="switch"  style={{width: 360, height: 50}}>
 function nextPage(){
   coloringFormStore.setMsg()
   figStore.setSize()
+  const incremented_val = firebase.firestore.FieldValue.increment(1)
+  firestore.collection("diagrams_count").doc("count").update({count_value: incremented_val})
 }
 
   return (

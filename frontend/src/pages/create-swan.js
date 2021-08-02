@@ -10,7 +10,8 @@ import { Slider, Rail, Handles} from "react-compound-slider";
 import SwitchSelector from "react-switch-selector";
 import { observer } from "mobx-react";
 import { useStores } from "../models/RootStoreContext"
-
+import firebase from 'firebase/app'
+import { firestore } from "../firebase"
 
 const CreateSwan = () => {
 
@@ -166,6 +167,8 @@ const wings_switch = <div className="switch"  style={{width: 100, height: 50}}>
 function nextPage(){
   coloringFormStore.setMsg()
   swanStore.setSize()
+  const incremented_val = firebase.firestore.FieldValue.increment(1)
+  firestore.collection("diagrams_count").doc("count").update({count_value: incremented_val})
 }
 
   return (
