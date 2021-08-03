@@ -1,5 +1,6 @@
 import React from 'react';
 import "./create.css"
+import "./static.css"
 import logo from "../assets/transparent.png"
 
 const Landing = () => {

@@ -59,13 +59,18 @@ const Browse = () => {
   [v_hard_25, "hard", 25], 
   [v_top_bot_rim_hard_40, "hard", 40]]
 
+  const len_swans = swans.length
+  const len_figs = figs.length
+  const len_baskets = baskets.length
+  const len_vases = vases.length
+
   const TODO_SZ = "1/32"
   const TODO_NUM = "1432"
 
   function element(key, img, difficulty, hours){
     return <div key={key} className="browse-el-holder">
       <div className="browse-straw-num">
-        <div className="browse-straw-text">
+        <div className="browse-straw-text" style={{marginLeft: key+1 >= 10? 25:35}}>
           {key+1}
         </div>
       </div>
@@ -128,19 +133,19 @@ const Browse = () => {
         <p className="create-text">— vase —</p>
       </div>
       {vases.map((entry, i) => (
-        element(i, entry[0], entry[1], entry[2])
+        element(len_figs + i, entry[0], entry[1], entry[2])
       ))}
       <div id="basket" className="holderTop">
         <p className="create-text">— basket —</p>
       </div>
       {baskets.map((entry, i) => (
-        element(i, entry[0], entry[1], entry[2])
+        element(len_figs + len_vases + i, entry[0], entry[1], entry[2])
       ))}
       <div id="swan" className="holderTop">
         <p className="create-text">— swan —</p>
       </div>
       {swans.map((entry, i) => (
-        element(i, entry[0], entry[1], entry[2])
+        element(len_figs + len_vases + len_baskets + i, entry[0], entry[1], entry[2])
       ))}
       <div style={{height: 160}}>
       <HashLink style={{color: "#D14240"}} to="/browse#top">
