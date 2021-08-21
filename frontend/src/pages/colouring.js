@@ -162,7 +162,7 @@ const Colouring = () => {
       prevPageRoute = "/create-swan"
       break;
     case "fig":
-      prevPageRoute = "/create-fig"
+      prevPageRoute = "/create-figurine"
       break;
     case "basket":
       prevPageRoute = "/create-basket"
