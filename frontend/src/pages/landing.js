@@ -29,7 +29,7 @@ const Landing = () => {
   return (
     <div className="landing-container">
       {heading("3d-origami", true, false)}
-      {paragraph("3d origami is the art of assembling hundreds to thousands of triangular paper units into intricate structures. As computational as it is artistic, 3d-origami design can involve much calculation and planning. Both an intellectual challenge and an artistic challenge; an exercise for the mind as well as the hands; 3d-origami is a stimulating and accessible art form enjoyable for all age groups.")}
+      {paragraph("3d origami is the art of assembling hundreds to thousands of triangular paper units into intricate structures. Computational as it is artistic, 3d-origami design can involve much calculation and planning. Both an intellectual challenge and an artistic challenge; an exercise for the mind as well as the hands; 3d-origami is an engaging and accessible art form enjoyable for all age groups.")}
       {heading("3d-o", false, true)}
       {paragraph("3d-o is a web application that generates comprehensive and easy-to-follow 3d-origami diagrams. Initially developed to combat rising COVID19 case counts amidst the 2020 global pandemic, 3d-o automates 3d-origami design and promotes social distancing by engaging users in a fun, indoor activity. 3d-o is also the first of its kind — a pioneer in the space of 3d-origami, and art, automation.")}
       {heading("the founder", true, false)}
