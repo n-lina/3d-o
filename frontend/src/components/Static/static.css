@@ -65,11 +65,6 @@
     line-height: 21px;
 }
 
-.bullet{
-    /* background: purple; */
-    text-align: right;
-}
-
 .bg-straw{
     width: 380px;
     height: 380px;
@@ -83,6 +78,26 @@
     width: 380px;
     height: 380px;
     opacity: 0.2;
+    position: absolute; 
+    bottom: 110px;
+    left: 15px;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.diag{
+    width: 770px;
+    height: 500px;
+    opacity: 0.1;
+    position: absolute; 
+    top: -20x;
+    right: 15px;
+}
+
+.diag-bottom{
+    width: 770px;
+    height: 500px;
+    opacity: 0.1;
     position: absolute; 
     bottom: 110px;
     left: 15px;

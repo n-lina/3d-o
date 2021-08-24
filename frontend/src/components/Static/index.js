@@ -2,11 +2,13 @@
 import React from 'react';
 import "./static.css"
 import logo from "../../assets/transparent.png"
-import straw from "../../assets/strawberry-slider-big.png"
 
 const Heading = (props) => {
   const {text, left, right_align} = props;
-  const width = Math.min(Math.max(300, Math.round(text.length) * 40), 600)
+  let width = Math.max(300, Math.round(text.length) * 40)
+  if (width >= 1000){
+      width = "100%"
+  }
   let logo_left = 0
   let logo_right = "auto"
   let underline_left = 8
@@ -50,23 +52,43 @@ const Paragraph = (props) => {
 
 const Bullet = (props) => {
     const {bottom, left, boldtext, text} = props;
-    let margin_left = 70
+    let margin_left = 110
     let margin_right = 30
     let bottom_margin = 10
+    let text_align = "left"
+    if (!left){
+        margin_right = 70
+        margin_left = 30
+        text_align = "right"
+    }
+    if (bottom){
+        bottom_margin = 20
+    }
+    return <div className="bullet" style={{textAlign: text_align}}>
+        {boldtext && <p className="paragraph" style={{display: "inline-block", width: left? "auto" : "80%", marginTop: 15, marginLeft: margin_left, marginRight: margin_right, marginBottom: bottom_margin}}>🍓 <span style={{fontWeight: 'bold'}}>{boldtext}:</span> {text}</p>}
+    </div>
+}
+
+const NumberBullet = (props) => {
+    const {num, left, text} = props;
+    let text_align = "left"
+    if (!left){
+        text_align = "right"
+    }
+    let margin_left = 70
+    let margin_right = 30
     if (!left){
         margin_right = 70
         margin_left = 30
     }
-    if (bottom){
-        bottom_margin = 40
-    }
-    return <div className="bullet">
-        {boldtext && <p className="paragraph" style={{display: "inline-block", width: "80%", marginTop: 15, marginLeft: margin_left, marginRight: margin_right, marginBottom: bottom_margin}}>🍓 <span style={{fontWeight: 'bold'}}>{boldtext}:</span> {text}</p>}
+    return <div className="bullet" style={{textAlign: text_align, margin: 0}}>
+    <p className="paragraph" style={{display: "inline-block", marginTop: 30, marginBottom: 0, marginLeft: margin_left, marginRight: margin_right}}>{num}. {text}</p>
     </div>
 }
 
 export {
     Heading,
     Paragraph, 
-    Bullet
+    Bullet, 
+    NumberBullet
 }
