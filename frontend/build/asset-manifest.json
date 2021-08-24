@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.c42a7466.chunk.css",
-    "main.js": "/static/js/main.5e6a353b.chunk.js",
-    "main.js.map": "/static/js/main.5e6a353b.chunk.js.map",
+    "main.css": "/static/css/main.ff725abe.chunk.css",
+    "main.js": "/static/js/main.4ac69043.chunk.js",
+    "main.js.map": "/static/js/main.4ac69043.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c60b7f5c.js",
     "runtime-main.js.map": "/static/js/runtime-main.c60b7f5c.js.map",
     "static/js/2.4165ff68.chunk.js": "/static/js/2.4165ff68.chunk.js",
     "static/js/2.4165ff68.chunk.js.map": "/static/js/2.4165ff68.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.c42a7466.chunk.css.map": "/static/css/main.c42a7466.chunk.css.map",
+    "static/css/main.ff725abe.chunk.css.map": "/static/css/main.ff725abe.chunk.css.map",
     "static/js/2.4165ff68.chunk.js.LICENSE.txt": "/static/js/2.4165ff68.chunk.js.LICENSE.txt",
     "static/media/basket.6d6869d7.png": "/static/media/basket.6d6869d7.png",
     "static/media/basket_hndl_med_12h.430dd9d3.jpg": "/static/media/basket_hndl_med_12h.430dd9d3.jpg",
@@ -47,7 +47,7 @@
   "entrypoints": [
     "static/js/runtime-main.c60b7f5c.js",
     "static/js/2.4165ff68.chunk.js",
-    "static/css/main.c42a7466.chunk.css",
-    "static/js/main.5e6a353b.chunk.js"
+    "static/css/main.ff725abe.chunk.css",
+    "static/js/main.4ac69043.chunk.js"
   ]
 }
