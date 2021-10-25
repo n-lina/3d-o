@@ -156,14 +156,14 @@ const About = () => {
           <img
             src={downloadbutton}
             alt=""
-            style={{ width: 496, marginLeft: 30 }}
+            style={{ width: 495, marginLeft: 30, marginTop: -11 }}
           ></img>
         }
         right={
           <Paragraph
             bottom={true}
             left={false}
-            text="Download your diagram using the button on the right."
+            text="Download your diagram using the 'download' button."
           />
         }
       />
