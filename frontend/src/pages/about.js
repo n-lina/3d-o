@@ -169,7 +169,7 @@ const About = () => {
       />
 
       <NumberBullet left={true} num={5} text="start folding!" />
-      <div style={{ height: 30 }} />
+      <div className="bottom-padding" />
     </div>
   );
 };

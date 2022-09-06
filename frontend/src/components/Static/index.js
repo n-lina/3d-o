@@ -107,8 +107,9 @@ const Bullet = (props) => {
 
 const NumberBullet = (props) => {
   const { num, left, text } = props;
-  let width = Math.max(200, Math.round(text.length) * 30);
-  console.log(width);
+  let factor = num ? 30 : 45;
+  let length = text.length <= 8 ? text.length + 2 : text.length;
+  let width = Math.max(200, Math.round(length) * factor);
   let text_align = "left";
   if (!left) {
     text_align = "right";
@@ -135,7 +136,7 @@ const NumberBullet = (props) => {
           marginRight: margin_right,
         }}
       >
-        {num}. {text}
+        {num ? num + "." : "🍓 ' . ` "} {text} {num ? "" : " ` . ' 🍓"}
       </p>
       <div
         className="num-bullet-bg"
