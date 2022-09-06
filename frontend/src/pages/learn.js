@@ -26,7 +26,7 @@ const Learn = () => {
         bottom={true}
         left={true}
         text={
-          "3d-origami pieces usually come in two different sizes: 1/32 and 1/16. These fractions indicate how many pieces pieces can be cut from an 8.5 x 11 inch piece of US letter paper (A4 paper works too!). If you are using a different size of paper, cut the larger paper into 8.5 x 11 inch (or 8.5 x 4.5 inch) pieces before starting. "
+          "3d-origami pieces usually come in two different sizes: 1/32 and 1/16. These fractions indicate how many pieces can be cut from an 8.5 x 11 inch piece of US letter paper (A4 paper works too!). If you are using a different size of paper, cut the larger paper into 8.5 x 11 inch pieces before starting. "
         }
       />
       <NumberBullet left={false} num={false} text="paper" />
@@ -34,7 +34,7 @@ const Learn = () => {
         bottom={true}
         left={false}
         text={
-          "Because not all colors come in standard letter paper or A4 sizes, sometimes other types of paper need to be used. Cardstock, poster board, or other thicker papers can be used as well, but I recommend that you make pieces half the length when using these papers. In other words, skip the first step of folding your piece in half when folding and start directly at Step 3 in the diagram above! "
+          "Because not all colors come in standard letter paper or A4 sizes, sometimes other types of paper need to be used. Cardstock, poster board, or other thicker papers can be used as well, but I recommend making pieces the length when using these papers. In other words, skip the first step of folding your piece in half when folding and start directly at Step 3 in the diagram above! "
         }
       />
       <NumberBullet left={true} num={false} text="inversion" />
