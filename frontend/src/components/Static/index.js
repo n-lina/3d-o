@@ -161,4 +161,31 @@ const SideBySide = (props) => {
   );
 };
 
-export { Heading, Paragraph, Bullet, NumberBullet, SideBySide };
+const CaptionPicture = (props) => {
+  const { pic, caption, img_height, img_width, fig_num } = props;
+
+  return (
+    <div>
+      {pic ? (
+        <img
+          src={pic}
+          alt=""
+          style={{
+            width: img_width ? img_width : "auto",
+            height: img_height ? img_height : "auto",
+            marginTop: 20,
+            marginBottom: 0,
+            borderRadius: 20,
+          }}
+        ></img>
+      ) : (
+        <div />
+      )}
+      <p className="caption">
+        <a style={{ fontWeight: "bold" }}>Figure {fig_num}</a>. {caption}
+      </p>
+    </div>
+  );
+};
+
+export { Heading, Paragraph, Bullet, NumberBullet, SideBySide, CaptionPicture };
