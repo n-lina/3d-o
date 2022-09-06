@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+.eslintcache
+package-lock.json
 
 # testing
 /coverage
