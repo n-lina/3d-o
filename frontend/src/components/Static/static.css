@@ -1,7 +1,6 @@
 .landing-container {
-  margin-left: 30px;
+  margin-left: 50px;
   margin-right: 50px;
-  margin-top: 85px;
   margin-bottom: 0px;
   position: relative;
 }
@@ -13,6 +12,7 @@
 .heading {
   position: relative;
   margin: 20px;
+  margin-top: 85px;
 }
 
 .heading-left {

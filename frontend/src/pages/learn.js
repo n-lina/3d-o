@@ -11,7 +11,13 @@ import pc_pic from "../assets/pc_real.jpg";
 import stacking_pic from "../assets/stacking.png"
 import base_pic from "../assets/base.png"
 import base_real_pic from "../assets/base_real.jpg"
-
+import diag_pic from "../assets/3do-diagram.png"
+import appendages_pic from "../assets/appendages.png"
+import overview_pic from "../assets/top.png"
+import rows_pic from "../assets/body.PNG"
+import increasing_diag_pic from "../assets/increasing_diag.png"
+import decreasing_diag_pic from "../assets/decreasing_diag.png"
+import ring_pic from "../assets/ring_pic.jpg"
 
 import {
   Heading,
@@ -24,7 +30,7 @@ import {
 const Learn = () => {
   return (
     <div className="landing-container">
-      <Heading text={"learn 3d-origami"} left={false} right_align={false} />
+      <Heading text={"learn 3d-origami"} left={true} right_align={false} />
       <NumberBullet num={false} left={false} text={"the unit piece"} />
       <Paragraph
         bottom={true}
@@ -137,6 +143,45 @@ const Learn = () => {
           "While 3d-o diagrams will give you your desired shape, you can mold your structure to perfection and guide its progress with your hands and fingers as you build as well. "
         }
       />
+      <Heading text={"reading 3d-o diagrams"} left={false} right_align={true} />
+      <NumberBullet num={false} left={true} text={"overview"} />
+      <Paragraph
+        bottom={true}
+        left={true}
+        text={
+          "3d-o diagrams contain all the information you need to build your 3d-origami project. At the top of the diagram, there is a count of how many pieces you will need, and in which colors. The recommended piece size is also specified here."}
+      />
+      <CaptionPicture pic={overview_pic} img_width={900} caption={"In this diagram, for example, 80 red, 1/32-sized pieces are needed, requiring 3 pieces of 8.5 x 11'' red paper."} fig_num={12} />
+      <Paragraph
+        bottom={true}
+        left={true}
+        text={
+          "3d-o diagrams also display row and piece numbers. The row number is shown immediately before and after the row, while piece numbers are shown at the top and bottoms of the sections. It is unimportant which piece in the row is designated number '1.' However, from the beginning, designate and mark one piece and stick with it."} />
+      <CaptionPicture pic={rows_pic} img_width={900} caption={"Row and piece numbers."} fig_num={13} />
+      <NumberBullet num={false} left={false} text={"inverted pieces"} />
+      <Paragraph
+        bottom={true}
+        left={false}
+        text={
+          "Inverted pieces are marked with a '⁠—'. In Figure 2., the wing of the swan consists of inverted pieces while the body consists of non-inverted pieces."}
+      />
+      <CaptionPicture pic={diag_pic} img_width={900} caption={"One-wing swans require both non-inverted and inverted pieces. The inverted pieces are marked."} fig_num={14} />
+      <NumberBullet num={false} left={true} text={"increasing + decreasing"} />
+      <Paragraph
+        bottom={true}
+        left={true}
+        text={
+          "3d-origami diagrams are read from bottom to top. Moving from a narrower section up to a wider section requires increasing. Moving from wide to narrow requires decreasing."} />
+      <CaptionPicture pic={increasing_diag_pic} img_width={1000} caption={"Increasing: "} fig_num={15} />
+      <CaptionPicture pic={decreasing_diag_pic} img_width={1000} caption={"Decreasing: "} fig_num={16} />
+      <NumberBullet num={false} left={false} text={"appendages"} />
+      <Paragraph
+        bottom={true}
+        left={false}
+        text={
+          "Depending on what parameters you select while designing your project, there may be additional diagrams for appendages. These appendage pieces are to be built seperate from the main body and glued on afterwards. Appendages include animal ears, lids, bottoms, wings, handles, and more.  "} />
+      <CaptionPicture pic={appendages_pic} img_width={1000} caption={"Appendages for a basket project, to be built sepearetly and attached afterwards."} fig_num={17} />
+      <CaptionPicture pic={ring_pic} img_width={500} caption={"The top and bottom rims shown in Figure 17 should look like this when completed."} fig_num={18} />
       <div className="bottom-padding" />
     </div>
   );
