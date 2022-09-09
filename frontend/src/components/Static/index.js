@@ -109,7 +109,7 @@ const NumberBullet = (props) => {
   const { num, left, text } = props;
   let factor = num ? 30 : 45;
   let length = text.length <= 8 ? text.length + 2 : text.length;
-  let width = Math.max(200, Math.round(length) * factor);
+  let width = Math.min(900, Math.max(200, Math.round(length) * factor));
   let text_align = "left";
   if (!left) {
     text_align = "right";

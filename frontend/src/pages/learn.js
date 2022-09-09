@@ -24,9 +24,9 @@ const Learn = () => {
       <Paragraph
         bottom={true}
         left={false}
-        text={"3d-origami begins with the unit piece."}
+        text={"3d-origami begins with the unit piece. The 3d-origami unit piece is triangular with two pockets. Pieces stack on top of each other using these pockets."}
       />
-      <CaptionPicture pic={unit_pic} caption={"testing"} fig_num={1} />
+      <CaptionPicture pic={unit_pic} caption={"How to fold the 3d-origami unit piece."} fig_num={1} />
       <NumberBullet left={true} num={false} text="sizing" />
       <Paragraph
         bottom={true}
@@ -53,33 +53,48 @@ const Learn = () => {
         }
       />
       <CaptionPicture pic={inverted_pic} caption={"testing"} fig_num={3} />
-      {/* <div style={{ background: "#ff0000" }}>
-        <SideBySide
-          left={
-            <img
-              style={{
-                height: 300,
-                width: 300,
-                borderRadius: 20,
-              }}
-              src={inverted_real_front_pic}
-              alt={""}
-            />
-          }
-          right={
-            <img
-              style={{
-                height: 300,
-                width: 300,
-                marginLeft: 100,
-                borderRadius: 20,
-              }}
-              src={inverted_real_pic}
-              alt={""}
-            />
-          }
-        />
-      </div> */}
+      <SideBySide
+        left={
+          <img
+            style={{
+              height: 350,
+              width: 350,
+              borderRadius: 20,
+            }}
+            src={inverted_real_front_pic}
+            alt={""}
+          />
+        }
+        right={
+          <img
+            style={{
+              height: 350,
+              width: 350,
+              marginLeft: 100,
+              borderRadius: 20,
+            }}
+            src={inverted_real_pic}
+            alt={""}
+          />
+        }
+      />
+      <CaptionPicture pic={false} caption={"testing"} fig_num={3} />
+      <NumberBullet left={false} num={false} text="putting pieces together" />
+      <Paragraph
+        bottom={true}
+        left={false}
+        text={
+          "Increasing is the technique of adding more pieces to a row to increase the circumference. In increasing, 2 pieces in one row become 3 pieces in the next row. This is achieved by putting two unit pieces where you would normally put one. Pretend there is an invisible piece between the two pieces involved in the increasing. Optionally, you can also add a small piece between the two pieces in place of the invisible piece! "
+        }
+      />
+      <NumberBullet left={true} num={false} text="building the base" />
+      <Paragraph
+        bottom={true}
+        left={true}
+        text={
+          "Increasing is the technique of adding more pieces to a row to increase the circumference. In increasing, 2 pieces in one row become 3 pieces in the next row. This is achieved by putting two unit pieces where you would normally put one. Pretend there is an invisible piece between the two pieces involved in the increasing. Optionally, you can also add a small piece between the two pieces in place of the invisible piece! "
+        }
+      />
       <NumberBullet left={false} num={false} text="increasing" />
       <Paragraph
         bottom={true}
@@ -94,7 +109,7 @@ const Learn = () => {
         bottom={true}
         left={true}
         text={
-          "Decreasing is the technique of removing pieces from a row to decrease the circumference. Decreasing slowly and properly makes structures stronger as curved surfaces are stronger than straight ones. In decreasing, 3 pieces become 2 pieces in the next row. This is achieved by putting two pieces where you would normally put three. In decreasing, two ''spikes'' go into one pocket."
+          "Decreasing is the technique of removing pieces from a row to decrease the circumference. Decreasing slowly and properly makes structures stronger as curved surfaces are stronger than straight ones. In decreasing, 3 pieces become 2 pieces in the next row. This is achieved by putting two pieces where you would normally put three. In decreasing, two legs go into one pocket."
         }
       />
       <CaptionPicture pic={decreasing_pic} caption={"testing"} fig_num={5} />

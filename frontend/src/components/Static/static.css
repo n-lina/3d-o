@@ -71,15 +71,17 @@
   position: relative;
 }
 
-.caption{
-  margin-left: 70px;
-  margin-right: 30px;
+.caption {
+  margin-left: 200px;
+  margin-right: 200px;
   letter-spacing: 2px;
   color: #dc0a0a;
   font-size: 14px;
   line-height: 24px;
   font-style: italic;
   opacity: 0.7;
+  margin-bottom: 40px;
+  margin-top: 20px;
 }
 
 .bg-straw {
@@ -124,6 +126,7 @@
 
 .sidebyside {
   display: flex;
+  justify-content: center;
 }
 
 .num-bullet-bg {
