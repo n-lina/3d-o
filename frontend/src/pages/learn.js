@@ -7,6 +7,11 @@ import inverted_real_front_pic from "../assets/inverted_real_front.PNG";
 import increasing_pic from "../assets/increasing.png";
 import filling_pic from "../assets/filling.png";
 import decreasing_pic from "../assets/decreasing.png";
+import pc_pic from "../assets/pc_real.jpg";
+import stacking_pic from "../assets/stacking.png"
+import base_pic from "../assets/base.png"
+import base_real_pic from "../assets/base_real.jpg"
+
 
 import {
   Heading,
@@ -27,21 +32,22 @@ const Learn = () => {
         text={"3d-origami begins with the unit piece. The 3d-origami unit piece is triangular with two pockets. Pieces stack on top of each other using these pockets."}
       />
       <CaptionPicture pic={unit_pic} caption={"How to fold the 3d-origami unit piece."} fig_num={1} />
+      <CaptionPicture pic={pc_pic} img_height={300} img_width={400} caption={"This is what your pieces should look like. Each piece has two pockets, formed by the two legs."} fig_num={2} />
       <NumberBullet left={true} num={false} text="sizing" />
       <Paragraph
         bottom={true}
         left={true}
         text={
-          "3d-origami pieces usually come in two different sizes: 1/32 and 1/16. These fractions indicate how many pieces can be cut from an 8.5 x 11 inch piece of US letter paper (A4 paper works too!). If you are using a different size of paper, cut the larger paper into 8.5 x 11 inch pieces before starting. "
+          "3d-origami pieces usually come in two different sizes: 1/32 and 1/16. 32 1/32-sized pieces can be cut from one 8.5 x 11 inch piece of paper while 16 1/16-sized pieces can be cut. Accordingly, 1/16-sized pieces are twice the size of 1/32-sized pieces. When using larger papers, cut the larger paper into 8.5 x 11 inch pieces before starting. 1/32-sized pieces are the default size; They are used in small, medium, and detailed works. 1/16-sized pieces are used for large or undetailed works."
         }
       />
-      <CaptionPicture pic={sizing_pic} caption={"testing"} fig_num={2} />
+      <CaptionPicture pic={sizing_pic} caption={"1/32 pieces are smaller than 1/16 pieces and are used for small-to-medium-sized and detailed 3d-origami works."} fig_num={3} />
       <NumberBullet left={false} num={false} text="paper" />
       <Paragraph
         bottom={true}
         left={false}
         text={
-          "Because not all colors come in standard letter paper or A4 sizes, sometimes other types of paper need to be used. Cardstock, poster board, or other thicker papers can be used as well, but I recommend making pieces the length when using these papers. In other words, skip the first step of folding your piece in half when folding and start directly at Step 3 in the diagram above! "
+          "Usually, regular copy paper (75gsm) is used. Cardstock, poster, and other thicker papers can also be used when copy paper is not available. When using such papers, cut the pieces to be half the length as usual. In other words, skip the first step of folding your piece in half when folding and start directly at Step 3 in Figure 1! "
         }
       />
       <NumberBullet left={true} num={false} text="inversion" />
@@ -52,7 +58,7 @@ const Learn = () => {
           "Inversion is when the inside of the 3d-origami piece is facing outwards instead of inwards. Inversion is commonly used when building vases, baskets, and one-winged swans. Inverted pieces can be used to add interest and detailing to a project or to make the project more structurally sound. As a rule of thumb, 3d-o recommends using inverted pieces when your vase or basket is decreasing in circumference starting from the bottom. This is reflected in 3d-o's diagrams!"
         }
       />
-      <CaptionPicture pic={inverted_pic} caption={"testing"} fig_num={3} />
+      <CaptionPicture pic={inverted_pic} caption={"Inverted pieces have the inside facing outwards instead of inwards."} fig_num={4} />
       <SideBySide
         left={
           <img
@@ -78,42 +84,43 @@ const Learn = () => {
           />
         }
       />
-      <CaptionPicture pic={false} caption={"testing"} fig_num={3} />
+      <CaptionPicture pic={false} caption={"On the left, the swan's chest and bottom are made with non-inverted pieces. On the right, the swan's wing is built with inverted pieces. Notice the difference in outward appearance!"} fig_num={5} />
       <NumberBullet left={false} num={false} text="putting pieces together" />
       <Paragraph
         bottom={true}
         left={false}
         text={
-          "Increasing is the technique of adding more pieces to a row to increase the circumference. In increasing, 2 pieces in one row become 3 pieces in the next row. This is achieved by putting two unit pieces where you would normally put one. Pretend there is an invisible piece between the two pieces involved in the increasing. Optionally, you can also add a small piece between the two pieces in place of the invisible piece! "
-        }
+          "Pieces stack atop of each other in a brick-wall-like pattern. The legs of the units in one row fit neatly into the pockets of the pieces in the next."}
       />
+      <CaptionPicture pic={stacking_pic} caption={"3d-origami pieces fit together like bricks in a brick wall. "} fig_num={6} />
       <NumberBullet left={true} num={false} text="building the base" />
       <Paragraph
         bottom={true}
         left={true}
         text={
-          "Increasing is the technique of adding more pieces to a row to increase the circumference. In increasing, 2 pieces in one row become 3 pieces in the next row. This is achieved by putting two unit pieces where you would normally put one. Pretend there is an invisible piece between the two pieces involved in the increasing. Optionally, you can also add a small piece between the two pieces in place of the invisible piece! "
-        }
+          "3d-origami projects begin with a circular base of two rows upon which rows are added."}
       />
+      <CaptionPicture pic={base_pic} caption={"How to build the base. The structure will become stronger as more rows are added."} fig_num={7} />
+      <CaptionPicture pic={base_real_pic} img_height={300} img_width={500} caption={"This is what your base should look like. The base on the left has six pieces while the one on the right has twenty-one. In the bases shown above, the pieces are non-inverted."} fig_num={8} />
       <NumberBullet left={false} num={false} text="increasing" />
       <Paragraph
         bottom={true}
         left={false}
         text={
-          "Increasing is the technique of adding more pieces to a row to increase the circumference. In increasing, 2 pieces in one row become 3 pieces in the next row. This is achieved by putting two unit pieces where you would normally put one. Pretend there is an invisible piece between the two pieces involved in the increasing. Optionally, you can also add a small piece between the two pieces in place of the invisible piece! "
+          "Increasing is the technique of adding more pieces to a row to increase the circumference. In increasing, two pieces in one row become three pieces in the next row. This is achieved by putting two unit pieces where you would normally put one. Pretend there is an invisible piece between the two pieces involved in the increasing. Optionally, you can also add a small piece between the two pieces in place of the invisible piece! "
         }
       />
-      <CaptionPicture pic={increasing_pic} caption={"testing"} fig_num={4} />
+      <CaptionPicture pic={increasing_pic} caption={"Increasing is stacking three pieces in place of two. Increasing is used to increase the piece count and thus the circumference of later rows."} fig_num={9} />
       <NumberBullet left={true} num={false} text="decreasing" />
       <Paragraph
         bottom={true}
         left={true}
         text={
-          "Decreasing is the technique of removing pieces from a row to decrease the circumference. Decreasing slowly and properly makes structures stronger as curved surfaces are stronger than straight ones. In decreasing, 3 pieces become 2 pieces in the next row. This is achieved by putting two pieces where you would normally put three. In decreasing, two legs go into one pocket."
+          "Decreasing is the technique of removing pieces from a row to decrease the circumference. Decreasing slowly and properly makes structures stronger as curved surfaces are stronger than straight ones. In decreasing, three pieces become two pieces in the next row. This is achieved by putting two pieces where there would normally be three. In decreasing, two legs go into one pocket."
         }
       />
-      <CaptionPicture pic={decreasing_pic} caption={"testing"} fig_num={5} />
-      <NumberBullet left={false} num={false} text="filling " />
+      <CaptionPicture pic={decreasing_pic} caption={"Decreasing is stacking two pieces in place of three. Decreasing is used to decrease the piece count and thus the circumference of later rows."} fig_num={10} />
+      <NumberBullet left={false} num={false} text="filling" />
       <Paragraph
         bottom={true}
         left={false}
@@ -121,7 +128,7 @@ const Learn = () => {
           "Filling is the technique of using scrap paper to ''fill'' your unit piece. Filling can be used when your paper is ripped or when you want to save paper by cutting pieces smaller than usual. When a particular colour of paper is hard to find, filling is a solution. Filling strengthens your pieces and conserves paper. Filling can be cut from any scrap paper, such as old newspaper or magazines. Also, make the filling a bit smaller so it stays neatly hidden!"
         }
       />
-      <CaptionPicture pic={filling_pic} caption={"testing"} fig_num={6} />
+      <CaptionPicture pic={filling_pic} caption={"''Filling'' strenghtens pieces and conserves paper."} fig_num={11} />
       <NumberBullet left={true} num={false} text="shaping" />
       <Paragraph
         bottom={true}
