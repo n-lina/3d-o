@@ -24,9 +24,22 @@
   margin: 4px;
 }
 
+.contents-header .left-col p:hover {
+  opacity: 0
+}
+
 .contents-header .right-col p {
   font-size: 14px;
   margin: 4px;
+}
+
+.contents-header .about-header p {
+  font-size: 14px;
+  margin: 4px;
+}
+
+.contents-header .right-col p:hover {
+  opacity: 0
 }
 
 .bottom-padding {

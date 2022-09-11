@@ -3,6 +3,7 @@ import models from "../assets/models.jpg";
 import sliders from "../assets/sliders.PNG";
 import coloring from "../assets/coloring.PNG";
 import downloadbutton from "../assets/downloadbutton.PNG";
+import { HashLink } from "react-router-hash-link";
 import {
   Heading,
   Paragraph,
@@ -12,9 +13,35 @@ import {
 } from "../components/Static";
 
 const About = () => {
+
+  function genHashLink(str, text) {
+    return (<HashLink style={{ color: "rgba(255, 192, 203, 0)", marginRight: 10 }} to={"/about#" + str} m>
+      <p>{text}</p>
+    </HashLink>
+    )
+
+  }
+
   return (
     <div className="landing-container">
+      <div className="contents-header">
+        <p>on this page</p>
+        <p>🍓</p>
+        <div className="about-header">
+          {genHashLink("howto", "— how to use 3d-o —")}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            {genHashLink("select", "• select a model")}
+            {genHashLink("custom", "• customize your model ")}
+            {genHashLink("color", "• color your diagram")}
+            {genHashLink("save", "• save your diagram")}
+            {genHashLink("fold", "• start folding!")}
+          </div>
+        </div>
+        <p>🍓</p>
+      </div>
+      <div id="howto" />
       <Heading text={"how to use 3d-o"} left={false} right_align={false} />
+      <div id="select" />
       <NumberBullet num={1} left={true} text={"select a model"} />
       <Paragraph
         bottom={true}
@@ -74,7 +101,7 @@ const About = () => {
           />
         }
       />
-
+      <div id="custom" />
       <NumberBullet left={false} num={2} text="customize your model" />
       <SideBySide
         left={
@@ -94,7 +121,7 @@ const About = () => {
           />
         }
       />
-
+      <div id="color" />
       <NumberBullet left={true} num={3} text="color your diagram" />
       <div style={{ height: 15 }} />
       <SideBySide
@@ -150,6 +177,7 @@ const About = () => {
           ></img>
         }
       />
+      <div id="save" />
       <NumberBullet left={false} num={4} text="save your 3d-o diagram" />
       <SideBySide
         left={
@@ -167,7 +195,7 @@ const About = () => {
           />
         }
       />
-
+      <div id="fold" />
       <NumberBullet left={true} num={5} text="start folding!" />
       <div className="bottom-padding" />
     </div>

@@ -224,8 +224,8 @@ const Learn = () => {
         left={true}
         text={
           "3d-origami diagrams are read from bottom to top. Moving from a narrower section up to a wider section requires increasing. Moving from wide to narrow requires decreasing."} />
-      <CaptionPicture pic={increasing_diag_pic} img_width={1000} caption={"Increasing: "} fig_num={15} />
-      <CaptionPicture pic={decreasing_diag_pic} img_width={1000} caption={"Decreasing: "} fig_num={16} />
+      <CaptionPicture pic={increasing_diag_pic} img_width={1000} caption={"Increasing: Moving from a smaller section to a smaller section requires increasing. Focusing on the contents of the red rectangle, note the pink markers indicating which two pieces in one row are aligned with which three pieces in the next. In this example, there are 13 pink markers. This means that the following section will have 13 additional pieces. The pink markers are optimized to increase as 'evenly' as possible. That is, the 13 pieces' locations are maximally spread out. In this example, pink marker 1 indicates that pieces 1-2 link to 1-3. Pink marker 2 indicates that pieces 4-5 link to 5-7. 7-8 to 9-11, and so on. Remember to maintain the location of piece # 1 moving when from section to section!  "} fig_num={15} />
+      <CaptionPicture pic={decreasing_diag_pic} img_width={1000} caption={"Decreasing: Moving from a larger section to smaller section requires decreasing. As in Figure 15, the pink markers in the red rectangle indicate that pieces 1-3 in the smaller section's top row will link to pieces 1-2 in the larger section's bottom row. Pieces 11-13 will link to 10-11 and so on. The 4 pink markers indicate that the next row will have 4 less pieces. "} fig_num={16} />
       <div id="appendages" />
       <NumberBullet num={false} left={false} text={"appendages"} />
       <Paragraph
