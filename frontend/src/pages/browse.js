@@ -63,7 +63,7 @@ const Browse = () => {
     [v_top_bot_rim_hard_40, "hard", 40],
   ];
 
-  const len_swans = swans.length;
+  // const len_swans = swans.length;
   const len_figs = figs.length;
   const len_baskets = baskets.length;
   const len_vases = vases.length;

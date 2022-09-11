@@ -5,6 +5,30 @@
   position: relative;
 }
 
+.contents-header {
+  border-radius: 40px;
+  background: rgba(255, 192, 203, 0.25);
+  margin: 25px;
+  padding: 20px
+}
+
+.contents-header p {
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: red;
+  margin: 20px
+}
+
+.contents-header .left-col p {
+  font-size: 14px;
+  margin: 4px;
+}
+
+.contents-header .right-col p {
+  font-size: 14px;
+  margin: 4px;
+}
+
 .bottom-padding {
   height: 85px;
 }
@@ -127,6 +151,14 @@
 .sidebyside {
   display: flex;
   justify-content: center;
+}
+
+.left-col {
+  margin-right: 20px
+}
+
+.right-col {
+  margin-left: 20px
 }
 
 .num-bullet-bg {

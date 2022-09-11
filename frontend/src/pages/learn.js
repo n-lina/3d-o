@@ -18,6 +18,8 @@ import rows_pic from "../assets/body.PNG"
 import increasing_diag_pic from "../assets/increasing_diag.png"
 import decreasing_diag_pic from "../assets/decreasing_diag.png"
 import ring_pic from "../assets/ring_pic.jpg"
+import straw from "../assets/strawberry-slider-big.png";
+import { HashLink } from "react-router-hash-link";
 
 import {
   Heading,
@@ -28,9 +30,46 @@ import {
 } from "../components/Static";
 
 const Learn = () => {
+  function genHashLink(str, text) {
+    return (<HashLink style={{ color: "rgba(255, 192, 203, 0)" }} to={"/learn#" + str}>
+      <p>{text}</p>
+    </HashLink>
+    )
+
+  }
+
   return (
-    <div className="landing-container">
+    <div id="top" className="landing-container">
+      <div className="contents-header">
+        <p>on this page</p>
+        <p>🍓</p>
+        <div className="sidebyside">
+          <div className="left-col">
+            {genHashLink("learn3do", "— learn 3d-origami —")}
+            {genHashLink("unitpc", "• the unit piece")}
+            {genHashLink("sizing", "• sizing")}
+            {genHashLink("paper", "• paper")}
+            {genHashLink("inversion", "• inversion")}
+            {genHashLink("stacking", "• putting pieces together")}
+            {genHashLink("base", "• building the base")}
+            {genHashLink("increasing", "• increasing")}
+            {genHashLink("decreasing", "• decreasing")}
+            {genHashLink("filling", "• filling")}
+            {genHashLink("shaping", "• shaping")}
+          </div>
+          <div className="right-col">
+            {genHashLink("read3do", "— reading 3d-origami diagrams —")}
+            {genHashLink("overview", "• overview", 2)}
+            {genHashLink("inverted", "• inverted", 2)}
+            {genHashLink("incdec", "• increasing + decreasing")}
+            {genHashLink("appendages", "• appendages")}
+          </div>
+        </div>
+        <p>🍓</p>
+      </div>
+      <div id="learn3do" />
       <Heading text={"learn 3d-origami"} left={true} right_align={false} />
+      <div id="unitpc" />
       <NumberBullet num={false} left={false} text={"the unit piece"} />
       <Paragraph
         bottom={true}
@@ -39,6 +78,7 @@ const Learn = () => {
       />
       <CaptionPicture pic={unit_pic} caption={"How to fold the 3d-origami unit piece."} fig_num={1} />
       <CaptionPicture pic={pc_pic} img_height={300} img_width={400} caption={"This is what your pieces should look like. Each piece has two pockets, formed by the two legs."} fig_num={2} />
+      <div id="sizing" />
       <NumberBullet left={true} num={false} text="sizing" />
       <Paragraph
         bottom={true}
@@ -48,6 +88,7 @@ const Learn = () => {
         }
       />
       <CaptionPicture pic={sizing_pic} caption={"1/32 pieces are smaller than 1/16 pieces and are used for small-to-medium-sized and detailed 3d-origami works."} fig_num={3} />
+      <div id="paper" />
       <NumberBullet left={false} num={false} text="paper" />
       <Paragraph
         bottom={true}
@@ -56,6 +97,7 @@ const Learn = () => {
           "Usually, regular copy paper (75gsm) is used. Cardstock, poster, and other thicker papers can also be used when copy paper is not available. When using such papers, cut the pieces to be half the length as usual. In other words, skip the first step of folding your piece in half when folding and start directly at Step 3 in Figure 1! "
         }
       />
+      <div id="inversion" />
       <NumberBullet left={true} num={false} text="inversion" />
       <Paragraph
         bottom={true}
@@ -91,6 +133,7 @@ const Learn = () => {
         }
       />
       <CaptionPicture pic={false} caption={"On the left, the swan's chest and bottom are made with non-inverted pieces. On the right, the swan's wing is built with inverted pieces. Notice the difference in outward appearance!"} fig_num={5} />
+      <div id="stacking" />
       <NumberBullet left={false} num={false} text="putting pieces together" />
       <Paragraph
         bottom={true}
@@ -99,6 +142,7 @@ const Learn = () => {
           "Pieces stack atop of each other in a brick-wall-like pattern. The legs of the units in one row fit neatly into the pockets of the pieces in the next."}
       />
       <CaptionPicture pic={stacking_pic} caption={"3d-origami pieces fit together like bricks in a brick wall. "} fig_num={6} />
+      <div id="base" />
       <NumberBullet left={true} num={false} text="building the base" />
       <Paragraph
         bottom={true}
@@ -108,6 +152,7 @@ const Learn = () => {
       />
       <CaptionPicture pic={base_pic} caption={"How to build the base. The structure will become stronger as more rows are added."} fig_num={7} />
       <CaptionPicture pic={base_real_pic} img_height={300} img_width={500} caption={"This is what your base should look like. The base on the left has six pieces while the one on the right has twenty-one. In the bases shown above, the pieces are non-inverted."} fig_num={8} />
+      <div id="increasing" />
       <NumberBullet left={false} num={false} text="increasing" />
       <Paragraph
         bottom={true}
@@ -117,6 +162,7 @@ const Learn = () => {
         }
       />
       <CaptionPicture pic={increasing_pic} caption={"Increasing is stacking three pieces in place of two. Increasing is used to increase the piece count and thus the circumference of later rows."} fig_num={9} />
+      <div id="decreasing" />
       <NumberBullet left={true} num={false} text="decreasing" />
       <Paragraph
         bottom={true}
@@ -126,6 +172,7 @@ const Learn = () => {
         }
       />
       <CaptionPicture pic={decreasing_pic} caption={"Decreasing is stacking two pieces in place of three. Decreasing is used to decrease the piece count and thus the circumference of later rows."} fig_num={10} />
+      <div id="filling" />
       <NumberBullet left={false} num={false} text="filling" />
       <Paragraph
         bottom={true}
@@ -135,6 +182,7 @@ const Learn = () => {
         }
       />
       <CaptionPicture pic={filling_pic} caption={"''Filling'' strenghtens pieces and conserves paper."} fig_num={11} />
+      <div id="shaping" />
       <NumberBullet left={true} num={false} text="shaping" />
       <Paragraph
         bottom={true}
@@ -143,7 +191,9 @@ const Learn = () => {
           "While 3d-o diagrams will give you your desired shape, you can mold your structure to perfection and guide its progress with your hands and fingers as you build as well. "
         }
       />
+      <div id="read3do" />
       <Heading text={"reading 3d-o diagrams"} left={false} right_align={true} />
+      <div id="overview" />
       <NumberBullet num={false} left={true} text={"overview"} />
       <Paragraph
         bottom={true}
@@ -158,6 +208,7 @@ const Learn = () => {
         text={
           "3d-o diagrams also display row and piece numbers. The row number is shown immediately before and after the row, while piece numbers are shown at the top and bottoms of the sections. It is unimportant which piece in the row is designated number '1.' However, from the beginning, designate and mark one piece and stick with it."} />
       <CaptionPicture pic={rows_pic} img_width={900} caption={"Row and piece numbers."} fig_num={13} />
+      <div id="inverted" />
       <NumberBullet num={false} left={false} text={"inverted pieces"} />
       <Paragraph
         bottom={true}
@@ -166,6 +217,7 @@ const Learn = () => {
           "Inverted pieces are marked with a '⁠—'. In Figure 2., the wing of the swan consists of inverted pieces while the body consists of non-inverted pieces."}
       />
       <CaptionPicture pic={diag_pic} img_width={900} caption={"One-wing swans require both non-inverted and inverted pieces. The inverted pieces are marked."} fig_num={14} />
+      <div id="incdec" />
       <NumberBullet num={false} left={true} text={"increasing + decreasing"} />
       <Paragraph
         bottom={true}
@@ -174,6 +226,7 @@ const Learn = () => {
           "3d-origami diagrams are read from bottom to top. Moving from a narrower section up to a wider section requires increasing. Moving from wide to narrow requires decreasing."} />
       <CaptionPicture pic={increasing_diag_pic} img_width={1000} caption={"Increasing: "} fig_num={15} />
       <CaptionPicture pic={decreasing_diag_pic} img_width={1000} caption={"Decreasing: "} fig_num={16} />
+      <div id="appendages" />
       <NumberBullet num={false} left={false} text={"appendages"} />
       <Paragraph
         bottom={true}
@@ -182,8 +235,17 @@ const Learn = () => {
           "Depending on what parameters you select while designing your project, there may be additional diagrams for appendages. These appendage pieces are to be built seperate from the main body and glued on afterwards. Appendages include animal ears, lids, bottoms, wings, handles, and more.  "} />
       <CaptionPicture pic={appendages_pic} img_width={1000} caption={"Appendages for a basket project, to be built sepearetly and attached afterwards."} fig_num={17} />
       <CaptionPicture pic={ring_pic} img_width={500} caption={"The top and bottom rims shown in Figure 17 should look like this when completed."} fig_num={18} />
+      <HashLink style={{ color: "#D14240" }} to="/learn#top">
+        <img src={straw} alt={""} className="tabS" />
+        <p
+          className="browse-tab"
+          style={{ width: 150, marginLeft: "calc(50% - 90px)" }}
+        >
+          • scroll to top •
+        </p>
+      </HashLink>
       <div className="bottom-padding" />
-    </div>
+    </div >
   );
 };
 
