@@ -4,23 +4,15 @@ import "./create.css";
 import { HashLink } from "react-router-hash-link";
 import { FiDownload } from "react-icons/fi";
 import b_hnd_med_12 from "../assets/browse/basket_hndl_med_12h.jpg";
-import b_lid_med_5 from "../assets/browse/basket_lid_med_5h.jpg";
-import b_lid_med_10 from "../assets/browse/basket_lid_med_10h.jpg";
 import f_bear_med_7 from "../assets/browse/fig_bear_med_7h.jpg";
-import f_bear_med_8 from "../assets/browse/fig_bear_med_8h.jpg";
 import f_bun_ez_8 from "../assets/browse/fig_bun_ez_8h.jpg";
 import f_cat_ez_8 from "../assets/browse/fig_cat_ez_8h.jpg";
-import s_ez_1w_2_2 from "../assets/browse/swan_ez_1w_2h_2.jpg";
-import s_ez_1w_2 from "../assets/browse/swan_ez_1w_2h.jpg";
 import s_ez_1w_3 from "../assets/browse/swan_ez_1w_3h.jpg";
-import s_ez_1w_4 from "../assets/browse/swan_ez_1w_4h.jpg";
 import s_ez_2w_2 from "../assets/browse/swan_ez_2w_2h.jpg";
 import s_ez_2w_4 from "../assets/browse/swan_ez_2w_4h.jpg";
 import s_med_1w_4 from "../assets/browse/swan_med_1w_8h.jpg";
 import v_bot_cov_hard_20 from "../assets/browse/vase_bot_cov_hard_20h.jpg";
 import v_bot_cov_med_10 from "../assets/browse/vase_bot_cov_med_10h.jpg";
-import v_hard_25 from "../assets/browse/vase_hard_25h.jpg";
-import v_top_bot_rim_hard_40 from "../assets/browse/vase_top_bot_rim_hard_40h.jpg";
 import placeholder from "../assets/browse/placeholder.PNG";
 
 const Browse = () => {
@@ -34,11 +26,8 @@ const Browse = () => {
   // }
 
   const swans = [
-    [s_ez_1w_2, "easy", 2],
-    [s_ez_1w_2_2, "easy", 2],
     [s_ez_2w_2, "easy", 2],
     [s_ez_1w_3, "easy", 3],
-    [s_ez_1w_4, "easy", 4],
     [s_ez_2w_4, "easy", 4],
     [s_med_1w_4, "medium", 4],
   ];
@@ -47,20 +36,15 @@ const Browse = () => {
     [f_bun_ez_8, "easy", 8],
     [f_cat_ez_8, "easy", 8],
     [f_bear_med_7, "medium", 7],
-    [f_bear_med_8, "medium", 8],
   ];
 
   const baskets = [
-    [b_lid_med_5, "medium", 5],
-    [b_lid_med_10, "medium", 10],
     [b_hnd_med_12, "medium", 12],
   ];
 
   const vases = [
     [v_bot_cov_med_10, "medium", 10],
     [v_bot_cov_hard_20, "hard", 20],
-    [v_hard_25, "hard", 25],
-    [v_top_bot_rim_hard_40, "hard", 40],
   ];
 
   // const len_swans = swans.length;
@@ -125,9 +109,7 @@ const Browse = () => {
   return (
     <div id="top">
       <div className="holderTop">
-        {/* <img src={straw} alt={""} className="leftS" style={{ left: "35%" }} /> */}
         <p className="create-text">🍓 ' . ` browse pre-made designs ` . ' 🍓</p>
-        {/* <img src={straw} alt={""} className="rightS" style={{ right: "35%" }} /> */}
       </div>
       <div
         style={{

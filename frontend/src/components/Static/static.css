@@ -38,6 +38,10 @@
   margin: 4px;
 }
 
+.contents-header .about-header p:hover {
+  opacity: 0
+}
+
 .contents-header .right-col p:hover {
   opacity: 0
 }
