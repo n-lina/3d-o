@@ -207,7 +207,7 @@ const Learn = () => {
         left={true}
         text={
           "3d-o diagrams also display row and piece numbers. The row number is shown immediately before and after the row, while piece numbers are shown at the top and bottoms of the sections. It is unimportant which piece in the row is designated number '1.' However, from the beginning, designate and mark one piece and stick with it."} />
-      <CaptionPicture pic={rows_pic} img_width={900} caption={"Row and piece numbers."} fig_num={13} />
+      <CaptionPicture pic={rows_pic} img_width={900} caption={"Row and piece numbers. The left side shows the relative row numbers while the right side shows the absolute row number."} fig_num={13} />
       <div id="inverted" />
       <NumberBullet num={false} left={false} text={"inverted pieces"} />
       <Paragraph

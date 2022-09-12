@@ -167,6 +167,14 @@ const About = () => {
                 "Once you are happy with your diagram, press the 'next' arrow to see the final result."
               }
             />
+            <Bullet
+              bottom={false}
+              left={true}
+              boldtext={"Tip"}
+              text={
+                "If your diagram is really wide, zoom out on your browser!"
+              }
+            />
           </div>
         }
         right={
