@@ -13,7 +13,22 @@ import s_ez_2w_4 from "../assets/browse/swan_ez_2w_4h.jpg";
 import s_med_1w_4 from "../assets/browse/swan_med_1w_8h.jpg";
 import v_bot_cov_hard_20 from "../assets/browse/vase_bot_cov_hard_20h.jpg";
 import v_bot_cov_med_10 from "../assets/browse/vase_bot_cov_med_10h.jpg";
-import placeholder from "../assets/browse/placeholder.PNG";
+
+import basket_diag from "../assets/browse/basket.png"
+import basket_diag2 from "../assets/browse/basket2.png"
+import bunny_diag from "../assets/browse/bunny.png"
+import bunny_diag2 from "../assets/browse/bunny2.png"
+import kitty_diag from "../assets/browse/kitty.png"
+import kitty_diag2 from "../assets/browse/kitty2.png"
+import pooh_diag from "../assets/browse/pooh.png"
+import pooh_diag2 from "../assets/browse/pooh2.png"
+import swan_diag from "../assets/browse/swan.png"
+import swan_diag2 from "../assets/browse/swan2.png"
+import vase_diag from "../assets/browse/vase.png"
+import vase_diag2 from "../assets/browse/vase2.png"
+import blkswan_diag from "../assets/browse/blk_swan.png"
+import blkswan_diag2 from "../assets/browse/blk_swan2.png"
+import placeholder from "../assets/browse/placeholder.PNG"
 
 const Browse = () => {
   // function loadColoringPage(model){
@@ -26,25 +41,25 @@ const Browse = () => {
   // }
 
   const swans = [
-    [s_ez_2w_2, "easy", 2],
-    [s_ez_1w_3, "easy", 3],
-    [s_ez_2w_4, "easy", 4],
-    [s_med_1w_4, "medium", 4],
+    [s_ez_2w_2, "easy", 2, placeholder],
+    [s_ez_1w_3, "easy", 3, blkswan_diag],
+    [s_ez_2w_4, "easy", 4, placeholder],
+    [s_med_1w_4, "medium", 4, swan_diag],
   ];
 
   const figs = [
-    [f_bun_ez_8, "easy", 8],
-    [f_cat_ez_8, "easy", 8],
-    [f_bear_med_7, "medium", 7],
+    [f_bun_ez_8, "easy", 8, bunny_diag],
+    [f_cat_ez_8, "easy", 8, kitty_diag],
+    [f_bear_med_7, "medium", 7, pooh_diag],
   ];
 
   const baskets = [
-    [b_hnd_med_12, "medium", 12],
+    [b_hnd_med_12, "medium", 12, basket_diag],
   ];
 
   const vases = [
-    [v_bot_cov_med_10, "medium", 10],
-    [v_bot_cov_hard_20, "hard", 20],
+    [v_bot_cov_med_10, "medium", 10, vase_diag],
+    [v_bot_cov_hard_20, "hard", 20, placeholder],
   ];
 
   // const len_swans = swans.length;
@@ -55,7 +70,7 @@ const Browse = () => {
   const TODO_SZ = "1/32";
   const TODO_NUM = "1432";
 
-  function element(key, img, difficulty, hours) {
+  function element(key, img, difficulty, hours, diag_img) {
     return (
       <div key={key} className="browse-el-holder">
         <div className="browse-straw-num">
@@ -87,10 +102,12 @@ const Browse = () => {
             </p>
           </div>
         </div>
-        <img className="browse-diag" src={placeholder} alt={""} />
+        <img className="browse-diag" src={diag_img} alt={""} />
         <div
           className="browse-done-button"
-          onClick={() => console.log("hello")}
+          onClick={() => {
+            console.log(basket_diag)
+          }}
         >
           <p className="browse-download-label">
             <span>
@@ -139,18 +156,18 @@ const Browse = () => {
       <div id="figurine" className="holderTop">
         <p className="create-text">🍓 ' . ` figurine ` . ' 🍓</p>
       </div>
-      {figs.map((entry, i) => element(i, entry[0], entry[1], entry[2]))}
+      {figs.map((entry, i) => element(i, entry[0], entry[1], entry[2], entry[3]))}
       <div id="vase" className="holderTop">
         <p className="create-text">🍓 ' . ` vase ` . ' 🍓</p>
       </div>
       {vases.map((entry, i) =>
-        element(len_figs + i, entry[0], entry[1], entry[2])
+        element(len_figs + i, entry[0], entry[1], entry[2], entry[3])
       )}
       <div id="basket" className="holderTop">
         <p className="create-text">🍓 ' . ` basket ` . ' 🍓</p>
       </div>
       {baskets.map((entry, i) =>
-        element(len_figs + len_vases + i, entry[0], entry[1], entry[2])
+        element(len_figs + len_vases + i, entry[0], entry[1], entry[2], entry[3])
       )}
       <div id="swan" className="holderTop">
         <p className="create-text">🍓 ' . ` swan ` . ' 🍓</p>
@@ -160,7 +177,8 @@ const Browse = () => {
           len_figs + len_vases + len_baskets + i,
           entry[0],
           entry[1],
-          entry[2]
+          entry[2],
+          entry[3]
         )
       )}
       <div style={{ height: 160 }}>
