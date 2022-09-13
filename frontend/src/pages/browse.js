@@ -3,6 +3,7 @@ import straw from "../assets/strawberry-slider-big.png";
 import "./create.css";
 import { HashLink } from "react-router-hash-link";
 import { FiDownload } from "react-icons/fi";
+
 import b_hnd_med_12 from "../assets/browse/basket_hndl_med_12h.jpg";
 import f_bear_med_7 from "../assets/browse/fig_bear_med_7h.jpg";
 import f_bun_ez_8 from "../assets/browse/fig_bun_ez_8h.jpg";
@@ -41,28 +42,27 @@ const Browse = () => {
   // }
 
   const swans = [
-    [s_ez_2w_2, "easy", 2, placeholder],
-    [s_ez_1w_3, "easy", 3, blkswan_diag],
-    [s_ez_2w_4, "easy", 4, placeholder],
-    [s_med_1w_4, "medium", 4, swan_diag],
+    [s_ez_2w_2, "easy", 2, placeholder, placeholder],
+    [s_ez_1w_3, "easy", 3, blkswan_diag, blkswan_diag2],
+    [s_ez_2w_4, "easy", 4, placeholder, placeholder],
+    [s_med_1w_4, "medium", 4, swan_diag, swan_diag2],
   ];
 
   const figs = [
-    [f_bun_ez_8, "easy", 8, bunny_diag],
-    [f_cat_ez_8, "easy", 8, kitty_diag],
-    [f_bear_med_7, "medium", 7, pooh_diag],
+    [f_bun_ez_8, "easy", 8, bunny_diag, bunny_diag2],
+    [f_cat_ez_8, "easy", 8, kitty_diag, kitty_diag2],
+    [f_bear_med_7, "medium", 7, pooh_diag, pooh_diag2],
   ];
 
   const baskets = [
-    [b_hnd_med_12, "medium", 12, basket_diag],
+    [b_hnd_med_12, "medium", 12, basket_diag, basket_diag2],
   ];
 
   const vases = [
-    [v_bot_cov_med_10, "medium", 10, vase_diag],
-    [v_bot_cov_hard_20, "hard", 20, placeholder],
+    [v_bot_cov_med_10, "medium", 10, vase_diag, vase_diag2],
+    [v_bot_cov_hard_20, "hard", 20, placeholder, placeholder],
   ];
 
-  // const len_swans = swans.length;
   const len_figs = figs.length;
   const len_baskets = baskets.length;
   const len_vases = vases.length;
@@ -70,7 +70,7 @@ const Browse = () => {
   const TODO_SZ = "1/32";
   const TODO_NUM = "1432";
 
-  function element(key, img, difficulty, hours, diag_img) {
+  function element(key, img, difficulty, hours, diag_img, diag_img2) {
     return (
       <div key={key} className="browse-el-holder">
         <div className="browse-straw-num">
@@ -106,7 +106,9 @@ const Browse = () => {
         <div
           className="browse-done-button"
           onClick={() => {
-            console.log(basket_diag)
+            var FileSaver = require('file-saver');
+            FileSaver.saveAs(diag_img, "3do-diagram.png");
+            FileSaver.saveAs(diag_img2, "3do-diagram-appendages.png")
           }}
         >
           <p className="browse-download-label">
@@ -156,18 +158,18 @@ const Browse = () => {
       <div id="figurine" className="holderTop">
         <p className="create-text">🍓 ' . ` figurine ` . ' 🍓</p>
       </div>
-      {figs.map((entry, i) => element(i, entry[0], entry[1], entry[2], entry[3]))}
+      {figs.map((entry, i) => element(i, entry[0], entry[1], entry[2], entry[3], entry[4]))}
       <div id="vase" className="holderTop">
         <p className="create-text">🍓 ' . ` vase ` . ' 🍓</p>
       </div>
       {vases.map((entry, i) =>
-        element(len_figs + i, entry[0], entry[1], entry[2], entry[3])
+        element(len_figs + i, entry[0], entry[1], entry[2], entry[3], entry[4])
       )}
       <div id="basket" className="holderTop">
         <p className="create-text">🍓 ' . ` basket ` . ' 🍓</p>
       </div>
       {baskets.map((entry, i) =>
-        element(len_figs + len_vases + i, entry[0], entry[1], entry[2], entry[3])
+        element(len_figs + len_vases + i, entry[0], entry[1], entry[2], entry[3], entry[4])
       )}
       <div id="swan" className="holderTop">
         <p className="create-text">🍓 ' . ` swan ` . ' 🍓</p>
