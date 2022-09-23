@@ -29,7 +29,12 @@ import vase_diag from "../assets/browse/vase.png"
 import vase_diag2 from "../assets/browse/vase2.png"
 import blkswan_diag from "../assets/browse/blk_swan.png"
 import blkswan_diag2 from "../assets/browse/blk_swan2.png"
-import placeholder from "../assets/browse/placeholder.PNG"
+import vase2_diag from "../assets/browse/vase_diag.png"
+import vase2_diag2 from "../assets/browse/vase_diag2.png"
+import blue_swan_diag from "../assets/browse/blue_swan_diag.png"
+import blue_swan_diag2 from "../assets/browse/blue_swan_diag2.png"
+import pink_swan_diag from "../assets/browse/pink_swan_diag.png"
+import pink_swan_diag2 from "../assets/browse/pink_swan_diag2.png"
 
 const Browse = () => {
   // function loadColoringPage(model){
@@ -42,9 +47,9 @@ const Browse = () => {
   // }
 
   const swans = [
-    [s_ez_2w_2, "easy", 2, placeholder, placeholder],
+    [s_ez_2w_2, "easy", 2, pink_swan_diag, pink_swan_diag2],
     [s_ez_1w_3, "easy", 3, blkswan_diag, blkswan_diag2],
-    [s_ez_2w_4, "easy", 4, placeholder, placeholder],
+    [s_ez_2w_4, "easy", 4, blue_swan_diag, blue_swan_diag2],
     [s_med_1w_4, "medium", 4, swan_diag, swan_diag2],
   ];
 
@@ -60,7 +65,7 @@ const Browse = () => {
 
   const vases = [
     [v_bot_cov_med_10, "medium", 10, vase_diag, vase_diag2],
-    [v_bot_cov_hard_20, "hard", 20, placeholder, placeholder],
+    [v_bot_cov_hard_20, "hard", 20, vase2_diag, vase2_diag2],
   ];
 
   const len_figs = figs.length;
